@@ -9,6 +9,7 @@ function installPlowshare {
         echo "=== Installation de plowshare === \r\n"
         cd /opt/
         git clone https://github.com/mcrapet/plowshare.git plowshare
+        cd plowshare
         sudo make install
         plowmod --install
     fi
@@ -23,8 +24,13 @@ function installPrerequis {
     sudo apt-get upgrade
 
     echo "--- Installation d'un serveur LAMP --- \r\n"
-    echo "<<<<< Installation d'apache 2 >>>>>"
-    sudo apt-get install apache2
+    echo "*** Teste si apache2 est installé ****"
+    if ! which apache2 >/dev/null; then
+        echo "<<<<< Installation d'apache 2 >>>>>"
+        sudo apt-get install apache2
+    else
+        echo "Apache2 déjà installé"
+    fi
     echo "*** Teste si mysql est installé ****"
     if ! which mysqld >/dev/null; then
         echo "<<<<< Installation de mysql >>>>>"
@@ -32,18 +38,31 @@ function installPrerequis {
         echo "<<<<< Activation de mysql >>>>>"
         sudo mysql_install_db
         sudo /usr/bin/mysql_secure_installation
+    else
+        echo "Mysql déjà installé"
     fi
     echo "<<<<< Installation de PHP >>>>>"
-    sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt
+    echo "*** Teste si php est installé ****"
+    if ! which mysqld >/dev/null; then
+        sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt
+    else
+        echo "Php déjà installé"
+    fi
     echo "<<<<< Installation du reste des prérequis >>>>>"
     sudo apt-get install git python2.7 python3.3
     echo "=== Fin d'installation des prérequis === \r\n"
 }
 
 function createBaseDonnees {
-    echo "=== Création de la base de données ==="
-    mysql -uroot -e "create database 'plowshare'"
-    mysql -uroot plowshare < dump.sql
+    echo "Test si la base de données existe"
+    RESULT=`mysqlshow --user=XXXXXX --password=XXXXXX plowshare| grep -v Wildcard | grep -o plowshare`
+    if [ "$RESULT" != "plowshare" ]; then
+        echo "=== Création de la base de données ==="
+        mysql -uroot -e "create database 'plowshare'"
+        mysql -uroot plowshare < dump.sql
+    else
+        echo "La base de données existe"
+    fi
     echo "=== Fin de la création de la base de données ==="
 }
 
