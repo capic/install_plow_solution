@@ -55,7 +55,7 @@ function installPrerequis {
 
 function createBaseDonnees {
     echo "Test si la base de données existe"
-    RESULT=`mysqlshow --user=XXXXXX --password=XXXXXX plowshare| grep -v Wildcard | grep -o plowshare`
+    RESULT=`mysqlshow --user=root --password=capic_20_04_1982 plowshare| grep -v Wildcard | grep -o plowshare`
     if [ "$RESULT" != "plowshare" ]; then
         echo "=== Création de la base de données ==="
         mysql -uroot -e "create database 'plowshare'"
