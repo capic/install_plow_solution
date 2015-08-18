@@ -58,7 +58,7 @@ function createBaseDonnees {
     RESULT=`mysqlshow --user=root --password=capic_20_04_1982 plowshare| grep -v Wildcard | grep -o plowshare`
     if [ "$RESULT" != "plowshare" ]; then
         echo "=== Création de la base de données ==="
-        mysql -uroot -pcapic_20_04_1982 -e "create database 'plowshare'"
+        mysql -uroot -pcapic_20_04_1982 -e "create database plowshare"
         mysql -uroot -pcapic_20_04_1982 plowshare < plowshare.sql
     else
         echo "La base de données existe"
