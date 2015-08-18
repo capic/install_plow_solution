@@ -49,7 +49,7 @@ function installPrerequis {
         echo "Php déjà installé"
     fi
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get install git python2.7 python3.3
+    sudo apt-get install git python2.7 python3
     echo "=== Fin d'installation des prérequis === \r\n"
 }
 
@@ -78,7 +78,7 @@ function installPlowSolution {
     cd main
     git clone https://github.com/capic/plow_pyhton.git
     echo "Téléchargement du gestionnaire des notifications"
-    got clone https://github.com/capic/plow_notifications.git
+    git clone https://github.com/capic/plow_notifications.git
     echo "=== Fin de la création de la solution plow ==="
 }
 
