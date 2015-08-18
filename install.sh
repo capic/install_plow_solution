@@ -1,20 +1,5 @@
 #!/bin/bash
 
-# on installe les prerequis
-# =========================
-installPrerequis
-
-# on install plowshare
-installPlowshare
-
-# on cree la base si pas presente
-createBaseDonnees
-
-# on install les scripts
-installPlowSolution
-
-# on cree les taches cron
-
 # fonction d'installaion de plowshare et de ses prerequis
 function installPlowshare {
     echo "=== Installation des prérequis plowshare === \r\n"
@@ -77,3 +62,18 @@ function installPlowSolution {
     got clone https://github.com/capic/plow_notifications.git
     echo "=== Fin de la création de la solution plow ==="
 }
+
+# on installe les prerequis
+# =========================
+installPrerequis
+
+# on install plowshare
+installPlowshare
+
+# on cree la base si pas presente
+createBaseDonnees
+
+# on install les scripts
+installPlowSolution
+
+# on cree les taches cron
