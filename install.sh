@@ -2,28 +2,28 @@
 
 # fonction d'installaion de plowshare et de ses prerequis
 function installPlowshare {
-    echo "=== Installation des prérequis plowshare === \r\n"
+    echo "=== Installation des prérequis plowshare === "
     echo "*** Teste si mysql est installé ****"
     if ! which plowdown >/dev/null; then
         sudo apt-get install coreutils sed util-linux grep curl recode rhino
-        echo "=== Installation de plowshare === \r\n"
+        echo "=== Installation de plowshare === "
         cd /opt/
         git clone https://github.com/mcrapet/plowshare.git plowshare
         cd plowshare
         sudo make install
         plowmod --install
     fi
-    echo "=== Fin d'installation de plowshare === \r\n"
+    echo "=== Fin d'installation de plowshare === "
 }
 
 # fonction d'installation des prerequis
 function installPrerequis {
-    echo "=== Installation des prérequis === \r\n"
-    echo "--- Mise à jour des dépots --- \r\n"
+    echo "=== Installation des prérequis === "
+    echo "--- Mise à jour des dépots --- "
     sudo apt-get update
     sudo apt-get upgrade
 
-    echo "--- Installation d'un serveur LAMP --- \r\n"
+    echo "--- Installation d'un serveur LAMP --- "
     echo "*** Teste si apache2 est installé ****"
     if ! which apache2 >/dev/null; then
         echo "<<<<< Installation d'apache 2 >>>>>"
@@ -49,8 +49,8 @@ function installPrerequis {
         echo "Php déjà installé"
     fi
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get install git python2.7 python3
-    echo "=== Fin d'installation des prérequis === \r\n"
+    sudo apt-get install git python2.7 python3 screen
+    echo "=== Fin d'installation des prérequis === "
 }
 
 function createBaseDonnees {
@@ -59,7 +59,7 @@ function createBaseDonnees {
     if [ "$RESULT" != "plowshare" ]; then
         echo "=== Création de la base de données ==="
         mysql -uroot -pcapic_20_04_1982 -e "create database plowshare"
-        mysql -uroot -pcapic_20_04_1982 plowshare < plowshare.sql
+        mysql -uroot -pcapic_20_04_1982 plowshare < /var/www/plowshare_back/plowshare.sql
     else
         echo "La base de données existe"
     fi
@@ -74,14 +74,24 @@ function installPlowSolution {
     echo "Téléchargement du frontend"
     git clone https://github.com/capic/plow_front.git
     echo "Téléchargement du gestionnaire de téléchargements"
-    mkdir main
-    cd main
     git clone https://github.com/capic/plow_pyhton.git
     echo "Téléchargement du gestionnaire des notifications"
     git clone https://github.com/capic/plow_notifications.git
+
     echo "=== Fin de la création de la solution plow ==="
 }
 
+function nettoyage {
+    cd /var/www/
+    mv plowshare_back/* .
+    rm -r plowshare_back/
+    mv plow_front/* .
+    rm -r plow_front/
+    mv plow_python/* .
+    rm -r plow_python/
+    mv plow_notifications/* .
+    rm -r plow_notifications/
+}
 # on installe les prerequis
 # =========================
 installPrerequis
@@ -89,10 +99,13 @@ installPrerequis
 # on install plowshare
 installPlowshare
 
-# on cree la base si pas presente
-createBaseDonnees
-
 # on install les scripts
 installPlowSolution
 
+# on cree la base si pas presente
+createBaseDonnees
+
 # on cree les taches cron
+
+# nettoyage
+nettoyage
