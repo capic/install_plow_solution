@@ -114,6 +114,7 @@ installPlowSolution
 createBaseDonnees
 
 # on cree les taches cron
+creerTaches
 
 # nettoyage
 nettoyage
