@@ -1,4 +1,5 @@
 #!/bin/bash
+source ./config.cfg
 
 # fonction d'installaion de plowshare et de ses prerequis
 function installPlowshare {
@@ -7,9 +8,9 @@ function installPlowshare {
     if ! which plowdown >/dev/null; then
         sudo apt-get install coreutils sed util-linux grep curl recode rhino
         echo "=== Installation de plowshare === "
-        cd /opt/
-        git clone https://github.com/mcrapet/plowshare.git plowshare
-        cd plowshare
+        echo "Adresse du dépot git de plowdown : $git_plowhare => $repertoire_git_plowhare"
+        git clone $git_plowhare $repertoire_git_plowhare
+        cd $repertoire_git_plowhare
         sudo make install
         plowmod --install
     fi
@@ -68,29 +69,31 @@ function createBaseDonnees {
 
 function installPlowSolution {
     echo "=== Création de la solution plow ==="
-    cd /var/www/
+    echo "Adresse du dépot git de plowshare_back : $git_plow_back => $repertoire_git_plow_back"
     echo "Téléchargement du backend"
-    git clone https://github.com/capic/plowshare_back.git
+    git clone $git_plow_back $repertoire_git_plow_back
+    echo "Adresse du dépot git de plow_front : $git_plow_front => $repertoire_git_plow_front"
     echo "Téléchargement du frontend"
-    git clone https://github.com/capic/plow_front.git
+    git clone $git_plow_front repertoire_git_plow_front
+    echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
-    git clone https://github.com/capic/plow_pyhton.git
+    git clone $git_plow_python $repertoire_git_plow_python
+    echo "Adresse du dépot git de plow_notifications : $git_plow_notifications => $repertoire_git_plow_notifications"
     echo "Téléchargement du gestionnaire des notifications"
-    git clone https://github.com/capic/plow_notifications.git
+    git clone $git_plow_notifications $repertoire_git_plow_notifications
 
     echo "=== Fin de la création de la solution plow ==="
 }
 
 function nettoyage {
-    cd /var/www/
-    mv plowshare_back/* .
-    rm -r plowshare_back/
-    mv plow_front/* .
-    rm -r plow_front/
-    mv plow_pyhton/* .
-    rm -r plow_pyhton/
-    mv plow_notifications/* .
-    rm -r plow_notifications/
+    mv $repertoire_git_plow_back/* $repertoire_web
+    rm -r $repertoire_git_plow_back
+    mv $repertoire_git_plow_front/* $repertoire_web
+    rm -r $repertoire_git_plow_front
+    mv $repertoire_git_plow_python/* $repertoire_web
+    rm -r $repertoire_git_plow_python
+    mv $repertoire_git_plow_notifications/* $repertoire_web
+    rm -r $repertoire_git_plow_notifications
 }
 
 function creerTaches {
