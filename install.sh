@@ -3,7 +3,7 @@
 # fonction d'installaion de plowshare et de ses prerequis
 function installPlowshare {
     echo "=== Installation des prérequis plowshare === "
-    echo "*** Teste si mysql est installé ****"
+    echo "*** Teste si plowdown est installé ****"
     if ! which plowdown >/dev/null; then
         sudo apt-get install coreutils sed util-linux grep curl recode rhino
         echo "=== Installation de plowshare === "
@@ -43,7 +43,7 @@ function installPrerequis {
     fi
     echo "<<<<< Installation de PHP >>>>>"
     echo "*** Teste si php est installé ****"
-    if ! which mysqld >/dev/null; then
+    if ! which php >/dev/null; then
         sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt
     else
         echo "Php déjà installé"
@@ -87,10 +87,18 @@ function nettoyage {
     rm -r plowshare_back/
     mv plow_front/* .
     rm -r plow_front/
-    mv plow_python/* .
-    rm -r plow_python/
+    mv plow_pyhton/* .
+    rm -r plow_pyhton/
     mv plow_notifications/* .
     rm -r plow_notifications/
+}
+
+function creerTaches {
+    crontab -l > mycron
+    */15 * * * * sh /var/www/main/start_download.sh >> mycrhon
+    */2 * * * * python /var/www/main/download_basic.py check_download_alive >> mychron
+    crontab mycron
+    rm mycron
 }
 # on installe les prerequis
 # =========================
