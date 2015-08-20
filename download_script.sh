@@ -50,7 +50,7 @@ cd $repertoire_git_plowhare
 git stash
 git pull
 make install
-cd /root/.config/plowshare/modules.d/legacy.git
+cd $repertoire_module_plowshare
 git stash
 plowmod --update
 cp -r /root/.config /
