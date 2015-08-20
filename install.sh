@@ -101,8 +101,8 @@ function nettoyage {
 function creerTaches {
     echo "=== Création des taches cron ==="
     crontab -l > mycron
-    */15 * * * * sh $repertoire_web/main/start_download.sh >> mycrhon
-    */2 * * * * python $repertoire_web/main/download_basic.py check_download_alive >> mychron
+    echo "*/15 * * * * sh $repertoire_web/main/start_download.sh" >> mycrhon
+    echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive" >> mychron
     crontab mycron
     rm mycron
     echo "=== Fin de création des taches cron ==="
