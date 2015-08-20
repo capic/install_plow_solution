@@ -86,6 +86,7 @@ function installPlowSolution {
 }
 
 function nettoyage {
+    echo "=== Nettoyage des dossiers ==="
     mv $repertoire_git_plow_back/* $repertoire_web
     rm -r $repertoire_git_plow_back
     mv $repertoire_git_plow_front/* $repertoire_web
@@ -94,14 +95,17 @@ function nettoyage {
     rm -r $repertoire_git_plow_python
     mv $repertoire_git_plow_notifications/* $repertoire_web
     rm -r $repertoire_git_plow_notifications
+    echo "=== Fin de nettoyage des dossiers ==="
 }
 
 function creerTaches {
+    echo "=== Création des taches cron ==="
     crontab -l > mycron
     */15 * * * * sh /var/www/main/start_download.sh >> mycrhon
     */2 * * * * python /var/www/main/download_basic.py check_download_alive >> mychron
     crontab mycron
     rm mycron
+    echo "=== Fin de création des taches cron ==="
 }
 # on installe les prerequis
 # =========================
