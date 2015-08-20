@@ -1,6 +1,7 @@
 #!/bin/bash
 source ./config.cfg
-
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+echo $DIR
 installation_personnalisee = -1
 
 function init {
