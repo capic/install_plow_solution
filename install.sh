@@ -105,6 +105,7 @@ function installPrerequis {
     wget https://bootstrap.pypa.io/get-pip.py
     python get-pip.py
     pip install psutil
+    sudo pip install --allow-external mysql-connector-python mysql-connector-python
     echo "=== Fin d'installation des prérequis === "
 }
 
