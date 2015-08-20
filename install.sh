@@ -60,7 +60,7 @@ function createBaseDonnees {
     if [ "$RESULT" != "plowshare" ]; then
         echo "=== Création de la base de données ==="
         mysql -uroot -pcapic_20_04_1982 -e "create database plowshare"
-        mysql -uroot -pcapic_20_04_1982 plowshare < /var/www/plowshare_back/plowshare.sql
+        mysql -uroot -pcapic_20_04_1982 plowshare < $repertoire_git_plow_back/plowshare.sql
     else
         echo "La base de données existe"
     fi
@@ -101,8 +101,8 @@ function nettoyage {
 function creerTaches {
     echo "=== Création des taches cron ==="
     crontab -l > mycron
-    */15 * * * * sh /var/www/main/start_download.sh >> mycrhon
-    */2 * * * * python /var/www/main/download_basic.py check_download_alive >> mychron
+    */15 * * * * sh $repertoire_web/main/start_download.sh >> mycrhon
+    */2 * * * * python $repertoire_web/main/download_basic.py check_download_alive >> mychron
     crontab mycron
     rm mycron
     echo "=== Fin de création des taches cron ==="
