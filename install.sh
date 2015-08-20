@@ -67,7 +67,7 @@ function installPrerequis {
         echo "*** Teste si apache2 est installé ****"
         if ! which apache2 >/dev/null; then
             echo "<<<<< Installation d'apache 2 >>>>>"
-            sudo apt-get install apache2
+            sudo apt-get install apache2 libapache2-mod-auth-mysql
         else
             echo "Apache2 déjà installé"
         fi
@@ -86,7 +86,7 @@ function installPrerequis {
     echo "*** Teste si mysql est installé ****"
     if ! which mysqld >/dev/null; then
         echo "<<<<< Installation de mysql >>>>>"
-        sudo apt-get install mysql-server libapache2-mod-auth-mysql php5-mysql
+        sudo apt-get install mysql-server php5-mysql
         echo "<<<<< Activation de mysql >>>>>"
         sudo mysql_install_db
         sudo /usr/bin/mysql_secure_installation
@@ -136,6 +136,8 @@ function installPlowSolution {
     echo "Adresse du dépot git de plow_notifications : $git_plow_notifications => $repertoire_git_plow_notifications"
     echo "Téléchargement du gestionnaire des notifications"
     git clone $git_plow_notifications $repertoire_git_plow_notifications
+
+    mkdir $repertoire_web_log
 
     echo "=== Fin de la création de la solution plow ==="
 }
