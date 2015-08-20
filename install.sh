@@ -14,7 +14,7 @@ function init {
             1 ) echo $opt $REPLY;;
             2 ) echo $opt $REPLY;;
        
-           $(( ${#options[@]}+1 )) ) installation_personnalisee=$REPLY"; break;;
+           $(( ${#options[@]}+1 )) ) installation_personnalisee=$REPLY; break;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
     done
