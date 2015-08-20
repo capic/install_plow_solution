@@ -1,8 +1,6 @@
 #!/bin/bash
 source ./config.cfg
 
-echo "Adresse du dépot git de plowdown : $git_plowhare => $repertoire_git_plowhare"
-
 # fonction d'installaion de plowshare et de ses prerequis
 function installPlowshare {
     echo "=== Installation des prérequis plowshare === "
