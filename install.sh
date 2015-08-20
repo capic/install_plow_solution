@@ -14,7 +14,7 @@ function init {
             1 ) break;;
             2 ) break;;
        
-           $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
+           $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
     done
@@ -43,14 +43,43 @@ function installPrerequis {
     echo "--- Mise à jour des dépots --- "
     sudo apt-get update
     sudo apt-get upgrade
+    
+    serveur=1
 
     echo "--- Installation d'un serveur LAMP --- "
-    echo "*** Teste si apache2 est installé ****"
-    if ! which apache2 >/dev/null; then
-        echo "<<<<< Installation d'apache 2 >>>>>"
-        sudo apt-get install apache2
+    if $installation_personnalisee == 2
+        options=("Apache" "Lighttpd")
+        
+        PS3="Choix du serveur"
+        select opt in "${options[@]}" "Quit"; do
+            case "$REPLY" in
+                1 ) break;;
+                2 ) break;;
+          
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+        done
+    fi
+    
+    if serveur == 1
+        echo "*** Teste si apache2 est installé ****"
+        if ! which apache2 >/dev/null; then
+            echo "<<<<< Installation d'apache 2 >>>>>"
+            sudo apt-get install apache2
+        else
+            echo "Apache2 déjà installé"
+        fi
+    elif serveur == 2
+        echo "*** Teste si lighttpd est installé ****"
+        if ! which lighttpd >/dev/null; then
+            echo "<<<<< Installation de lighhtpd >>>>>"
+            sudo apt-get install lighttpd
+        else
+            echo "Lighttpd déjà installé"
+        fi
     else
-        echo "Apache2 déjà installé"
+        echo "Erreur de selection de serveur"
+        exit 1
     fi
     echo "*** Teste si mysql est installé ****"
     if ! which mysqld >/dev/null; then
