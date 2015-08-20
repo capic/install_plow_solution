@@ -18,7 +18,8 @@ function init {
             *) echo "Le choix n'est pas correct";continue;;
         esac
     done
-    echo "Installation personnalisée ? => $REPLY"
+    installation_personnalisee=$REPLY
+    echo "Installation personnalisée ? => $installation_personnalisee"
 }
 
 # fonction d'installaion de plowshare et de ses prerequis
@@ -47,11 +48,11 @@ function installPrerequis {
     serveur=1
 
     echo "--- Installation d'un serveur LAMP --- "
-    if $installation_personnalisee == 2
+    if $installation_personnalisee == 2 then
         options=("Apache" "Lighttpd")
         
         PS3="Choix du serveur"
-        select opt in "${options[@]}" "Quit"; do
+        select opt in "${options[@]}"; do
             case "$REPLY" in
                 1 ) break;;
                 2 ) break;;
@@ -59,9 +60,10 @@ function installPrerequis {
                 *) echo "Le choix n'est pas correct";continue;;
             esac
         done
+        serveur=$REPLY
     fi
     
-    if serveur == 1
+    if serveur == 1 then
         echo "*** Teste si apache2 est installé ****"
         if ! which apache2 >/dev/null; then
             echo "<<<<< Installation d'apache 2 >>>>>"
@@ -69,7 +71,7 @@ function installPrerequis {
         else
             echo "Apache2 déjà installé"
         fi
-    elif serveur == 2
+    elif serveur == 2 then
         echo "*** Teste si lighttpd est installé ****"
         if ! which lighttpd >/dev/null; then
             echo "<<<<< Installation de lighhtpd >>>>>"
