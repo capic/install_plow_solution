@@ -2,7 +2,7 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/config.cfg
 
-installation_personnalisee = -1
+installation_personnalisee=-1
 
 function init {
     echo "=== Init ==="
