@@ -11,8 +11,8 @@ function init {
     PS3="Voulez-vous utilisez l'installation personnalisée ?"
     select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
-            1 );;
-            2 );;
+            1 ) break;;
+            2 ) break;;
        
            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
             *) echo "Le choix n'est pas correct";continue;;
