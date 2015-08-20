@@ -48,7 +48,7 @@ function installPrerequis {
     serveur=1
 
     echo "--- Installation d'un serveur LAMP --- "
-    if $installation_personnalisee == 2 then
+    if [$installation_personnalisee = 2] then
         options=("Apache" "Lighttpd")
         
         PS3="Choix du serveur"
@@ -63,7 +63,7 @@ function installPrerequis {
         serveur=$REPLY
     fi
     
-    if serveur == 1 then
+    if [serveur = 1] then
         echo "*** Teste si apache2 est installé ****"
         if ! which apache2 >/dev/null; then
             echo "<<<<< Installation d'apache 2 >>>>>"
@@ -71,7 +71,7 @@ function installPrerequis {
         else
             echo "Apache2 déjà installé"
         fi
-    elif serveur == 2 then
+    elif [serveur = 2] then
         echo "*** Teste si lighttpd est installé ****"
         if ! which lighttpd >/dev/null; then
             echo "<<<<< Installation de lighhtpd >>>>>"
