@@ -6,7 +6,7 @@ installation_personnalisee=-1
 
 function init {
     echo "=== Init ==="
-    options=("Non" "Oui")
+    options=("Non [Apache2]" "Oui")
     
     PS3="Voulez-vous utilisez l'installation personnalisée ?"
     select opt in "${options[@]}" "Quit"; do
@@ -63,7 +63,7 @@ function installPrerequis {
         serveur=$REPLY
     fi
     
-    if [[ serveur = 1 ]]; then
+    if [[ $serveur = 1 ]]; then
         echo "*** Teste si apache2 est installé ****"
         if ! which apache2 >/dev/null; then
             echo "<<<<< Installation d'apache 2 >>>>>"
@@ -71,7 +71,7 @@ function installPrerequis {
         else
             echo "Apache2 déjà installé"
         fi
-    elif [[ serveur = 2 ]]; then
+    elif [[ $serveur = 2 ]]; then
         echo "*** Teste si lighttpd est installé ****"
         if ! which lighttpd >/dev/null; then
             echo "<<<<< Installation de lighhtpd >>>>>"
@@ -151,11 +151,6 @@ function nettoyage {
 
 function creerTaches {
     echo "=== Création des taches cron ==="
-    #crontab -l > mycron
-    #echo "*/15 * * * * sh $repertoire_web/main/start_download.sh" >> mycrhon
-    #echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive" >> mychron
-    #crontab mycron
-    #rm mycron
     cat <(crontab -l) <(echo "*/15 * * * * sh $repertoire_web/main/start_download.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
     echo "=== Fin de création des taches cron ==="
 }
