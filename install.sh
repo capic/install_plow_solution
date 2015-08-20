@@ -101,7 +101,10 @@ function installPrerequis {
         echo "Php déjà installé"
     fi
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get install git python2.7 python3 screen
+    sudo apt-get install git python2.7 python3 python-dev screen
+    wget https://bootstrap.pypa.io/get-pip.py
+    python get-pip.py
+    pip install psutil
     echo "=== Fin d'installation des prérequis === "
 }
 
