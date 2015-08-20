@@ -11,14 +11,14 @@ function init {
     PS3="Voulez-vous utilisez l'installation personnalisée ?"
     select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
-            1 ) echo $opt $REPLY;;
-            2 ) echo $opt $REPLY;;
+            1 );;
+            2 );;
        
-           $(( ${#options[@]}+1 )) ) installation_personnalisee=$REPLY; break;;
+           $(( ${#options[@]}+1 )) ) echo "Goodbye!"; break;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
     done
-    echo "Installation personnalisée ? => $installation_personnalisee"
+    echo "Installation personnalisée ? => $REPLY"
 }
 
 # fonction d'installaion de plowshare et de ses prerequis
