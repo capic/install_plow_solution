@@ -128,6 +128,9 @@ function creerTaches {
     cat <(crontab -l) <(echo "*/15 * * * * sh $repertoire_web/main/start_download.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
     echo "=== Fin de création des taches cron ==="
 }
+
+init
+
 # on installe les prerequis
 # =========================
 installPrerequis
