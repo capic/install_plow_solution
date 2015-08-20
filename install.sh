@@ -17,7 +17,7 @@ function init {
            $(( ${#options[@]}+1 )) ) installation_personnalisee=$REPLY"; break;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
-    done;
+    done
     echo "Installation personnalisée ? => $installation_personnalisee"
 }
 
