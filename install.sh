@@ -74,7 +74,7 @@ function installPlowSolution {
     git clone $git_plow_back $repertoire_git_plow_back
     echo "Adresse du dépot git de plow_front : $git_plow_front => $repertoire_git_plow_front"
     echo "Téléchargement du frontend"
-    git clone $git_plow_front repertoire_git_plow_front
+    git clone $git_plow_front $repertoire_git_plow_front
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
@@ -87,13 +87,13 @@ function installPlowSolution {
 
 function nettoyage {
     echo "=== Nettoyage des dossiers ==="
-    mv $repertoire_git_plow_back/* $repertoire_web
+    cp -r $repertoire_git_plow_back/* $repertoire_web
     rm -r $repertoire_git_plow_back
-    mv $repertoire_git_plow_front/* $repertoire_web
+    cp -r $repertoire_git_plow_front/* $repertoire_web
     rm -r $repertoire_git_plow_front
-    mv $repertoire_git_plow_python/* $repertoire_web
+    cp -r $repertoire_git_plow_python/* $repertoire_web
     rm -r $repertoire_git_plow_python
-    mv $repertoire_git_plow_notifications/* $repertoire_web
+    cp -r $repertoire_git_plow_notifications/* $repertoire_web
     rm -r $repertoire_git_plow_notifications
     echo "=== Fin de nettoyage des dossiers ==="
 }
