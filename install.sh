@@ -100,11 +100,12 @@ function nettoyage {
 
 function creerTaches {
     echo "=== Création des taches cron ==="
-    crontab -l > mycron
-    echo "*/15 * * * * sh $repertoire_web/main/start_download.sh" >> mycrhon
-    echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive" >> mychron
-    crontab mycron
-    rm mycron
+    #crontab -l > mycron
+    #echo "*/15 * * * * sh $repertoire_web/main/start_download.sh" >> mycrhon
+    #echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive" >> mychron
+    #crontab mycron
+    #rm mycron
+    crontab -l | { cat; echo "*/15 * * * * sh $repertoire_web/main/start_download.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";} | crontab -
     echo "=== Fin de création des taches cron ==="
 }
 # on installe les prerequis
