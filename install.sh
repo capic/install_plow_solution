@@ -248,15 +248,14 @@ function installPlowSolution {
 
     mkdir $repertoire_web_log
 
+    installBower
+
     preparationSite
 
     nettoyage
 
     echo "=== Fin de la création de la solution plow ==="
 }
-
-
-
 
 function creerTaches {
     echo "=== Création des taches cron ==="
