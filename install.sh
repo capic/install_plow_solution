@@ -298,7 +298,6 @@ elif [[ ${type_installation} = 3 ]]; then
     installServeur
 elif [[ ${type_installation} = 4 ]]; then
     installPlowSolution
-    nettoyage
 elif [[ ${type_installation} = 5 ]]; then
     installTotale 0 # sans serveur
 fi;
