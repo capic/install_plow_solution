@@ -27,7 +27,7 @@ function installPlowshare {
     echo "=== Installation des prérequis plowshare === "
     echo "*** Teste si plowdown est installé ****"
     if ! which plowdown >/dev/null; then
-        sudo apt-get install coreutils sed util-linux grep curl recode rhino
+        sudo apt-get -y install coreutils sed util-linux grep curl recode rhino
         echo "=== Installation de plowshare === "
         echo "Adresse du dépot git de plowdown : $git_plowhare => $repertoire_git_plowhare"
         git clone $git_plowhare $repertoire_git_plowhare
@@ -68,7 +68,7 @@ function installPrerequis {
         echo "*** Teste si apache2 est installé ****"
         if ! which apache2 >/dev/null; then
             echo "<<<<< Installation d'apache 2 >>>>>"
-            sudo apt-get install apache2 libapache2-mod-auth-mysql
+            sudo apt-get -y install apache2 libapache2-mod-auth-mysql
         else
             echo "Apache2 déjà installé"
         fi
@@ -76,7 +76,7 @@ function installPrerequis {
         echo "*** Teste si lighttpd est installé ****"
         if ! which lighttpd >/dev/null; then
             echo "<<<<< Installation de lighhtpd >>>>>"
-            sudo apt-get install lighttpd
+            sudo apt-get -y install lighttpd
         else
             echo "Lighttpd déjà installé"
         fi
@@ -89,7 +89,7 @@ function installPrerequis {
     echo "*** Teste si mysql est installé ****"
     if ! which mysqld >/dev/null; then
         echo "<<<<< Installation de mysql >>>>>"
-        sudo apt-get install mysql-server php5-mysql
+        sudo apt-get -y install mysql-server php5-mysql
         echo "<<<<< Activation de mysql >>>>>"
         sudo mysql_install_db
         sudo /usr/bin/mysql_secure_installation
@@ -99,12 +99,12 @@ function installPrerequis {
     echo "<<<<< Installation de PHP >>>>>"
     echo "*** Teste si php est installé ****"
     if ! which php >/dev/null; then
-        sudo apt-get install php5 libapache2-mod-php5 php5-mcrypt
+        sudo apt-get -y install php5 libapache2-mod-php5 php5-mcrypt
     else
         echo "Php déjà installé"
     fi
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get install git python2.7 python3 python-dev screen
+    sudo apt-get -y install git python2.7 python3 python-dev screen
     wget https://bootstrap.pypa.io/get-pip.py
     python get-pip.py
     pip install psutil
