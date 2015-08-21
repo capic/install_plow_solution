@@ -168,7 +168,7 @@ function configLighttpd {
 
 function createBaseDonnees {
     echo "Test si la base de données existe"
-    RESULT=`mysqlshow --uroot -p plowshare| grep -v Wildcard | grep -o plowshare`
+    RESULT=`mysqlshow -uroot -p plowshare| grep -v Wildcard | grep -o plowshare`
     if [ "$RESULT" != "plowshare" ]; then
         echo "=== Création de la base de données ==="
         mysql -uroot -p -e "create database plowshare"
