@@ -248,6 +248,7 @@ function installPlowSolution {
 
     mkdir $repertoire_web_log
 
+    installNodeJS
     installBower
 
     preparationSite
@@ -273,10 +274,6 @@ function installTotale() {
     installPHP
 
     installPHPMYADMIN
-
-    installNodeJS
-
-    installBower
 
     installPlowshare
 
