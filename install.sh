@@ -2,12 +2,12 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/config.cfg
 
-installation_personnalisee=-1
+type_installation=-1
 serveur=1 # apache par defaut
 
 function init {
     echo "=== Init ==="
-    options=("Installation automatique" "Installation personnalisée" "Installation uniquement de la solution plow")
+    options=("Installation totale automatique" "Installation totale interactive" "Installation uniquement d'un serveur" "Installation uniquement de la solution plow" "Installation totale sans serveur")
     
     PS3="Voulez-vous utilisez l'installation personnalisée ?"
     select opt in "${options[@]}" "Quit"; do
@@ -15,13 +15,15 @@ function init {
             1 ) break;;
             2 ) break;;
             3 ) break;;
+            4 ) break;;
+            5 ) break;;
        
            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
     done
-    installation_personnalisee=$REPLY
-    echo "Installation personnalisée ? => $installation_personnalisee"
+    type_installation=$REPLY
+    echo "Installation personnalisée ? => $type_installation"
 }
 
 # fonction d'installaion de plowshare et de ses prerequis
@@ -40,113 +42,24 @@ function installPlowshare {
     echo "=== Fin d'installation de plowshare === "
 }
 
-# fonction d'installation des prerequis
-function installPrerequis {
-    echo "=== Installation des prérequis === "
-    echo "--- Mise à jour des dépots --- "
-    sudo apt-get update
-    sudo apt-get -y upgrade
-
-    echo "--- Installation d'un serveur LAMP --- "
-    if [[ $installation_personnalisee = 2 ]]; then
-        options=("Apache" "Lighttpd" "Serveur déjà installé")
-        
-        PS3="Choix du serveur "
-        select opt in "${options[@]}"; do
-            case "$REPLY" in
-                1 ) break;;
-                2 ) break;;
-                3 ) break;;
-          
-                *) echo "Le choix n'est pas correct";continue;;
-            esac
-        done
-        serveur=$REPLY
-    fi
-    
-    if [[ $serveur = 1 ]]; then
-        echo "*** Teste si apache2 est installé ****"
-        if ! which apache2 >/dev/null; then
-            echo "<<<<< Installation d'apache 2 >>>>>"
-            sudo apt-get -y install apache2
-        else
-            echo "Apache2 déjà installé"
-        fi
-    elif [[ $serveur = 2 ]]; then
-        echo "*** Teste si lighttpd est installé ****"
-        if ! which lighttpd >/dev/null; then
-            echo "<<<<< Installation de lighhtpd >>>>>"
-            sudo apt-get -y install lighttpd
-        else
-            echo "Lighttpd déjà installé"
-        fi
-    elif [[ $serveur = 3 ]]; then
-        echo "<<<<< Aucune installation de serveur ne sera faite >>>>>"
+function installApache {
+    echo "*** Teste si apache2 est installé ****"
+    if ! which apache2 >/dev/null; then
+        echo "<<<<< Installation d'apache 2 >>>>>"
+        sudo apt-get -y install apache2
     else
-        echo "Erreur de selection de serveur"
-        exit 1
+        echo "Apache2 déjà installé"
     fi
-    echo "*** Teste si mysql est installé ****"
-    if ! which mysqld >/dev/null; then
-        echo "<<<<< Installation de mysql >>>>>"
-        sudo apt-get -y install mysql-server php5-mysql
+}
 
-        if [[ $serveur = 1 ]]; then
-            sudo apt-get -y install libapache2-mod-auth-mysql
-        fi
-
-        echo "<<<<< Activation de mysql >>>>>"
-        sudo mysql_install_db
-        sudo /usr/bin/mysql_secure_installation
+function installLighttpd {
+    echo "*** Teste si lighttpd est installé ****"
+    if ! which lighttpd >/dev/null; then
+        echo "<<<<< Installation de lighhtpd >>>>>"
+        sudo apt-get -y install lighttpd
     else
-        echo "Mysql déjà installé"
+        echo "Lighttpd déjà installé"
     fi
-    echo "<<<<< Installation de PHP >>>>>"
-    echo "*** Teste si php est installé ****"
-    if ! which php >/dev/null; then
-        sudo apt-get -y install apt-cache search php5
-
-        sudo apt-get -y install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5 php5-mcrypt php5-xcache
-
-        if [[ $serveur = 1 ]]; then
-            sudo apt-get -y install libapache2-mod-php5
-        fi
-    else
-        echo "Php déjà installé"
-    fi
-    echo " <<<<<< Installation de PHPMYADMIN >>>>>>"
-    echo "*** Teste si phpmyadmin est installé ****"
-    if ! which phpmyadmin >/dev/null; then
-        sudo apt-get -y install phpmyadmin
-    fi
-
-    # configuration des serveurs après installation
-    if [[ $serveur = 2 ]]; then
-        configLighttpd
-    fi
-
-    echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
-    echo "<<<<< Installation de NodeJS >>>>>"
-    if ! which npm >/dev/null; then
-        wget http://nodejs.org/dist/node-latest.tar.gz
-        tar zxvf node-latest.tar.gz
-        cd node-v0.1*
-        ./configure
-        make
-        sudo make install
-    else
-        echo "NodeJS déjà installé"
-    fi
-    sudo npm cache clean
-    echo "<<<<< Installation de Bower >>>>>"
-    sudo npm install -g bower
-    wget https://bootstrap.pypa.io/get-pip.py
-    echo "<<<<< Installation des librairies python >>>>>"
-    python get-pip.py
-    pip install psutil
-    sudo pip install --allow-external mysql-connector-python mysql-connector-python
-    echo "=== Fin d'installation des prérequis === "
 }
 
 function configLighttpd {
@@ -166,7 +79,123 @@ function configLighttpd {
     echo "*** Fin de configuration de lighttpd ***"
 }
 
-function createBaseDonnees {
+function installServeur {
+    echo "--- Installation d'un serveur LAMP --- "
+    if [[ ${type_installation} = 2 ]]; then
+        options=("Apache" "Lighttpd" "Serveur déjà installé")
+
+        PS3="Choix du serveur "
+        select opt in "${options[@]}"; do
+            case "$REPLY" in
+                1 ) break;;
+                2 ) break;;
+                3 ) break;;
+
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+        done
+        serveur=$REPLY
+    fi
+
+    if [[ ${serveur} = 1 ]]; then
+        installApache
+    elif [[ ${serveur} = 2 ]]; then
+        installLighttpd
+    elif [[ ${serveur} = 3 ]]; then
+        echo "<<<<< Aucune installation de serveur ne sera faite >>>>>"
+    else
+        echo "Erreur de selection de serveur"
+        exit 1
+    fi
+}
+
+function installMysql {
+     echo "*** Teste si mysql est installé ****"
+    if ! which mysqld >/dev/null; then
+        echo "<<<<< Installation de mysql >>>>>"
+        sudo apt-get -y install mysql-server php5-mysql
+
+        if [[ $serveur = 1 ]]; then
+            sudo apt-get -y install libapache2-mod-auth-mysql
+        fi
+
+        echo "<<<<< Activation de mysql >>>>>"
+        sudo mysql_install_db
+        sudo /usr/bin/mysql_secure_installation
+    else
+        echo "Mysql déjà installé"
+    fi
+}
+
+function installPHP {
+    echo "<<<<< Installation de PHP >>>>>"
+    echo "*** Teste si php est installé ****"
+    if ! which php >/dev/null; then
+        sudo apt-get -y install apt-cache search php5
+
+        sudo apt-get -y install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5 php5-mcrypt php5-xcache
+
+        if [[ $serveur = 1 ]]; then
+            sudo apt-get -y install libapache2-mod-php5
+        fi
+    else
+        echo "Php déjà installé"
+    fi
+}
+
+function installPHPMYADMIN {
+    echo " <<<<<< Installation de PHPMYADMIN >>>>>>"
+    echo "*** Teste si phpmyadmin est installé ****"
+    if ! which phpmyadmin >/dev/null; then
+        sudo apt-get -y install phpmyadmin
+    fi
+
+    # configuration des serveurs après installation
+    if [[ $serveur = 2 ]]; then
+        configLighttpd
+    fi
+
+}
+
+function installNodeJS {
+    echo "<<<<< Installation de NodeJS >>>>>"
+    if ! which npm >/dev/null; then
+        wget http://nodejs.org/dist/node-latest.tar.gz
+        tar zxvf node-latest.tar.gz
+        cd node-v0.1*
+        ./configure
+        make
+        sudo make install
+    else
+        echo "NodeJS déjà installé"
+    fi
+    sudo npm cache clean
+}
+
+function installBower {
+    echo "<<<<< Installation de Bower >>>>>"
+    sudo npm install -g bower
+    wget https://bootstrap.pypa.io/get-pip.py
+}
+
+# fonction d'installation des prerequis
+function installPrerequis {
+    echo "=== Installation des prérequis === "
+    echo "--- Mise à jour des dépots --- "
+    sudo apt-get update
+    sudo apt-get -y upgrade
+
+    echo "<<<<< Installation du reste des prérequis >>>>>"
+    sudo apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
+
+    echo "<<<<< Installation des librairies python >>>>>"
+    python get-pip.py
+    pip install psutil
+    sudo pip install --allow-external mysql-connector-python mysql-connector-python
+    echo "=== Fin d'installation des prérequis === "
+}
+
+function creerBaseDonnees {
     echo "Test si la base de données existe"
     RESULT=`mysqlshow -uroot -p plowshare| grep -v Wildcard | grep -o plowshare`
     if [ "$RESULT" != "plowshare" ]; then
@@ -225,28 +254,45 @@ function creerTaches {
     echo "=== Fin de création des taches cron ==="
 }
 
-init
-
-if [[ $installation_personnalisee != 3 ]]; then
-    # on installe les prerequis
-    # =========================
+function installTotale() {
     installPrerequis
 
-    # on install plowshare
+    if [[ $1 = 1 ]]; then
+        installServeur
+    fi
+
+    installMysql
+
+    installPHP
+
+    installPHPMYADMIN
+
+    installNodeJS
+
+    installBower
+
     installPlowshare
-fi
 
-# on install les scripts
-installPlowSolution
+    installPlowSolution
 
-# on cree la base si pas presente
-createBaseDonnees
+    creerBaseDonnees
 
-# on cree les taches cron
-creerTaches
+    creerTaches
 
-# preparation du site internet
-preparationSite
+    preparationSite
+}
 
-# nettoyage
+
+init
+
+if [[ ${type_installation} = 1 ]] || [[ ${type_installation} = 2 ]]; then
+    installTotale 1 # avec serveur
+elif [[ ${type_installation} = 3 ]]; then
+    installServeur
+elif [[ ${type_installation} = 4 ]]; then
+    installPlowSolution
+elif [[ ${type_installation} = 5 ]]; then
+    installTotale 0 # sans serveur
+fi;
+
 nettoyage
