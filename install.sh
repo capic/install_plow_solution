@@ -101,6 +101,7 @@ function installServeur {
         installApache
     elif [[ ${serveur} = 2 ]]; then
         installLighttpd
+        configLighttpd
     elif [[ ${serveur} = 3 ]]; then
         echo "<<<<< Aucune installation de serveur ne sera faite >>>>>"
     else
