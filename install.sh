@@ -176,7 +176,6 @@ function installNodeJS {
 function installBower {
     echo "<<<<< Installation de Bower >>>>>"
     sudo npm install -g bower
-    wget https://bootstrap.pypa.io/get-pip.py
 }
 
 # fonction d'installation des prerequis
@@ -190,6 +189,7 @@ function installPrerequis {
     sudo apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
 
     echo "<<<<< Installation des librairies python >>>>>"
+    wget https://bootstrap.pypa.io/get-pip.py
     python get-pip.py
     pip install psutil
     sudo pip install --allow-external mysql-connector-python mysql-connector-python
