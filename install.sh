@@ -68,7 +68,7 @@ function installPrerequis {
         echo "*** Teste si apache2 est installé ****"
         if ! which apache2 >/dev/null; then
             echo "<<<<< Installation d'apache 2 >>>>>"
-            sudo apt-get -y install apache2 libapache2-mod-auth-mysql
+            sudo apt-get -y install apache2
         else
             echo "Apache2 déjà installé"
         fi
@@ -90,6 +90,11 @@ function installPrerequis {
     if ! which mysqld >/dev/null; then
         echo "<<<<< Installation de mysql >>>>>"
         sudo apt-get -y install mysql-server php5-mysql
+
+        if [[ $serveur = 1 ]]; then
+            sudo apt-get -y install libapache2-mod-auth-mysql
+        fi
+
         echo "<<<<< Activation de mysql >>>>>"
         sudo mysql_install_db
         sudo /usr/bin/mysql_secure_installation
@@ -99,17 +104,50 @@ function installPrerequis {
     echo "<<<<< Installation de PHP >>>>>"
     echo "*** Teste si php est installé ****"
     if ! which php >/dev/null; then
-        sudo apt-get -y install php5 libapache2-mod-php5 php5-mcrypt
+        sudo apt-get -y install apt-cache search php5
+
+        sudo apt-get -y install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5 php5-mcrypt php5-xcache
+
+        if [[ $serveur = 1 ]]; then
+            sudo apt-get -y install libapache2-mod-php5
+        fi
     else
         echo "Php déjà installé"
     fi
+    echo " <<<<<< Installation de PHPMYADMIN >>>>>>"
+    echo "*** Teste si phpmyadmin est installé ****"
+    if ! which phpmyadmin >/dev/null; then
+        sudo apt-get -y install phpmyadmin
+    fi
+
+    # configuration des serveurs après installation
+    if [[ $serveur = 2 ]]; then
+        configLighttpd
+    fi
+
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get -y install git python2.7 python3 python-dev screen
+    sudo apt-get -y install git python2.7 python3 python-dev screen postfix
     wget https://bootstrap.pypa.io/get-pip.py
     python get-pip.py
     pip install psutil
     sudo pip install --allow-external mysql-connector-python mysql-connector-python
     echo "=== Fin d'installation des prérequis === "
+}
+
+function configLighttpd {
+    echo "*** Configuration de lighttpd ***"
+    sed "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1 /" < /etc/php5/cgi/php.ini
+    lighttpd-enable-mod fastcgi
+    lighttpd-enable-mod fastcgi-php
+    ls -l /etc/lighttpd/conf-enabled
+    /etc/init.d/lighttpd force-reload
+    /bin/echo '## directory listing configuration## we disable the directory listing by default##$HTTP["url"] =~ "^/" {  dir-listing.activate = "disable"}' | /usr/bin/tee /etc/lighttpd/conf-available/20-disable-listing.conf
+    /usr/sbin/lighty-enable-mod disable-listing
+    /etc/init.d/lighttpd force-reload
+    sed "s/#        \"mod_rewrite\",/\"mod_rewrite\" /" < /etc/lighttpd/lighttpd.conf
+    echo "server.error-handler-404 = \"/index.php?error=404\"" >> /etc/lighttpd/lighttpd.conf
+    /etc/init.d/lighttpd force-reload
+    echo "*** Fin de configuration de lighttpd ***"
 }
 
 function createBaseDonnees {
