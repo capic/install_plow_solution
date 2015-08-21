@@ -49,13 +49,14 @@ function installPrerequis {
 
     echo "--- Installation d'un serveur LAMP --- "
     if [[ $installation_personnalisee = 2 ]]; then
-        options=("Apache" "Lighttpd")
+        options=("Apache" "Lighttpd" "Serveur déjà installé")
         
-        PS3="Choix du serveur"
+        PS3="Choix du serveur "
         select opt in "${options[@]}"; do
             case "$REPLY" in
                 1 ) break;;
                 2 ) break;;
+                3 ) break;;
           
                 *) echo "Le choix n'est pas correct";continue;;
             esac
@@ -79,6 +80,8 @@ function installPrerequis {
         else
             echo "Lighttpd déjà installé"
         fi
+    elif [[ $serveur = 3 ]]; then
+        echo "<<<<< Aucune installation de serveur ne sera faite >>>>>"
     else
         echo "Erreur de selection de serveur"
         exit 1
