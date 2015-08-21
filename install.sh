@@ -7,13 +7,14 @@ serveur=1 # apache par defaut
 
 function init {
     echo "=== Init ==="
-    options=("Non [Apache2]" "Oui")
+    options=("Installation automatique" "Installation personnalisée" "Installation uniquement de la solution plow")
     
     PS3="Voulez-vous utilisez l'installation personnalisée ?"
     select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
             1 ) break;;
             2 ) break;;
+            3 ) break;;
        
            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
             *) echo "Le choix n'est pas correct";continue;;
@@ -226,12 +227,14 @@ function creerTaches {
 
 init
 
-# on installe les prerequis
-# =========================
-installPrerequis
+if [[ $installation_personnalisee != 3 ]]; then
+    # on installe les prerequis
+    # =========================
+    installPrerequis
 
-# on install plowshare
-installPlowshare
+    # on install plowshare
+    installPlowshare
+fi
 
 # on install les scripts
 installPlowSolution
