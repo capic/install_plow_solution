@@ -126,8 +126,19 @@ function installPrerequis {
     fi
 
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get -y install git python2.7 python3 python-dev screen postfix
+    sudo apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
+    echo "<<<<< Installation de NodeJS >>>>>"
+    wget http://nodejs.org/dist/node-latest.tar.gz
+    tar zxvf node-latest.tar.gz
+    cd node-v0.1*
+    ./configure
+    make
+    sudo make install
+    sudo npm cache clean
+    echo "<<<<< Installation de Bower >>>>>"
+    sudo npm install -g bower
     wget https://bootstrap.pypa.io/get-pip.py
+    echo "<<<<< Installation des librairies python >>>>>"
     python get-pip.py
     pip install psutil
     sudo pip install --allow-external mysql-connector-python mysql-connector-python
@@ -184,16 +195,22 @@ function installPlowSolution {
     echo "=== Fin de la création de la solution plow ==="
 }
 
-function nettoyage {
-    echo "=== Nettoyage des dossiers ==="
+function preparationSite {
+    echo "=== Préparation du site internet ==="
     cp -r $repertoire_git_plow_back/* $repertoire_web
-    rm -r $repertoire_git_plow_back
+    cd $repertoire_git_plow_front
+    bower install
     cp -r $repertoire_git_plow_front/app/* $repertoire_web
     cp -r $repertoire_git_plow_front/bower_components $repertoire_web
-    rm -r $repertoire_git_plow_front
     cp -r $repertoire_git_plow_python/* $repertoire_web
-    rm -r $repertoire_git_plow_python
     cp -r $repertoire_git_plow_notifications/* $repertoire_web
+    echo "=== fin de préparation du site internet ==="
+}
+function nettoyage {
+    echo "=== Nettoyage des dossiers ==="
+    rm -r $repertoire_git_plow_back
+    rm -r $repertoire_git_plow_front
+    rm -r $repertoire_git_plow_python
     rm -r $repertoire_git_plow_notifications
     echo "=== Fin de nettoyage des dossiers ==="
 }
@@ -221,6 +238,9 @@ createBaseDonnees
 
 # on cree les taches cron
 creerTaches
+
+# preparation du site internet
+preparationSite
 
 # nettoyage
 nettoyage
