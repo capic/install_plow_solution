@@ -81,7 +81,7 @@ function configLighttpd {
 
 function installServeur {
     echo "--- Installation d'un serveur LAMP --- "
-    if [[ ${type_installation} = 2 ]]; then
+    if [[ ${type_installation} = 2 ]] || [[ ${type_installation} = 3 ]]; then
         options=("Apache" "Lighttpd" "Serveur déjà installé")
 
         PS3="Choix du serveur "
