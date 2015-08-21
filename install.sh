@@ -43,7 +43,7 @@ function installPrerequis {
     echo "=== Installation des prérequis === "
     echo "--- Mise à jour des dépots --- "
     sudo apt-get update
-    sudo apt-get upgrade
+    sudo apt-get -y upgrade
     
     serveur=1
 
@@ -136,6 +136,7 @@ function installPrerequis {
 
 function configLighttpd {
     echo "*** Configuration de lighttpd ***"
+    sudo apt-get -y install php5-cgi
     sed "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1 /" < /etc/php5/cgi/php.ini
     lighttpd-enable-mod fastcgi
     lighttpd-enable-mod fastcgi-php
