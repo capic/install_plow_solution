@@ -293,6 +293,7 @@ function installTotale() {
 
 init
 
+installPrerequis
 if [[ ${type_installation} = 1 ]] || [[ ${type_installation} = 2 ]]; then
     installTotale 1 # avec serveur
 elif [[ ${type_installation} = 3 ]]; then
