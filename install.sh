@@ -265,8 +265,6 @@ function creerTaches {
 }
 
 function installTotale() {
-    installPrerequis
-
     if [[ $1 = 1 ]]; then
         installServeur
     fi
