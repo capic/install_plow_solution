@@ -208,6 +208,28 @@ function creerBaseDonnees {
     echo "=== Fin de la création de la base de données ==="
 }
 
+function preparationSite {
+    echo "=== Préparation du site internet ==="
+    cp -r $repertoire_git_plow_back/* $repertoire_web
+    cd $repertoire_git_plow_front
+    bower --allow-root install
+    cp -r $repertoire_git_plow_front/app/* $repertoire_web
+    cp -r $repertoire_git_plow_front/bower_components $repertoire_web
+    cp -r $repertoire_git_plow_python/* $repertoire_web
+    cp -r $repertoire_git_plow_notifications/* $repertoire_web
+
+    echo "=== fin de préparation du site internet ==="
+}
+
+function nettoyage {
+    echo "=== Nettoyage des dossiers ==="
+    rm -r $repertoire_git_plow_back
+    rm -r $repertoire_git_plow_front
+    rm -r $repertoire_git_plow_python
+    rm -r $repertoire_git_plow_notifications
+    echo "=== Fin de nettoyage des dossiers ==="
+}
+
 function installPlowSolution {
     echo "=== Création de la solution plow ==="
     echo "Adresse du dépot git de plowshare_back : $git_plow_back => $repertoire_git_plow_back"
@@ -225,28 +247,15 @@ function installPlowSolution {
 
     mkdir $repertoire_web_log
 
+    preparationSite
+
+    nettoyage
+
     echo "=== Fin de la création de la solution plow ==="
 }
 
-function preparationSite {
-    echo "=== Préparation du site internet ==="
-    cp -r $repertoire_git_plow_back/* $repertoire_web
-    cd $repertoire_git_plow_front
-    bower --allow-root install
-    cp -r $repertoire_git_plow_front/app/* $repertoire_web
-    cp -r $repertoire_git_plow_front/bower_components $repertoire_web
-    cp -r $repertoire_git_plow_python/* $repertoire_web
-    cp -r $repertoire_git_plow_notifications/* $repertoire_web
-    echo "=== fin de préparation du site internet ==="
-}
-function nettoyage {
-    echo "=== Nettoyage des dossiers ==="
-    rm -r $repertoire_git_plow_back
-    rm -r $repertoire_git_plow_front
-    rm -r $repertoire_git_plow_python
-    rm -r $repertoire_git_plow_notifications
-    echo "=== Fin de nettoyage des dossiers ==="
-}
+
+
 
 function creerTaches {
     echo "=== Création des taches cron ==="
@@ -278,10 +287,6 @@ function installTotale() {
     creerBaseDonnees
 
     creerTaches
-
-    preparationSite
-
-    nettoyage
 }
 
 
