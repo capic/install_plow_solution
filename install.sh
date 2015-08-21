@@ -3,6 +3,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/config.cfg
 
 installation_personnalisee=-1
+serveur=1 # apache par defaut
 
 function init {
     echo "=== Init ==="
@@ -44,8 +45,6 @@ function installPrerequis {
     echo "--- Mise à jour des dépots --- "
     sudo apt-get update
     sudo apt-get -y upgrade
-    
-    serveur=1
 
     echo "--- Installation d'un serveur LAMP --- "
     if [[ $installation_personnalisee = 2 ]]; then
@@ -128,12 +127,16 @@ function installPrerequis {
     echo "<<<<< Installation du reste des prérequis >>>>>"
     sudo apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
     echo "<<<<< Installation de NodeJS >>>>>"
-    wget http://nodejs.org/dist/node-latest.tar.gz
-    tar zxvf node-latest.tar.gz
-    cd node-v0.1*
-    ./configure
-    make
-    sudo make install
+    if ! which npm >/dev/null; then
+        wget http://nodejs.org/dist/node-latest.tar.gz
+        tar zxvf node-latest.tar.gz
+        cd node-v0.1*
+        ./configure
+        make
+        sudo make install
+    else
+        echo "NodeJS déjà installé"
+    fi
     sudo npm cache clean
     echo "<<<<< Installation de Bower >>>>>"
     sudo npm install -g bower
@@ -199,7 +202,7 @@ function preparationSite {
     echo "=== Préparation du site internet ==="
     cp -r $repertoire_git_plow_back/* $repertoire_web
     cd $repertoire_git_plow_front
-    sudo bower install
+    bower --allow-root install
     cp -r $repertoire_git_plow_front/app/* $repertoire_web
     cp -r $repertoire_git_plow_front/bower_components $repertoire_web
     cp -r $repertoire_git_plow_python/* $repertoire_web
