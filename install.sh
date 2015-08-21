@@ -199,7 +199,7 @@ function preparationSite {
     echo "=== Préparation du site internet ==="
     cp -r $repertoire_git_plow_back/* $repertoire_web
     cd $repertoire_git_plow_front
-    bower install
+    sudo bower install
     cp -r $repertoire_git_plow_front/app/* $repertoire_web
     cp -r $repertoire_git_plow_front/bower_components $repertoire_web
     cp -r $repertoire_git_plow_python/* $repertoire_web
