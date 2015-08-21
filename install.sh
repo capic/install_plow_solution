@@ -145,7 +145,7 @@ function configLighttpd {
     /bin/echo '## directory listing configuration## we disable the directory listing by default##$HTTP["url"] =~ "^/" {  dir-listing.activate = "disable"}' | /usr/bin/tee /etc/lighttpd/conf-available/20-disable-listing.conf
     /usr/sbin/lighty-enable-mod disable-listing
     /etc/init.d/lighttpd force-reload
-    sed -i -e  "s/#       \"mod_rewrite\",/\"        mod_rewrite\" /" /etc/lighttpd/lighttpd.conf
+    sed -i -e  "s/#       \"mod_rewrite\",/        \"mod_rewrite\" /" /etc/lighttpd/lighttpd.conf
     echo "server.error-handler-404 = \"/index.php?error=404\"" >> /etc/lighttpd/lighttpd.conf
     /etc/init.d/lighttpd force-reload
     echo "*** Fin de configuration de lighttpd ***"
@@ -188,7 +188,8 @@ function nettoyage {
     echo "=== Nettoyage des dossiers ==="
     cp -r $repertoire_git_plow_back/* $repertoire_web
     rm -r $repertoire_git_plow_back
-    cp -r $repertoire_git_plow_front/* $repertoire_web
+    cp -r $repertoire_git_plow_front/app/* $repertoire_web
+    cp -r $repertoire_git_plow_front/bower_components $repertoire_web
     rm -r $repertoire_git_plow_front
     cp -r $repertoire_git_plow_python/* $repertoire_web
     rm -r $repertoire_git_plow_python
