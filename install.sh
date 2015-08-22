@@ -284,6 +284,10 @@ function installTotale() {
     creerTaches
 }
 
+if [[ $EUID -ne 0 ]]; then
+   echo "Ce script doit être lancé avec les droits super utilisateur" 1>&2
+   exit 1
+fi
 
 init
 
