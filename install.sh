@@ -31,12 +31,12 @@ function installPlowshare {
     echo "=== Installation des prérequis plowshare === "
     echo "*** Teste si plowdown est installé ****"
     if ! which plowdown >/dev/null; then
-        sudo apt-get -y install coreutils sed util-linux grep curl recode rhino
+        apt-get -y install coreutils sed util-linux grep curl recode rhino
         echo "=== Installation de plowshare === "
         echo "Adresse du dépot git de plowdown : $git_plowhare => $repertoire_git_plowhare"
         git clone $git_plowhare $repertoire_git_plowhare
         cd $repertoire_git_plowhare
-        sudo make install
+        make install
         plowmod --install
     fi
     echo "=== Fin d'installation de plowshare === "
@@ -46,7 +46,7 @@ function installApache {
     echo "*** Teste si apache2 est installé ****"
     if ! which apache2 >/dev/null; then
         echo "<<<<< Installation d'apache 2 >>>>>"
-        sudo apt-get -y install apache2
+        apt-get -y install apache2
     else
         echo "Apache2 déjà installé"
     fi
@@ -56,7 +56,7 @@ function installLighttpd {
     echo "*** Teste si lighttpd est installé ****"
     if ! which lighttpd >/dev/null; then
         echo "<<<<< Installation de lighhtpd >>>>>"
-        sudo apt-get -y install lighttpd
+        apt-get -y install lighttpd
     else
         echo "Lighttpd déjà installé"
     fi
@@ -64,7 +64,7 @@ function installLighttpd {
 
 function configLighttpd {
     echo "*** Configuration de lighttpd ***"
-    sudo apt-get -y install php5-cgi
+    apt-get -y install php5-cgi
     sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=1 /"  /etc/php5/cgi/php.ini
     lighttpd-enable-mod fastcgi
     lighttpd-enable-mod fastcgi-php
@@ -114,15 +114,15 @@ function installMysql {
      echo "*** Teste si mysql est installé ****"
     if ! which mysqld >/dev/null; then
         echo "<<<<< Installation de mysql >>>>>"
-        sudo apt-get -y install mysql-server php5-mysql
+        apt-get -y install mysql-server php5-mysql
 
         if [[ $serveur = 1 ]]; then
-            sudo apt-get -y install libapache2-mod-auth-mysql
+            apt-get -y install libapache2-mod-auth-mysql
         fi
 
         echo "<<<<< Activation de mysql >>>>>"
-        sudo mysql_install_db
-        sudo /usr/bin/mysql_secure_installation
+        mysql_install_db
+        /usr/bin/mysql_secure_installation
     else
         echo "Mysql déjà installé"
     fi
@@ -132,12 +132,12 @@ function installPHP {
     echo "<<<<< Installation de PHP >>>>>"
     echo "*** Teste si php est installé ****"
     if ! which php >/dev/null; then
-        sudo apt-get -y install apt-cache search php5
+        apt-get -y install apt-cache search php5
 
-        sudo apt-get -y install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5 php5-mcrypt php5-xcache
+        apt-get -y install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5 php5-mcrypt php5-xcache
 
         if [[ $serveur = 1 ]]; then
-            sudo apt-get -y install libapache2-mod-php5
+            apt-get -y install libapache2-mod-php5
         fi
     else
         echo "Php déjà installé"
@@ -148,7 +148,7 @@ function installPHPMYADMIN {
     echo " <<<<<< Installation de PHPMYADMIN >>>>>>"
     echo "*** Teste si phpmyadmin est installé ****"
     if ! which phpmyadmin >/dev/null; then
-        sudo apt-get -y install phpmyadmin
+        apt-get -y install phpmyadmin
     fi
 
     # configuration des serveurs après installation
@@ -166,33 +166,33 @@ function installNodeJS {
         cd node-v0.1*
         ./configure
         make
-        sudo make install
+        make install
     else
         echo "NodeJS déjà installé"
     fi
-    sudo npm cache clean
+    npm cache clean
 }
 
 function installBower {
     echo "<<<<< Installation de Bower >>>>>"
-    sudo npm install -g bower
+    npm install -g bower
 }
 
 # fonction d'installation des prerequis
 function installPrerequis {
     echo "=== Installation des prérequis === "
     echo "--- Mise à jour des dépots --- "
-    sudo apt-get update
-    sudo apt-get -y upgrade
+    apt-get update
+    apt-get -y upgrade
 
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    sudo apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
+    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
 
     echo "<<<<< Installation des librairies python >>>>>"
     wget https://bootstrap.pypa.io/get-pip.py
     python get-pip.py
     pip install psutil
-    sudo pip install --allow-external mysql-connector-python mysql-connector-python
+    pip install --allow-external mysql-connector-python mysql-connector-python
     echo "=== Fin d'installation des prérequis === "
 }
 
