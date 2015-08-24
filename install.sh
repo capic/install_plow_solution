@@ -186,7 +186,7 @@ function installPrerequis {
     apt-get -y upgrade
 
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev
+    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc
 
     echo "<<<<< Installation des librairies python >>>>>"
     wget https://bootstrap.pypa.io/get-pip.py
