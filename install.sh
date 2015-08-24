@@ -253,6 +253,8 @@ function installPlowSolution {
 
     preparationSite
 
+    creerBaseDonnees
+
     nettoyage
 
     echo "=== Fin de la création de la solution plow ==="
@@ -278,8 +280,6 @@ function installTotale() {
     installPlowshare
 
     installPlowSolution
-
-    creerBaseDonnees
 
     creerTaches
 }
