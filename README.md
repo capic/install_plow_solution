@@ -10,3 +10,4 @@ gerer les erreurs d'installation
 donner les droits à l'utilisateur courant sur tous les dossiers créés
 donner les droits executables au download_script.sh
 les taches planifier ne doivent pas le lancer en sh mais en executable
+definir l'adresse de la base de données dans les config

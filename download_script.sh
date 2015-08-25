@@ -3,7 +3,7 @@ PATH=/opt/someApp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/b
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/config.cfg
 
-entree=.
+entree=$repertoire_telechargement_texte
 destination=$repertoire_telechargement
 destination_temp=$repertoire_telechargement_temporaire
 nbTelechargements=-1
