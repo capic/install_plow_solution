@@ -167,8 +167,10 @@ function installNodeJS {
 #        ./configure
 #        make
 #        make install
-        curl -sL https://deb.nodesource.com/setup_0.12 | bash -
-        apt-get install -y nodejs
+        echo "deb http://node-arm.herokuapp.com/ /" | sudo tee --append /etc/apt/sources.list
+        sudo apt-get update
+        sudo apt-get install node
+        node -v
     else
         echo "NodeJS déjà installé"
     fi
