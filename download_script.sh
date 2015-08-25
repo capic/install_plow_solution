@@ -1,6 +1,7 @@
 #!/bin/bash
 PATH=/opt/someApp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-source ./config.cfg
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source $DIR/config.cfg
 
 entree=.
 destination=$repertoire_telechargement
@@ -52,8 +53,9 @@ git pull
 make install
 cd $repertoire_module_plowshare
 git stash
-plowmod --update
-cp -r /root/.config /
+git pull
+# plowmod --update
+# cp -r /root/.config /
 
 echo "wipe screen"
 screen -wipe
