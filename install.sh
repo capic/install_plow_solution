@@ -161,12 +161,14 @@ function installPHPMYADMIN {
 function installNodeJS {
     echo "<<<<< Installation de NodeJS >>>>>"
     if ! which npm >/dev/null; then
-        wget http://nodejs.org/dist/node-latest.tar.gz
-        tar zxvf node-latest.tar.gz
-        cd node-v0.1*
-        ./configure
-        make
-        make install
+#        wget http://nodejs.org/dist/node-latest.tar.gz
+#        tar zxvf node-latest.tar.gz
+#        cd node-v0.1*
+#        ./configure
+#        make
+#        make install
+        curl -sL https://deb.nodesource.com/setup_0.12 | bash -
+        apt-get install -y nodejs
     else
         echo "NodeJS déjà installé"
     fi
