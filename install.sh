@@ -35,6 +35,7 @@ function installPlowshare {
         echo "=== Installation de plowshare === "
         echo "Adresse du dépot git de plowdown : $git_plowhare => $repertoire_git_plowhare"
         git clone $git_plowhare $repertoire_git_plowhare
+        chown $(whoami) $repertoire_git_plowhare
         cd $repertoire_git_plowhare
         make install
         plowmod --install
@@ -190,7 +191,7 @@ function installPrerequis {
     apt-get -y upgrade
 
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc
+    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils
 
     echo "<<<<< Installation des librairies python >>>>>"
     wget https://bootstrap.pypa.io/get-pip.py
@@ -222,6 +223,8 @@ function preparationSite {
     cp -r $repertoire_git_plow_front/bower_components $repertoire_web
     cp -r $repertoire_git_plow_python/* $repertoire_web
     cp -r $repertoire_git_plow_notifications/* $repertoire_web
+
+    chown $(whoami) $repertoire_web
 
     echo "=== fin de préparation du site internet ==="
 }
@@ -266,7 +269,7 @@ function installPlowSolution {
 
 function creerTaches {
     echo "=== Création des taches cron ==="
-    cat <(crontab -l) <(echo "*/15 * * * * sh $repertoire_web/main/start_download.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
+    cat <(crontab -l) <(echo "*/15 * * * * $repertoire_web/main/start_download.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
     echo "=== Fin de création des taches cron ==="
 }
 
