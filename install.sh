@@ -262,6 +262,7 @@ function installPlowPython {
 
     chmod 777 $repertoire_web/main/download_script.sh
     creerTaches
+    creerBaseDonnees
 }
 
 function installPlowNotifications {
