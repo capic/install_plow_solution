@@ -208,7 +208,7 @@ function creerBaseDonnees {
     if [ "$RESULT" != "plowshare" ]; then
         echo "=== Création de la base de données ==="
         mysql -uroot -p -e "create database plowshare"
-        mysql -uroot -p plowshare < $repertoire_git_plow_back/plowshare.sql
+        mysql -uroot -p plowshare < $DIR/plowshare.sql
     else
         echo "La base de données existe"
     fi
