@@ -214,55 +214,88 @@ function creerBaseDonnees {
     echo "=== Fin de la création de la base de données ==="
 }
 
-function preparationSite {
-    echo "=== Préparation du site internet ==="
+function installPlowBack {
+    echo "Adresse du dépot git de plowshare_back : $git_plow_back => $repertoire_git_plow_back"
+    echo "Téléchargement du backend"
+    git clone $git_plow_back $repertoire_git_plow_back
     cp -r $repertoire_git_plow_back/* $repertoire_web
+    rm -r $repertoire_git_plow_back
+
+    creerBaseDonnees
+}
+
+function installPlowFront {
+    installNodeJS
+    installBower
+    echo "Adresse du dépot git de plow_front : $git_plow_front => $repertoire_git_plow_front"
+    echo "Téléchargement du frontend"
+    git clone $git_plow_front $repertoire_git_plow_front
     cd $repertoire_git_plow_front
     bower --allow-root install
     cp -r $repertoire_git_plow_front/app/* $repertoire_web
     cp -r $repertoire_git_plow_front/bower_components $repertoire_web
-    cp -r $repertoire_git_plow_python/* $repertoire_web
-    cp -r $repertoire_git_plow_notifications/* $repertoire_web
-
-    chown $(whoami) $repertoire_web
-
-    echo "=== fin de préparation du site internet ==="
-}
-
-function nettoyage {
-    echo "=== Nettoyage des dossiers ==="
-    rm -r $repertoire_git_plow_back
     rm -r $repertoire_git_plow_front
-    rm -r $repertoire_git_plow_python
-    rm -r $repertoire_git_plow_notifications
-    echo "=== Fin de nettoyage des dossiers ==="
 }
 
-function installPlowSolution {
-    echo "=== Création de la solution plow ==="
-    echo "Adresse du dépot git de plowshare_back : $git_plow_back => $repertoire_git_plow_back"
-    echo "Téléchargement du backend"
-    git clone $git_plow_back $repertoire_git_plow_back
-    echo "Adresse du dépot git de plow_front : $git_plow_front => $repertoire_git_plow_front"
-    echo "Téléchargement du frontend"
-    git clone $git_plow_front $repertoire_git_plow_front
+function installPlowPython {
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
+    cp -r $repertoire_git_plow_python/* $repertoire_web
+    rm -r $repertoire_git_plow_python
+}
+
+function installPlowNotifications {
     echo "Adresse du dépot git de plow_notifications : $git_plow_notifications => $repertoire_git_plow_notifications"
     echo "Téléchargement du gestionnaire des notifications"
     git clone $git_plow_notifications $repertoire_git_plow_notifications
+    cp -r $repertoire_git_plow_notifications/* $repertoire_web
+    rm -r $repertoire_git_plow_notifications
+}
+
+function installPlowSolution {
+    options=("Installation totale de la solution" "Installation pas à pas")
+
+    type_installation_solution_plow = 1
+    if [[ ${type_installation} != 1 ]] && [[ ${type_installation} != 2 ]]; then
+        PS3="Comment désirez-vous installer la solution plow ?"
+        select opt in "${options[@]}" "Quit"; do
+            case "$REPLY" in
+                1 ) break;;
+                2 ) break;;
+
+               $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+            type_installation_solution_plow=$REPLY
+        done
+    fi
+
+    # installation pas à pas
+    if [[  ${type_installation_solution_plow} = 2 ]]; then
+        options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications")
+
+        PS3="Comment désirez-vous installer la solution plow ?"
+        select opt in "${options[@]}" "Quit"; do
+            case "$REPLY" in
+                1 ) installPlowBack; continue;;
+                2 ) installPlowFront; continue;;
+                3 ) installPlowPython; continue;;
+                4 ) installPlowNotifications; continue;;
+
+               $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+        done
+    else
+        installPlowBack
+        installPlowFront
+        installPlowPython
+        installPlowNotifications
+    fi
 
     mkdir $repertoire_web_log
-
-    installNodeJS
-    installBower
-
-    preparationSite
-
-    creerBaseDonnees
-
-    nettoyage
+    chown $(whoami) $repertoire_web
 
     echo "=== Fin de la création de la solution plow ==="
 }
