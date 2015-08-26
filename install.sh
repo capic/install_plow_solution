@@ -239,6 +239,18 @@ function installPlowFront {
 }
 
 function installPlowPython {
+     if ! which plowdown >/dev/null; then
+        options=("Oui" "Non")
+        PS3="Attention, plowshare n'est pas installé, voulez-vous l'installer ?"
+        select opt in "${options[@]}" "Quit"; do
+            case "$REPLY" in
+                1 ) installPlowshare; break;;
+                2 ) break;;
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+        done
+    fi
+
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
@@ -248,7 +260,7 @@ function installPlowPython {
     cp $DIR/download_script.sh $repertoire_web/main
     cp $DIR/config.cfg $repertoire_web/main
 
-    chmod 777 $DIR/download_script.sh
+    chmod 777 $repertoire_web/main/download_script.sh
     creerTaches
 }
 
@@ -261,10 +273,9 @@ function installPlowNotifications {
 }
 
 function installPlowSolution {
-    options=("Installation totale de la solution" "Installation pas à pas")
-
     #type_installation_solution_plow = 1
     if [[ ${type_installation} != 1 ]] && [[ ${type_installation} != 2 ]]; then
+        options=("Installation totale de la solution" "Installation pas à pas")
         PS3="Comment désirez-vous installer la solution plow ?"
         select opt in "${options[@]}" "Quit"; do
             case "$REPLY" in
