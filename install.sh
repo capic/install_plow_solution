@@ -137,7 +137,7 @@ function installPHP {
 
         apt-get -y install php5-mysql php5-curl php5-gd php5-idn php-pear php5-imagick php5-imap php5-mcrypt php5-memcache php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-sqlite php5-tidy php5-xmlrpc php5-xsl php5 php5-mcrypt php5-xcache
 
-        if [[ $serveur = 1 ]]; then
+        if [[ ${serveur} = 1 ]]; then
             apt-get -y install libapache2-mod-php5
         fi
     else
@@ -153,7 +153,7 @@ function installPHPMYADMIN {
     fi
 
     # configuration des serveurs après installation
-    if [[ $serveur = 2 ]]; then
+    if [[ ${serveur} = 2 ]]; then
         configLighttpd
     fi
 
@@ -267,8 +267,8 @@ function installPlowSolution {
                $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
                 *) echo "Le choix n'est pas correct";continue;;
             esac
-            type_installation_solution_plow=$REPLY
         done
+        type_installation_solution_plow = $REPLY
     fi
 
     # installation pas à pas
