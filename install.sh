@@ -221,8 +221,6 @@ function installPlowBack {
     git clone $git_plow_back $repertoire_git_plow_back
     cp -r $repertoire_git_plow_back/* $repertoire_web
     rm -r $repertoire_git_plow_back
-
-    creerBaseDonnees
 }
 
 function installPlowFront {
@@ -262,7 +260,6 @@ function installPlowPython {
 
     chmod 777 $repertoire_web/main/download_script.sh
     creerTaches
-    creerBaseDonnees
 }
 
 function installPlowNotifications {
@@ -292,7 +289,7 @@ function installPlowSolution {
 
     # installation pas à pas
     if [[  ${type_installation_solution_plow} = 2 ]]; then
-        options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications")
+        options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications" "Création de la base de données")
 
         PS3="Comment désirez-vous installer la solution plow ?"
         select opt in "${options[@]}" "Quit"; do
@@ -301,6 +298,7 @@ function installPlowSolution {
                 2 ) installPlowFront; continue;;
                 3 ) installPlowPython; continue;;
                 4 ) installPlowNotifications; continue;;
+                5 ) creerBaseDonnees; continue;;
 
                $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
                 *) echo "Le choix n'est pas correct";continue;;
@@ -339,6 +337,8 @@ function installTotale() {
     installPlowshare
 
     installPlowSolution
+
+    creerBaseDonnees
 }
 
 if [[ $EUID -ne 0 ]]; then
