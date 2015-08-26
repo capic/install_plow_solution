@@ -245,8 +245,11 @@ function installPlowPython {
     cp -r $repertoire_git_plow_python/* $repertoire_web
     rm -r $repertoire_git_plow_python
 
-    cp download_script.sh $repertoire_web/main
-    cp config.cfg $repertoire_web/main
+    cp $DIR/download_script.sh $repertoire_web/main
+    cp $DIR/config.cfg $repertoire_web/main
+
+    chmod 777 $DIR/download_script.sh
+    creerTaches
 }
 
 function installPlowNotifications {
@@ -324,8 +327,6 @@ function installTotale() {
     installPlowshare
 
     installPlowSolution
-
-    creerTaches
 }
 
 if [[ $EUID -ne 0 ]]; then
