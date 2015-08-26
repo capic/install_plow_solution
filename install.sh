@@ -244,6 +244,9 @@ function installPlowPython {
     git clone $git_plow_python $repertoire_git_plow_python
     cp -r $repertoire_git_plow_python/* $repertoire_web
     rm -r $repertoire_git_plow_python
+
+    cp download_script.sh $repertoire_web/main
+    cp config.cfg $repertoire_web/main
 }
 
 function installPlowNotifications {
@@ -303,7 +306,7 @@ function installPlowSolution {
 
 function creerTaches {
     echo "=== Création des taches cron ==="
-    cat <(crontab -l) <(echo "*/15 * * * * $repertoire_web/main/start_download.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
+    cat <(crontab -l) <(echo "*/15 * * * * $repertoire_web/main/download_script.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
     echo "=== Fin de création des taches cron ==="
 }
 
