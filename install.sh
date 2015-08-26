@@ -4,6 +4,7 @@ source $DIR/config.cfg
 
 type_installation=-1
 serveur=1 # apache par defaut
+type_installation_solution_plow=1
 
 function init {
     echo "=== Init ==="
@@ -256,7 +257,7 @@ function installPlowNotifications {
 function installPlowSolution {
     options=("Installation totale de la solution" "Installation pas à pas")
 
-    type_installation_solution_plow = 1
+    #type_installation_solution_plow = 1
     if [[ ${type_installation} != 1 ]] && [[ ${type_installation} != 2 ]]; then
         PS3="Comment désirez-vous installer la solution plow ?"
         select opt in "${options[@]}" "Quit"; do
@@ -268,7 +269,7 @@ function installPlowSolution {
                 *) echo "Le choix n'est pas correct";continue;;
             esac
         done
-        type_installation_solution_plow = $REPLY
+        type_installation_solution_plow=$REPLY
     fi
 
     # installation pas à pas
