@@ -286,7 +286,7 @@ function updatePlowPython {
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
-    cp -r $repertoire_git_plow_python/* $repertoire_web
+    cp -r -f $repertoire_git_plow_python/* $repertoire_web
     rm -r $repertoire_git_plow_python
 
     cp $DIR/download_script.sh $repertoire_web/main
