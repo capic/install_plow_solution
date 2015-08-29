@@ -171,8 +171,8 @@ function installNodeJS {
 #        make
 #        make install
         echo "deb http://node-arm.herokuapp.com/ /" | sudo tee --append /etc/apt/sources.list
-        sudo apt-get update
-        sudo apt-get install node
+        apt-get update
+        apt-get -y install node
         node -v
     else
         echo "NodeJS déjà installé"
