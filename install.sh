@@ -196,8 +196,10 @@ function installPrerequis {
     apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils
 
     echo "<<<<< Installation des librairies python >>>>>"
-    wget https://bootstrap.pypa.io/get-pip.py
-    python get-pip.py
+    if ! which pip >/dev/null; then
+        wget https://bootstrap.pypa.io/get-pip.py
+        python get-pip.py
+    fi
     pip install psutil
     pip install --allow-external mysql-connector-python mysql-connector-python
     echo "=== Fin d'installation des prérequis === "
