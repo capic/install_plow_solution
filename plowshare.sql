@@ -89,6 +89,7 @@ CREATE TABLE IF NOT EXISTS `download_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
+
 -- --------------------------------------------------------
 
 --
