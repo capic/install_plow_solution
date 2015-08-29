@@ -8,7 +8,7 @@ type_installation_solution_plow=1
 
 function init {
     echo "=== Init ==="
-    options=("Installation totale automatique" "Installation totale interactive" "Installation uniquement d'un serveur" "Installation uniquement de la solution plow" "Installation totale sans serveur")
+    options=("Installation totale automatique" "Installation totale interactive" "Installation uniquement d'un serveur" "Installation uniquement de la solution plow" "Installation totale sans serveur" "Mise à jour de la solution plow")
     
     PS3="Voulez-vous utilisez l'installation personnalisée ?"
     select opt in "${options[@]}" "Quit"; do
@@ -18,6 +18,7 @@ function init {
             3 ) break;;
             4 ) break;;
             5 ) break;;
+            6 ) break;;
        
            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
             *) echo "Le choix n'est pas correct";continue;;
@@ -223,9 +224,28 @@ function installPlowBack {
     rm -r $repertoire_git_plow_back
 }
 
+function updatePlowBack {
+    echo "Adresse du dépot git de plowshare_back : $git_plow_back => $repertoire_git_plow_back"
+    echo "Téléchargement du backend"
+    git clone $git_plow_back $repertoire_git_plow_back
+    cp -r $repertoire_git_plow_back/* $repertoire_web
+    rm -r $repertoire_git_plow_back
+}
+
 function installPlowFront {
     installNodeJS
     installBower
+    echo "Adresse du dépot git de plow_front : $git_plow_front => $repertoire_git_plow_front"
+    echo "Téléchargement du frontend"
+    git clone $git_plow_front $repertoire_git_plow_front
+    cd $repertoire_git_plow_front
+    bower --allow-root install
+    cp -r $repertoire_git_plow_front/app/* $repertoire_web
+    cp -r $repertoire_git_plow_front/bower_components $repertoire_web
+    rm -r $repertoire_git_plow_front
+}
+
+function updatePlowFront {
     echo "Adresse du dépot git de plow_front : $git_plow_front => $repertoire_git_plow_front"
     echo "Téléchargement du frontend"
     git clone $git_plow_front $repertoire_git_plow_front
@@ -262,6 +282,28 @@ function installPlowPython {
     creerTaches
 }
 
+function updatePlowPyhton {
+    echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
+    echo "Téléchargement du gestionnaire de téléchargements"
+    git clone $git_plow_python $repertoire_git_plow_python
+    cp -r $repertoire_git_plow_python/* $repertoire_web
+    rm -r $repertoire_git_plow_python
+
+    cp $DIR/download_script.sh $repertoire_web/main
+
+    options=("Oui" "Non")
+    PS3="Recopier et écraser la config"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) cp $DIR/config.cfg $repertoire_web/main; break;;
+            2 ) break;;
+            *) echo "Le choix n'est pas correct";continue;;
+        esac
+    done
+
+    chmod 777 $repertoire_web/main/download_script.sh
+}
+
 function installPlowNotifications {
     echo "Adresse du dépot git de plow_notifications : $git_plow_notifications => $repertoire_git_plow_notifications"
     echo "Téléchargement du gestionnaire des notifications"
@@ -270,40 +312,81 @@ function installPlowNotifications {
     rm -r $repertoire_git_plow_notifications
 }
 
+function updatePlowNotifications {
+    echo "Adresse du dépot git de plow_notifications : $git_plow_notifications => $repertoire_git_plow_notifications"
+    echo "Téléchargement du gestionnaire des notifications"
+    git clone $git_plow_notifications $repertoire_git_plow_notifications
+    cp -r $repertoire_git_plow_notifications/* $repertoire_web
+    rm -r $repertoire_git_plow_notifications
+}
+
+function installPlowSolutionMenu1 {
+    options=("Installation totale de la solution" "Installation pas à pas")
+    PS3="Comment désirez-vous installer la solution plow ?"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) break;;
+            2 ) break;;
+
+           $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
+            *) echo "Le choix n'est pas correct";continue;;
+        esac
+    done
+    type_installation_solution_plow=$REPLY
+}
+
+function installPlowSolutionMenu2 {
+    options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications" "Création de la base de données")
+
+    PS3="Comment désirez-vous installer la solution plow ?"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) if [[ ${type_installation} = 6 ]]; then
+                    updatePlowBack
+                else
+                    installPlowBack
+                fi
+                installPlowSolutionMenu2;;
+            2 ) if [[ ${type_installation} = 6 ]]; then
+                    updatePlowFront
+                else
+                    installPlowFront
+                fi
+                installPlowSolutionMenu2;;
+            3 ) if [[ ${type_installation} = 6 ]]; then
+                    updatePlowPython
+                else
+                    installPlowPython
+                fi
+                installPlowSolutionMenu2;;
+            4 ) if [[ ${type_installation} = 6 ]]; then
+                    updatePlowNotification
+                else
+                    installPlowNotifications
+                fi
+                installPlowSolutionMenu2;;
+            5 ) if [[ ${type_installation} = 6 ]]; then
+                    updateBaseDonnees
+                else
+                    creerBaseDonnees;
+                fi
+                installPlowSolutionMenu2;;
+
+           $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
+            *) echo "Le choix n'est pas correct";installPlowSolutionMenu2;;
+        esac
+    done
+}
+
 function installPlowSolution {
     #type_installation_solution_plow = 1
     if [[ ${type_installation} != 1 ]] && [[ ${type_installation} != 2 ]]; then
-        options=("Installation totale de la solution" "Installation pas à pas")
-        PS3="Comment désirez-vous installer la solution plow ?"
-        select opt in "${options[@]}" "Quit"; do
-            case "$REPLY" in
-                1 ) break;;
-                2 ) break;;
-
-               $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
-                *) echo "Le choix n'est pas correct";continue;;
-            esac
-        done
-        type_installation_solution_plow=$REPLY
+        installPlowSolutionMenu1
     fi
 
     # installation pas à pas
     if [[  ${type_installation_solution_plow} = 2 ]]; then
-        options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications" "Création de la base de données")
-
-        PS3="Comment désirez-vous installer la solution plow ?"
-        select opt in "${options[@]}" "Quit"; do
-            case "$REPLY" in
-                1 ) installPlowBack; continue;;
-                2 ) installPlowFront; continue;;
-                3 ) installPlowPython; continue;;
-                4 ) installPlowNotifications; continue;;
-                5 ) creerBaseDonnees; continue;;
-
-               $(( ${#options[@]}+1 )) ) echo "Fin!"; break;;
-                *) echo "Le choix n'est pas correct";continue;;
-            esac
-        done
+        installPlowSolutionMenu2
     else
         installPlowBack
         installPlowFront
@@ -353,8 +436,8 @@ if [[ ${type_installation} = 1 ]] || [[ ${type_installation} = 2 ]]; then
     installTotale 1 # avec serveur
 elif [[ ${type_installation} = 3 ]]; then
     installServeur
-elif [[ ${type_installation} = 4 ]]; then
+elif [[ ${type_installation} = 4 ]] || [[ ${type_installation} = 6 ]]; then
     installPlowSolution
 elif [[ ${type_installation} = 5 ]]; then
     installTotale 0 # sans serveur
-fi;
+fi
