@@ -282,7 +282,7 @@ function installPlowPython {
     creerTaches
 }
 
-function updatePlowPyhton {
+function updatePlowPython {
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
