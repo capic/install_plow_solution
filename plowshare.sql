@@ -46,7 +46,6 @@ CREATE TABLE IF NOT EXISTS `download` (
   `pid_python` int(11) NOT NULL,
   `file_path` varchar(2048) NOT NULL,
   `priority` smallint(1) NOT NULL DEFAULT '0',
-  `infos_plowdown` longtext NOT NULL,
   `theorical_start_datetime` datetime NOT NULL,
   `lifecycle_insert_date` datetime NOT NULL,
   `lifecycle_update_date` datetime NOT NULL,
@@ -79,6 +78,17 @@ INSERT INTO `download_status` (`id`, `name`, `ord`) VALUES
 (6, 'cancel', 6),
 (7, 'undefined', 7),
 (8, 'starting', 8);
+
+--
+-- Structure de la table `download_logs`
+--
+
+CREATE TABLE IF NOT EXISTS `download_logs` (
+  `id` int(11) NOT NULL,
+  `logs` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
 
 -- --------------------------------------------------------
 
