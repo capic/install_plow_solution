@@ -288,7 +288,8 @@ function updatePlowPython {
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
-    cp -r -f $repertoire_git_plow_python/* $repertoire_web
+    rm -r $repertoire_web/main
+    cp -r $repertoire_git_plow_python/* $repertoire_web
     rm -r $repertoire_git_plow_python
 
     cp $DIR/download_script.sh $repertoire_web/main
@@ -338,7 +339,11 @@ function installPlowSolutionMenu1 {
 }
 
 function installPlowSolutionMenu2 {
-    options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications" "Création de la base de données")
+    if [[ ${type_installation} = 6 ]]; then
+         options=("Mise à jour de plow_back" "Mise à jour de plow_front" "Mise à jour de plow_python" "Mise à jour de plow_notifications" "Mise à jour de la base de données")
+    else
+        options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications" "Création de la base de données")
+    fi
 
     PS3="Comment désirez-vous installer la solution plow ?"
     select opt in "${options[@]}" "Quit"; do
