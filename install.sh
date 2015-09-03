@@ -258,6 +258,26 @@ function updatePlowFront {
     rm -r $repertoire_git_plow_front
 }
 
+
+#function creerFichierConfigPlowPython {
+#    a_ecrire="rest_adresse=\"${rest_adresse}\"
+#              notification_adresse=\"${notification_adresse}\"
+#              mysql_login=\"${mysql_login}\"
+#              mysql_pass=\"${mysql_pass}\"
+#              mysql_host=\"${mysql_host}\"
+#              mysql_database=\"${mysql_database}\"
+#
+#              log_output=\"${log_output}\"
+#              console_output=\"${console_output}\"
+#
+#              repertoire_web_log=\"${repertoire_web_log}\"
+#              repertoire_telechargement=\"${repertoire_telechargement}\"
+#              repertoire_telechargement_temporaire=\"${repertoire_telechargement_temporaire}\""
+#    echo ${a_ecrire} >> $
+#
+#
+#}
+
 function installPlowPython {
      if ! which plowdown >/dev/null; then
         options=("Oui" "Non")
@@ -288,8 +308,7 @@ function updatePlowPython {
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
-    rm -r $repertoire_web/main
-    cp -r $repertoire_git_plow_python/* $repertoire_web
+    cp -r $repertoire_git_plow_python/main/* $repertoire_web/main/
     rm -r $repertoire_git_plow_python
 
     cp $DIR/download_script.sh $repertoire_web/main
@@ -323,6 +342,34 @@ function updatePlowNotifications {
     rm -r $repertoire_git_plow_notifications
 }
 
+function creerFichierConfigPlowBackRest {
+    echo "Création du fichier pour plow back rest"
+    a_ecrire="{
+                \"db\": {
+                    \"host\": \"${mysql_host}\",
+                    \"database\": \"${mysql_database}\",
+                    \"user\": \"${mysql_login}\",
+                    \"password\": \"${mysql_pass}\"
+                },
+                \"notification\": {
+                    \"address\": \"${notification_adresse}\#
+                }
+              }"
+    echo ${a_ecrire} >> ${repertoire_git_plow_back_rest}/config/default.json
+}
+
+function installPlowBackRest {
+    installNodeJS
+    echo "Adresse du dépot git de plow_back_rest: ${git_plow_back_rest} => ${repertoire_git_plow_back_rest}"
+    echo "Téléchargement du plow back rest"
+    git clone ${git_plow_back_rest} ${repertoire_git_plow_back_rest}
+    creerFichierConfigPlowBackRest
+    cp -r ${repertoire_git_plow_back_rest} $repertoire_web
+    rm -r ${repertoire_git_plow_back_rest}
+
+
+}
+
 function installPlowSolutionMenu1 {
     options=("Installation totale de la solution" "Installation pas à pas")
     PS3="Comment désirez-vous installer la solution plow ?"
@@ -340,9 +387,9 @@ function installPlowSolutionMenu1 {
 
 function installPlowSolutionMenu2 {
     if [[ ${type_installation} = 6 ]]; then
-         options=("Mise à jour de plow_back" "Mise à jour de plow_front" "Mise à jour de plow_python" "Mise à jour de plow_notifications" "Mise à jour de la base de données")
+         options=("Mise à jour de plow_back" "Mise à jour de plow_front" "Mise à jour de plow_python" "Mise à jour de plow_notifications" "Mise à jour de plow_back_rest" "Mise à jour de la base de données")
     else
-        options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications" "Création de la base de données")
+        options=("Installation de plow_back" "Installation de plow_front" "Installation de plow_python" "Installation de plow_notifications" "Installation de plow_back_rest" "Création de la base de données")
     fi
 
     PS3="Comment désirez-vous installer la solution plow ?"
@@ -373,6 +420,12 @@ function installPlowSolutionMenu2 {
                 fi
                 installPlowSolutionMenu2;;
             5 ) if [[ ${type_installation} = 6 ]]; then
+                    updatePlowBackRest
+                else
+                    installPlowBackRest
+                fi
+                installPlowSolutionMenu2;;
+            6 ) if [[ ${type_installation} = 6 ]]; then
                     updateBaseDonnees
                 else
                     creerBaseDonnees;
@@ -409,7 +462,7 @@ function installPlowSolution {
 
 function creerTaches {
     echo "=== Création des taches cron ==="
-    cat <(crontab -l) <(echo "*/15 * * * * $repertoire_web/main/download_script.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
+    cat <(crontab -l) <(echo "*/15 * * * * $repertoire_web/download_script.sh"; echo "*/2 * * * * python $repertoire_web/main/download_basic.py check_download_alive";) | crontab -
     echo "=== Fin de création des taches cron ==="
 }
 

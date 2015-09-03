@@ -85,7 +85,8 @@ INSERT INTO `download_status` (`id`, `name`, `ord`) VALUES
 
 CREATE TABLE IF NOT EXISTS `download_logs` (
   `id` int(11) NOT NULL,
-  `logs` longtext NOT NULL
+  `logs` longtext NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
