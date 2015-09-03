@@ -352,7 +352,7 @@ function creerFichierConfigPlowBackRest {
                     \"password\": \"${mysql_pass}\"
                 },
                 \"notification\": {
-                    \"address\": \"${notification_adresse}\#
+                    \"address\": \"${notification_adresse}\"
                 }
               }"
     echo ${a_ecrire} >> ${repertoire_git_plow_back_rest}/config/default.json

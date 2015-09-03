@@ -9,4 +9,4 @@ donner la possibilité de choisir ce qu'on veut installer dans la solution plow
 gerer les erreurs d'installation (utiliser set -e; ???)
 donner les droits à l'utilisateur courant sur tous les dossiers créés
 donner les droits executables au download_script.sh
-definir l'adresse de la base de données dans les config
+terminé l'installation plow_back_rest + faire le démarrage auto + faire export NODE_CONFIG_DIR=/var/www/plow_solution/config/
