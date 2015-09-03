@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS `download` (
   `pid_python` int(11) NOT NULL,
   `file_path` varchar(2048) NOT NULL,
   `priority` smallint(1) NOT NULL DEFAULT '0',
-  `theorical_start_datetime` datetime NOT NULL,
+  `theorical_start_datetime` datetime NULL,
   `lifecycle_insert_date` datetime NOT NULL,
-  `lifecycle_update_date` datetime NOT NULL,
+  `lifecycle_update_date` datetime NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
