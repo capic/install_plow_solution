@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `download` (
   `pid_plowdown` int(11) NOT NULL,
   `pid_curl` int(11) NOT NULL,
   `pid_python` int(11) NOT NULL,
+  `directory` varchar(2048) NOT NULL,
   `file_path` varchar(2048) NOT NULL,
   `priority` smallint(1) NOT NULL DEFAULT '0',
   `theorical_start_datetime` datetime NULL,
