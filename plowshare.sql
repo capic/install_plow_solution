@@ -90,6 +90,18 @@ CREATE TABLE IF NOT EXISTS `download_logs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Structure de la table `download_package`
+--
+
+CREATE TABLE IF NOT EXISTS `download_package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(512) NOT NULL,
+  `unrar_progress` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+
 
 
 -- --------------------------------------------------------
