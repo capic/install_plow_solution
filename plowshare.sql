@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `download` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
-  `package` varchar(255) NOT NULL,
+  `package_id` int(11) NOT NULL,
   `link` varchar(512) NOT NULL,
   `size_file` int(11) NOT NULL,
   `size_part` int(11) NOT NULL,
@@ -47,11 +47,11 @@ CREATE TABLE IF NOT EXISTS `download` (
   `directory` varchar(2048) NOT NULL,
   `file_path` varchar(2048) NOT NULL,
   `priority` smallint(1) NOT NULL DEFAULT '0',
-  `theorical_start_datetime` datetime NULL,
+  `theorical_start_datetime` datetime DEFAULT NULL,
   `lifecycle_insert_date` datetime NOT NULL,
-  `lifecycle_update_date` datetime NULL,
+  `lifecycle_update_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -78,7 +78,10 @@ INSERT INTO `download_status` (`id`, `name`, `ord`) VALUES
 (5, 'pause', 5),
 (6, 'cancel', 6),
 (7, 'undefined', 7),
-(8, 'starting', 8);
+(8, 'starting', 8),
+(9, 'moving', 9),
+(10, 'moved', 10),
+(11, 'error moving', 11);
 
 --
 -- Structure de la table `download_logs`
