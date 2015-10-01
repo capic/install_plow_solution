@@ -53,6 +53,16 @@ CREATE TABLE IF NOT EXISTS `download` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `download`
+--
+ALTER TABLE `download`
+  ADD CONSTRAINT `download_package_constraint` FOREIGN KEY (`package_id`) REFERENCES `download_package` (`id`) ON DELETE CASCADE;
+
 -- --------------------------------------------------------
 
 --
