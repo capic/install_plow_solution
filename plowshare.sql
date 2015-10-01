@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `download` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
-  `package_id` int(11) NOT NULL,
+  `package_id` int(11) DEFAULT NULL,
   `link` varchar(512) NOT NULL,
   `size_file` int(11) NOT NULL,
   `size_part` int(11) NOT NULL,
