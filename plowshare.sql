@@ -53,15 +53,6 @@ CREATE TABLE IF NOT EXISTS `download` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
---
--- Contraintes pour les tables exportées
---
-
---
--- Contraintes pour la table `download`
---
-ALTER TABLE `download`
-  ADD CONSTRAINT `download_package_constraint` FOREIGN KEY (`package_id`) REFERENCES `download_package` (`id`) ON DELETE CASCADE;
 
 -- --------------------------------------------------------
 
@@ -152,6 +143,17 @@ CREATE TABLE IF NOT EXISTS `link_status` (
 INSERT INTO `link_status` (`id`, `name`, `ord`) VALUES
 (1, 'on line', 1),
 (2, 'deleted', 2);
+
+--
+-- Contraintes pour les tables exportées
+--
+
+--
+-- Contraintes pour la table `download`
+--
+ALTER TABLE `download`
+  ADD CONSTRAINT `download_package_constraint` FOREIGN KEY (`package_id`) REFERENCES `download_package` (`id`) ON DELETE CASCADE;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
