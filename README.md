@@ -13,4 +13,4 @@ terminé l'installation plow_back_rest + faire le démarrage auto + faire export
 
 A FAIRE POUR AUTHORIZER LE SSH DEPUIS LE SERVEUR NODE SUR LE CLIENT PYTHON TELECHARGEMENT
 ssh-keygen -t dsa
-cat .ssh/id_dsa.pub | ssh root@192.168.1.200 "cat - >>.ssh/authorized_keys
+cat .ssh/id_dsa.pub | ssh root@192.168.1.200 "cat - >>~/.ssh/authorized_keys"
