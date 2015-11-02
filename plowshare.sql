@@ -1,23 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.11.1deb2+deb7u1
+-- version 4.2.12deb2+deb8u1
 -- http://www.phpmyadmin.net
 --
--- Client: localhost
--- Généré le: Mar 18 Août 2015 à 21:36
--- Version du serveur: 5.5.44
--- Version de PHP: 5.4.41-0+deb7u1
+-- Client :  localhost
+-- Généré le :  Lun 02 Novembre 2015 à 13:10
+-- Version du serveur :  5.5.44-0+deb8u1
+-- Version de PHP :  5.6.14-0+deb8u1
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
-
 --
--- Base de données: `plowshare`
+-- Base de données :  `plowshare`
 --
 
 -- --------------------------------------------------------
@@ -27,7 +21,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `download` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(256) NOT NULL,
   `package_id` int(11) DEFAULT NULL,
   `link` varchar(512) NOT NULL,
@@ -45,14 +39,47 @@ CREATE TABLE IF NOT EXISTS `download` (
   `pid_curl` int(11) NOT NULL,
   `pid_python` int(11) NOT NULL,
   `directory` varchar(2048) NOT NULL,
+  `directory_id` int(11) NOT NULL,
   `file_path` varchar(2048) NOT NULL,
   `priority` smallint(1) NOT NULL DEFAULT '0',
   `theorical_start_datetime` datetime DEFAULT NULL,
   `lifecycle_insert_date` datetime NOT NULL,
-  `lifecycle_update_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `lifecycle_update_date` datetime DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `download_directory`
+--
+
+CREATE TABLE IF NOT EXISTS `download_directory` (
+`id` int(11) NOT NULL,
+  `path` varchar(2048) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `download_logs`
+--
+
+CREATE TABLE IF NOT EXISTS `download_logs` (
+  `id` int(11) NOT NULL,
+  `logs` longtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `download_package`
+--
+
+CREATE TABLE IF NOT EXISTS `download_package` (
+`id` int(11) NOT NULL,
+  `name` varchar(512) NOT NULL,
+  `unrar_progress` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -61,11 +88,10 @@ CREATE TABLE IF NOT EXISTS `download` (
 --
 
 CREATE TABLE IF NOT EXISTS `download_status` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `ord` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+  `ord` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `download_status`
@@ -84,30 +110,6 @@ INSERT INTO `download_status` (`id`, `name`, `ord`) VALUES
 (10, 'moved', 10),
 (11, 'error moving', 11);
 
---
--- Structure de la table `download_logs`
---
-
-CREATE TABLE IF NOT EXISTS `download_logs` (
-  `id` int(11) NOT NULL,
-  `logs` longtext NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Structure de la table `download_package`
---
-
-CREATE TABLE IF NOT EXISTS `download_package` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(512) NOT NULL,
-  `unrar_progress` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
-
-
-
 -- --------------------------------------------------------
 
 --
@@ -115,13 +117,12 @@ CREATE TABLE IF NOT EXISTS `download_package` (
 --
 
 CREATE TABLE IF NOT EXISTS `link` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(256) NOT NULL,
   `link` varchar(512) NOT NULL,
   `size` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  `status` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -130,11 +131,10 @@ CREATE TABLE IF NOT EXISTS `link` (
 --
 
 CREATE TABLE IF NOT EXISTS `link_status` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `ord` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `ord` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Contenu de la table `link_status`
@@ -145,6 +145,86 @@ INSERT INTO `link_status` (`id`, `name`, `ord`) VALUES
 (2, 'deleted', 2);
 
 --
+-- Index pour les tables exportées
+--
+
+--
+-- Index pour la table `download`
+--
+ALTER TABLE `download`
+ ADD PRIMARY KEY (`id`), ADD KEY `download_package_constraint` (`package_id`);
+
+--
+-- Index pour la table `download_directory`
+--
+ALTER TABLE `download_directory`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `download_logs`
+--
+ALTER TABLE `download_logs`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `download_package`
+--
+ALTER TABLE `download_package`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `download_status`
+--
+ALTER TABLE `download_status`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `link`
+--
+ALTER TABLE `link`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `link_status`
+--
+ALTER TABLE `link_status`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT pour les tables exportées
+--
+
+--
+-- AUTO_INCREMENT pour la table `download`
+--
+ALTER TABLE `download`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=189;
+--
+-- AUTO_INCREMENT pour la table `download_directory`
+--
+ALTER TABLE `download_directory`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `download_package`
+--
+ALTER TABLE `download_package`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+--
+-- AUTO_INCREMENT pour la table `download_status`
+--
+ALTER TABLE `download_status`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT pour la table `link`
+--
+ALTER TABLE `link`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT pour la table `link_status`
+--
+ALTER TABLE `link_status`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- Contraintes pour les tables exportées
 --
 
@@ -152,9 +232,4 @@ INSERT INTO `link_status` (`id`, `name`, `ord`) VALUES
 -- Contraintes pour la table `download`
 --
 ALTER TABLE `download`
-  ADD CONSTRAINT `download_package_constraint` FOREIGN KEY (`package_id`) REFERENCES `download_package` (`id`) ON DELETE CASCADE;
-
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ADD CONSTRAINT `download_package_constraint` FOREIGN KEY (`package_id`) REFERENCES `download_package` (`id`) ON DELETE CASCADE;
