@@ -1,5 +1,7 @@
 #!/bin/bash
-PATH=/opt/someApp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# PATH=/opt/someApp/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# export PYTHONIOENCODE='utf-8'
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/config.cfg
 
@@ -49,10 +51,12 @@ liste=$(ls ${entree} | egrep "*.txt")
 
 cd $repertoire_git_plowhare
 git stash
+git reset --hard
 git pull
 make install
 cd $repertoire_module_plowshare
 git stash
+git reset --hard
 git pull
 # plowmod --update
 # cp -r /root/.config /
@@ -76,7 +80,8 @@ else
 
 		# traitement de liens a inserer en bdd
 		nomScreen="treat-${fich}"
-		command="python $repertoire_web/main/download_basic.py start_file_treatment ${entree}/${fich}"
+		#command="python $repertoire_web/main/download_basic.py start_file_treatment ${entree}/${fich}"
+		command="python3.2 $repertoire_web/main/download_basic.py start_file_treatment ${entree}/${fich}"
 		echo ${command}
 		screen -list | grep ${nomScreen} > /dev/null
 		if [ $? -eq 1  ]; then
@@ -88,7 +93,8 @@ else
 		if [ $? -eq 1  ]; then
 			echo "**** Nom du screen : ${nomScreen}"
 			# command="/usr/bin/plowdown -r10 -x -m --9kweu=I1QOR00P692PN4Q4669U --temp-rename --temp-directory ${destination_temp} -o ${destination} ${entree}/${fich}"
-			command="python $repertoire_web/main/download_basic.py start_multi_downloads ${entree}/${fich}"
+			#command="python $repertoire_web/main/download_basic.py start_multi_downloads ${entree}/${fich}"
+			command="python3.2 $repertoire_web/main/download_basic.py start_multi_downloads ${entree}/${fich}"
 			echo ${command}
 			screen -dmS ${nomScreen} -m ${command}
 		else
@@ -96,3 +102,4 @@ else
 		fi
 	done
 fi
+
