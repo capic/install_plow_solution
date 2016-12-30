@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/../config/config.cfg
+#DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+#source $DIR/../config/config.cfg
 
 function createConfigPythonFile {
     echo "Création du fichier de configuration pour plow_python"
