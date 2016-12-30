@@ -8,6 +8,8 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # installation des prerequis
+chmod 777 $DIR/common/install.sh
 $DIR/common/install.sh
 # installation de plow_python
+chmod 777 $DIR/plow_python/install.sh
 $DIR/plow_python/install.sh
