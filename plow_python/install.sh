@@ -4,25 +4,25 @@ source $DIR/../config/config_install.cfg
 
 function createConfigPythonFile {
     echo "Création du fichier de configuration pour plow_python"
-    echo "
-# application id
-PYTHON_APPLICATION_ID=1
 
-DOWNLOAD_ACTIVATED=True
-
-# rest server address
-REST_ADRESS=\"http://192.168.1.101:3000/\"
-# notification server address
-NOTIFICATION_ADDRESS=\"${notification_address}\"
-
-#LEVEL_OFF = 0, LEVEL_ALERT = 1, LEVEL_ERROR = 2, LEVEL_INFO = 3, LEVEL_DEBUG = 4
-PYTHON_LOG_LEVEL=4
-PYTHON_LOG_CONSOLE_LEVEL=4
-PYHTON_LOG_FORMAT=\"[%(levelname)8s]  %(asctime)s <%(to_ihm)4s>     (%(file_name)s) {%(function_name)s} [%(message)s]\"
-
-PYTHON_LOG_DIRECTORY=\"${repertoire_web_log}\"
-PYTHON_DIRECTORY_DOWNLOAD_TEMP=\"${repertoire_telechargement_temporaire}\"
-PYTHON_DIRECTORY_DOWNLOAD=\"${repertoire_telechargement}\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "# application id" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_APPLICATION_ID=1" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "DOWNLOAD_ACTIVATED=True" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "# rest server address" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "REST_ADRESS=\"http://192.168.1.101:3000/\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "# notification server address" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "NOTIFICATION_ADDRESS=\"${notification_address}\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "#LEVEL_OFF = 0, LEVEL_ALERT = 1, LEVEL_ERROR = 2, LEVEL_INFO = 3, LEVEL_DEBUG = 4" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_LOG_LEVEL=4" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_LOG_CONSOLE_LEVEL=4" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYHTON_LOG_FORMAT=\"[%(levelname)8s]  %(asctime)s <%(to_ihm)4s>     (%(file_name)s) {%(function_name)s} [%(message)s]\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo ""
+    echo "PYTHON_LOG_DIRECTORY=\"${repertoire_web_log}\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_DIRECTORY_DOWNLOAD_TEMP=\"${repertoire_telechargement_temporaire}\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_DIRECTORY_DOWNLOAD=\"${repertoire_telechargement}\"" >> ${repertoire_git_plow_python}/config_python.cfg
 }
 
 # fonction d'installaion de plowshare et de ses prerequis
