@@ -63,7 +63,7 @@ function installPlowPython {
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
     echo "Création du répertoire de log"
-    mkdir ${git_plow_python}/log
+    mkdir ${repertoire_git_plow_python}/log
 
     createConfigPythonFile
 }
