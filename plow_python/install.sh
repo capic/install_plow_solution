@@ -3,7 +3,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source $DIR/../config/config_install.cfg
 
 function createConfigPythonFile {
-#    echo "Création du fichier de configuration pour plow_python"
+    echo "Création du fichier de configuration pour plow_python"
 
     echo "# application id" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "PYTHON_APPLICATION_ID=1" >> ${repertoire_git_plow_python}/config_python.cfg
@@ -59,7 +59,7 @@ function installPlowPython {
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone $git_plow_python $repertoire_git_plow_python
 
-    createConfigPythonFile
+#    createConfigPythonFile
 }
 
 if [[ $EUID -ne 0 ]]; then
