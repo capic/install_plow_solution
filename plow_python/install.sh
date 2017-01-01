@@ -1,7 +1,4 @@
 #!/usr/bin/env bash
-DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/../config/config_install.cfg
-
 
 function createConfigPythonFile {
     echo "Suppression du fichier de configuration déjà existant"
@@ -36,10 +33,10 @@ function installPlowshare {
     if ! which plowdown >/dev/null; then
         apt-get -y install coreutils sed util-linux grep curl recode rhino
         echo "=== Installation de plowshare === "
-        echo "Adresse du dépot git de plowdown : ${git_plowhare} => $repertoire_git_plowhare"
-        git clone $git_plowhare $repertoire_git_plowhare
-        chown $(whoami) $repertoire_git_plowhare
-        cd $repertoire_git_plowhare
+        echo "Adresse du dépot git de plowdown : ${git_plowshare} => $repertoire_git_plowshare"
+        git clone $git_plowshare $repertoire_git_plowshare
+        chown $(whoami) $repertoire_git_plowshare
+        cd $repertoire_git_plowshare
         make install
         plowmod --install
     fi
