@@ -1,6 +1,25 @@
 #!/usr/bin/env bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
+function configureVariable {
+    echo "=== Configuration des variables de plow python ==="
+    echo "Chemin d'installation de plow python ? (defaut: ${repertoire_git_plow_python})"
+    read -p ${repertoire_installation_base} repertoire_git_plow_python_input
+    if [ ! -z "${repertoire_git_plow_python_input}" ]; then
+        repertoire_git_plow_python=${repertoire_installation_base}${repertoire_git_plow_python_input}
+    fi
+}
+
+function displayConfig {
+    echo "=== Configuration ==="
+    echo "Branche git: ${branch}"
+    echo "Chemin de base de l'installation: ${repertoire_installation_base}"
+    echo "Chemin d'installation de plow python: ${repertoire_git_plow_python}"
+    echo "Chemin repertoire téléchargement: ${repertoire_telechargement}"
+    echo "Chemin repertoire téléchargement temporaire: ${repertoire_telechargement_temporaire}"
+    echo "Adresse serveur de notification: ${notification_address}"
+}
+
 function createConfigPythonFile {
     echo "Suppression du fichier de configuration déjà existant"
     rm ${repertoire_git_plow_python}/config_python.cfg
@@ -45,6 +64,9 @@ function installPlowshare {
 }
 
 function installPlowPython {
+    configureVariable
+    displayConfig
+
      if ! which plowdown >/dev/null; then
         options=("Oui" "Non")
         PS3="Attention, plowshare n'est pas installé, voulez-vous l'installer ?"
