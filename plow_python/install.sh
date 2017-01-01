@@ -45,7 +45,7 @@ function createConfigPythonFile {
     echo "PYTHON_LOG_CONSOLE_LEVEL=4" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "PYHTON_LOG_FORMAT=\"[%(levelname)8s]  %(asctime)s <%(to_ihm)4s>     (%(file_name)s) {%(function_name)s} [%(message)s]\"" >> ${repertoire_git_plow_python}/config_python.cfg
     echo ""
-    echo "PYTHON_LOG_DIRECTORY=\"${repertoire_git_plow_python}log\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_LOG_DIRECTORY=\"${repertoire_git_plow_python}log/\"" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "PYTHON_DIRECTORY_DOWNLOAD_TEMP=\"${repertoire_telechargement_temporaire}\"" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "PYTHON_DIRECTORY_DOWNLOAD=\"${repertoire_telechargement}\"" >> ${repertoire_git_plow_python}/config_python.cfg
 }
