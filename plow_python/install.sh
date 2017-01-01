@@ -31,7 +31,7 @@ function createConfigPythonFile {
     echo "Création du fichier de configuration pour plow_python"
 
     echo "# application id" >> ${repertoire_git_plow_python}/config_python.cfg
-    echo "PYTHON_APPLICATION_ID=1" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_APPLICATION_ID=${python_application_id}" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "DOWNLOAD_ACTIVATED=True" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "" >> ${repertoire_git_plow_python}/config_python.cfg
@@ -88,6 +88,7 @@ function installPlowPython {
     git clone -b ${branch} $git_plow_python $repertoire_git_plow_python
     echo "Création du répertoire de log"
     mkdir ${repertoire_git_plow_python}log
+    chmod 777 ${repertoire_git_plow_python}log
 
     createConfigPythonFile
 }

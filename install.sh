@@ -14,6 +14,11 @@ function configureVariable {
     if [ ! -z "${branch_input}" ]; then
         branch=${branch_input}
     fi
+    echo "Id de la configuration en base de données ? (defaut: ${python_application_id})"
+    read python_application_id_input
+    if [ ! -z "${python_application_id_input}" ]; then
+        python_application_id=${python_application_id_input}
+    fi
 #    on sauvegarde le repertoire defini par defaut (utile pour plus tard)
     repertoire_installation_base_defaut=${repertoire_installation_base}
     echo "Chemin de base de l'installation ? (defaut: ${repertoire_installation_base})"
@@ -48,6 +53,7 @@ function configureVariable {
 configureVariable
 
 export branch
+export python_application_id
 export repertoire_installation_base_defaut
 export repertoire_installation_base
 export git_plowshare
