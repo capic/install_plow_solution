@@ -41,6 +41,8 @@ function configureVariable {
     fi
 }
 
+configureVariable
+
 export branch
 export repertoire_installation_base
 export git_plowshare
