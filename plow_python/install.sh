@@ -8,6 +8,8 @@ function configureVariable {
     read -p ${repertoire_installation_base} repertoire_git_plow_python_input
     if [ ! -z "${repertoire_git_plow_python_input}" ]; then
         repertoire_git_plow_python=${repertoire_installation_base}${repertoire_git_plow_python_input}
+    elif [ "${repertoire_installation_base_defaut}" != "${repertoire_installation_base}" ]; then
+        repertoire_git_plow_python=${repertoire_git_plow_python/${repertoire_installation_base_defaut}/${repertoire_installation_base}}
     fi
 }
 

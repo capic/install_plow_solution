@@ -14,6 +14,8 @@ function configureVariable {
     if [ ! -z "${branch_input}" ]; then
         branch=${branch_input}
     fi
+#    on sauvegarde le repertoire defini par defaut (utile pour plus tard)
+    repertoire_installation_base_defaut=${repertoire_installation_base}
     echo "Chemin de base de l'installation ? (defaut: ${repertoire_installation_base})"
     read repertoire_installation_base_input
     if [ ! -z "${repertoire_installation_base_input}" ]; then
@@ -49,6 +51,7 @@ function displayConfig {
 configureVariable
 
 export branch
+export repertoire_installation_base_defaut
 export repertoire_installation_base
 export git_plowshare
 export git_plow_python
