@@ -31,6 +31,11 @@ function configureVariable {
     if [ ! -z "${repertoire_telechargement_temporaire_input}" ]; then
         repertoire_telechargement_temporaire=${repertoire_telechargement_temporaire_input}
     fi
+    echo "Adresse serveur ? (defaut: ${rest_address})"
+    read rest_address_input
+    if [ ! -z "${rest_address_input}" ]; then
+        rest_address=${rest_address_input}
+    fi
     echo "Adresse serveur de notification ? (defaut: ${notification_address})"
     read notification_address_input
     if [ ! -z "${notification_address_input}" ]; then
@@ -45,6 +50,7 @@ function displayConfig {
     echo "Chemin d'installation de plow python: ${repertoire_git_plow_python}"
     echo "Chemin repertoire téléchargement: ${repertoire_telechargement}"
     echo "Chemin repertoire téléchargement temporaire: ${repertoire_telechargement_temporaire}"
+    echo "Adresse serveur: ${rest_address}"
     echo "Adresse serveur de notification: ${notification_address}"
 }
 
