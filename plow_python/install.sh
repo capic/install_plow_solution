@@ -23,7 +23,7 @@ function displayConfig {
 
 function createConfigPythonFile {
     echo "Suppression du fichier de configuration déjà existant"
-    rm ${repertoire_git_plow_python}/config_python.cfg
+    rm ${repertoire_git_plow_python}config_python.cfg
 
     echo "Création du fichier de configuration pour plow_python"
 
@@ -84,7 +84,7 @@ function installPlowPython {
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone -b ${branch} $git_plow_python $repertoire_git_plow_python
     echo "Création du répertoire de log"
-    mkdir ${repertoire_git_plow_python}/log
+    mkdir ${repertoire_git_plow_python}log
 
     createConfigPythonFile
 }
