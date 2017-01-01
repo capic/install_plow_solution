@@ -43,16 +43,7 @@ function configureVariable {
     fi
 }
 
-function displayConfig {
-    echo "=== Configuration ==="
-    echo "Branche git: ${branch}"
-    echo "Chemin de base de l'installation: ${repertoire_installation_base}"
-    echo "Chemin d'installation de plow python: ${repertoire_git_plow_python}"
-    echo "Chemin repertoire téléchargement: ${repertoire_telechargement}"
-    echo "Chemin repertoire téléchargement temporaire: ${repertoire_telechargement_temporaire}"
-    echo "Adresse serveur: ${rest_address}"
-    echo "Adresse serveur de notification: ${notification_address}"
-}
+
 
 configureVariable
 

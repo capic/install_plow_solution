@@ -20,6 +20,7 @@ function displayConfig {
     echo "Chemin d'installation de plow python: ${repertoire_git_plow_python}"
     echo "Chemin repertoire téléchargement: ${repertoire_telechargement}"
     echo "Chemin repertoire téléchargement temporaire: ${repertoire_telechargement_temporaire}"
+    echo "Adresse serveur: ${rest_address}"
     echo "Adresse serveur de notification: ${notification_address}"
 }
 
