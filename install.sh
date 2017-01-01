@@ -41,6 +41,11 @@ function configureGeneralsVariables {
     if [ ! -z "${repertoire_telechargement_texte_input}" ]; then
         repertoire_telechargement_texte=${repertoire_telechargement_texte_input}
     fi
+    echo "Adresse base de données ? (defaut: ${bdd_address})"
+    read bdd_address_input
+    if [ ! -z "${bdd_address_input}" ]; then
+        bdd_address=${bdd_address_input}
+    fi
     echo "Adresse serveur ? (defaut: ${rest_address})"
     read rest_address_input
     if [ ! -z "${rest_address_input}" ]; then

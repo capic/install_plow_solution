@@ -9,7 +9,7 @@ function installPrerequis {
     apt-get -y upgrade
 
     echo "<<<<< Installation du reste des prérequis >>>>>"
-    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils
+    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils mysql-client
 
     echo "<<<<< Installation des librairies python >>>>>"
     if ! which pip >/dev/null; then
