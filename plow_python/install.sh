@@ -35,7 +35,7 @@ function createConfigPythonFile {
     echo "DOWNLOAD_ACTIVATED=True" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "# rest server address" >> ${repertoire_git_plow_python}/config_python.cfg
-    echo "REST_ADRESS=\"http://192.168.1.101:3000/\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "REST_ADRESS=\"${rest_address}/\"" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "# notification server address" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "NOTIFICATION_ADDRESS=\"${notification_address}\"" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "" >> ${repertoire_git_plow_python}/config_python.cfg
