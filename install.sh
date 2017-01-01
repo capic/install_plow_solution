@@ -93,7 +93,7 @@ function installPlowPython {
 function configDatabase {
     echo "Configuration de la base de données"
 
-    mysql -u root -h ${bdd_address} -d ${database} << EOF
+    mysql -u root -h ${bdd_address} -D ${database} << EOF
     insert into application_configuration(
         id_application,
         download_activated,
