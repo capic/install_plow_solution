@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-function configureVariable {
+function configureGeneralsVariables {
     echo "=== Configuration des variables générales ==="
     echo "Branche git ? (defaut: ${branch})"
     read branch_input
@@ -36,6 +36,11 @@ function configureVariable {
     if [ ! -z "${repertoire_telechargement_temporaire_input}" ]; then
         repertoire_telechargement_temporaire=${repertoire_telechargement_temporaire_input}
     fi
+    echo "Chemin repertoire téléchargement texte ? (defaut: ${repertoire_telechargement_texte})"
+    read repertoire_telechargement_texte_input
+    if [ ! -z "${repertoire_telechargement_texte_input}" ]; then
+        repertoire_telechargement_texte=${repertoire_telechargement_texte_input}
+    fi
     echo "Adresse serveur ? (defaut: ${rest_address})"
     read rest_address_input
     if [ ! -z "${rest_address_input}" ]; then
@@ -48,27 +53,60 @@ function configureVariable {
     fi
 }
 
+function menu {
+    echo "================ MENU ================"
+    options=("Installation de plow python")
+    PS3="Voulez-vous utilisez l'installation personnalisée ?"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) installPlowPython; break;;
+           $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
+            *) echo "Le choix n'est pas correct";continue;;
+        esac
+    done
+}
 
+function configurePlowPythonVariables {
+    echo "=== Configuration des variables de plow python ==="
+    echo "Chemin d'installation de plow python ? (defaut: ${repertoire_git_plow_python})"
+    read -p ${repertoire_installation_base} repertoire_git_plow_python_input
+    if [ ! -z "${repertoire_git_plow_python_input}" ]; then
+        repertoire_git_plow_python=${repertoire_installation_base}${repertoire_git_plow_python_input}
+    elif [ "${repertoire_installation_base_defaut}" != "${repertoire_installation_base}" ]; then
+        repertoire_git_plow_python=${repertoire_git_plow_python/${repertoire_installation_base_defaut}/${repertoire_installation_base}}
+    fi
+}
 
-configureVariable
+function installPlowPython {
+    configurePlowPythonVariables
 
-export branch
-export python_application_id
-export repertoire_installation_base_defaut
-export repertoire_installation_base
-export git_plowshare
-export git_plow_python
-export repertoire_git_plow_python
-export repertoire_git_plowshare
-export repertoire_telechargement
-export repertoire_telechargement_temporaire
-export rest_address
-export notification_address
+    # installation de plow_python
+    chmod 777 $DIR/plow_python/install.sh
+    $DIR/plow_python/install.sh
+}
 
-# installation des prerequis
-chmod 777 $DIR/common/install.sh
-$DIR/common/install.sh
+function start {
+    configureGeneralsVariables
 
-# installation de plow_python
-chmod 777 $DIR/plow_python/install.sh
-$DIR/plow_python/install.sh
+    export branch
+    export python_application_id
+    export repertoire_installation_base_defaut
+    export repertoire_installation_base
+    export git_plowshare
+    export git_plow_python
+    export repertoire_git_plow_python
+    export repertoire_git_plowshare
+    export repertoire_telechargement
+    export repertoire_telechargement_temporaire
+    export repertoire_telechargement_texte
+    export rest_address
+    export notification_address
+
+    # installation des prerequis
+    chmod 777 $DIR/common/install.sh
+    $DIR/common/install.sh
+
+    menu
+}
+
+start

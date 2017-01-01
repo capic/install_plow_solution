@@ -2,17 +2,6 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 #source $DIR/config/config_install.cfg
 
-function configureVariable {
-    echo "=== Configuration des variables de plow python ==="
-    echo "Chemin d'installation de plow python ? (defaut: ${repertoire_git_plow_python})"
-    read -p ${repertoire_installation_base} repertoire_git_plow_python_input
-    if [ ! -z "${repertoire_git_plow_python_input}" ]; then
-        repertoire_git_plow_python=${repertoire_installation_base}${repertoire_git_plow_python_input}
-    elif [ "${repertoire_installation_base_defaut}" != "${repertoire_installation_base}" ]; then
-        repertoire_git_plow_python=${repertoire_git_plow_python/${repertoire_installation_base_defaut}/${repertoire_installation_base}}
-    fi
-}
-
 function displayConfig {
     echo "=== Configuration ==="
     echo "Branche git: ${branch}"
@@ -48,6 +37,7 @@ function createConfigPythonFile {
     echo "PYTHON_LOG_DIRECTORY=\"${repertoire_git_plow_python}log/\"" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "PYTHON_DIRECTORY_DOWNLOAD_TEMP=\"${repertoire_telechargement_temporaire}\"" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "PYTHON_DIRECTORY_DOWNLOAD=\"${repertoire_telechargement}\"" >> ${repertoire_git_plow_python}/config_python.cfg
+    echo "PYTHON_DIRECTORY_DOWNLOAD_TEXT=\"${repertoire_telechargement_texte}\"" >> ${repertoire_git_plow_python}/config_python.cfg
 }
 
 # fonction d'installaion de plowshare et de ses prerequis
@@ -68,7 +58,6 @@ function installPlowshare {
 }
 
 function installPlowPython {
-    configureVariable
     displayConfig
 
      if ! which plowdown >/dev/null; then
