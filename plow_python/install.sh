@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 function createConfigPythonFile {
     echo "Suppression du fichier de configuration déjà existant"
