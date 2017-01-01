@@ -6,10 +6,6 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-# installation des prerequis
-chmod 777 $DIR/common/install.sh
-$DIR/common/install.sh
-
 export branch
 export repertoire_installation_base
 export git_plowshare
@@ -19,6 +15,10 @@ export repertoire_git_plow_python
 export repertoire_telechargement
 export repertoire_telechargement_temporaire
 export notification_address
+
+# installation des prerequis
+chmod 777 $DIR/common/install.sh
+$DIR/common/install.sh
 
 # installation de plow_python
 chmod 777 $DIR/plow_python/install.sh
