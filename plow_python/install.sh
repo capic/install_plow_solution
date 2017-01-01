@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/config/config_install.cfg
+#source $DIR/config/config_install.cfg
 
 function configureVariable {
     echo "=== Configuration des variables de plow python ==="
