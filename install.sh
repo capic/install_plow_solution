@@ -56,6 +56,7 @@ export repertoire_git_plow_python
 export repertoire_git_plowshare
 export repertoire_telechargement
 export repertoire_telechargement_temporaire
+export rest_address
 export notification_address
 
 # installation des prerequis
