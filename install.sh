@@ -52,6 +52,7 @@ export branch
 export repertoire_installation_base
 export git_plowshare
 export git_plow_python
+export repertoire_git_plow_python
 export repertoire_git_plowshare
 export repertoire_telechargement
 export repertoire_telechargement_temporaire
