@@ -9,54 +9,54 @@ fi
 
 function configureGeneralsVariables {
     echo "=== Configuration des variables générales ==="
-    echo "Branche git ? (defaut: ${branch})"
+    echo -e "\e[31mBranche git ? (defaut: ${branch})\e[39m"
     read branch_input
     if [ ! -z "${branch_input}" ]; then
         branch=${branch_input}
     fi
-    echo "Id de la configuration en base de données ? (defaut: ${python_application_id})"
+    echo -e "\e[31mId de la configuration en base de données ? (defaut: ${python_application_id})\e[39m"
     read python_application_id_input
     if [ ! -z "${python_application_id_input}" ]; then
         python_application_id=${python_application_id_input}
     fi
 #    on sauvegarde le repertoire defini par defaut (utile pour plus tard)
     repertoire_installation_base_defaut=${repertoire_installation_base}
-    echo "Chemin de base de l'installation ? (defaut: ${repertoire_installation_base})"
+    echo -e "\e[31mChemin de base de l'installation ? (defaut: ${repertoire_installation_base})\e[39m"
     read repertoire_installation_base_input
     if [ ! -z "${repertoire_installation_base_input}" ]; then
         repertoire_installation_base=${repertoire_installation_base_input}
     fi
-    echo "Chemin repertoire téléchargement ? (defaut: ${repertoire_telechargement})"
+    echo -e "\e[31mChemin repertoire téléchargement ? (defaut: ${repertoire_telechargement})\e[39m"
     read repertoire_telechargement_input
     if [ ! -z "${repertoire_telechargement_input}" ]; then
         repertoire_telechargement=${repertoire_telechargement_input}
     fi
-    echo "Chemin repertoire téléchargement temporaire ? (defaut: ${repertoire_telechargement_temporaire})"
+    echo -e "\e[31mChemin repertoire téléchargement temporaire ? (defaut: ${repertoire_telechargement_temporaire})\e[39m"
     read repertoire_telechargement_temporaire_input
     if [ ! -z "${repertoire_telechargement_temporaire_input}" ]; then
         repertoire_telechargement_temporaire=${repertoire_telechargement_temporaire_input}
     fi
-    echo "Chemin repertoire téléchargement texte ? (defaut: ${repertoire_telechargement_texte})"
+    echo -e "\e[31mChemin repertoire téléchargement texte ? (defaut: ${repertoire_telechargement_texte})\e[39m"
     read repertoire_telechargement_texte_input
     if [ ! -z "${repertoire_telechargement_texte_input}" ]; then
         repertoire_telechargement_texte=${repertoire_telechargement_texte_input}
     fi
-    echo "Adresse base de données ? (defaut: ${bdd_address})"
+    echo -e "\e[31mAdresse base de données ? (defaut: ${bdd_address})\e[39m"
     read bdd_address_input
     if [ ! -z "${bdd_address_input}" ]; then
         bdd_address=${bdd_address_input}
     fi
-    echo "Nom base de données ? (defaut: ${database})"
+    echo -e "\e[31mNom base de données ? (defaut: ${database})\e[39m"
     read database_input
     if [ ! -z "${database_input}" ]; then
         database=${database_input}
     fi
-    echo "Adresse serveur ? (defaut: ${rest_address})"
+    echo -e "\e[31mAdresse serveur ? (defaut: ${rest_address})\e[39m"
     read rest_address_input
     if [ ! -z "${rest_address_input}" ]; then
         rest_address=${rest_address_input}
     fi
-    echo "Adresse serveur de notification ? (defaut: ${notification_address})"
+    echo -e "\e[31mAdresse serveur de notification ? (defaut: ${notification_address})\e[39m"
     read notification_address_input
     if [ ! -z "${notification_address_input}" ]; then
         notification_address=${notification_address_input}

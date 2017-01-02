@@ -31,8 +31,6 @@ function createDatabase {
     mysql -u root -p -h ${bdd_address} << EOF
 CREATE DATABASE ${database}
 EOF
-
-    return true
 }
 
 function start {
@@ -47,10 +45,10 @@ function start {
         RESULT=`mysqlshow -u root -p -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
         if [ "$RESULT" == "" ]; then
             options=("Oui" "Non")
-            PS3=" La base de données n'existe pas, la créer ?"
+            PS3=" La base de données ${database} n'existe pas, la créer ?"
             select opt in "${options[@]}" "Quit"; do
                 case "$REPLY" in
-                    1 ) retry=createDatabase; break;;
+                    1 ) createDatabase; break;;
                     2 ) break;;
                     *) echo "Le choix n'est pas correct";continue;;
                 esac
