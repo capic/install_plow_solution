@@ -46,6 +46,11 @@ function configureGeneralsVariables {
     if [ ! -z "${bdd_address_input}" ]; then
         bdd_address=${bdd_address_input}
     fi
+    echo "Nom base de données ? (defaut: ${database})"
+    read database_input
+    if [ ! -z "${database_input}" ]; then
+        database=${database_input}
+    fi
     echo "Adresse serveur ? (defaut: ${rest_address})"
     read rest_address_input
     if [ ! -z "${rest_address_input}" ]; then
