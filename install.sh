@@ -91,7 +91,7 @@ function installPlowPython {
 }
 
 function configDatabase {
-    echo "Configuration de la base de données"
+    echo "Configuration de la base de données => insertion de la configuration"
 
     mysql -u root -h ${bdd_address} -p -D ${database} << EOF
     insert into application_configuration(
@@ -147,8 +147,15 @@ function start {
     $DIR/common/install.sh
 
     menu
-
-    configDatabase
+    options=("Oui")
+    PS3="Insérer la configuration ?"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) configDatabase; break;;
+           $(( ${#options[@]}+1 )) ) echo "Non!"; exit 1;;
+            *) echo "Le choix n'est pas correct";continue;;
+        esac
+    done
 }
 
 start

@@ -34,6 +34,7 @@ function start {
 
     # on teste si la bdd existe
     # => si non on demande si on doit la créer ou pas
+    echo "Connexion au serveur de base de données pour verifier si la base existe"
     RESULT=`mysqlshow -u root -p -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
     if [ "$RESULT" == "" ]; then
         options=("Oui")
@@ -45,6 +46,8 @@ function start {
                 *) echo "Le choix n'est pas correct";continue;;
             esac
         done
+    else
+        echo "La base de données existe déjà"
     fi
 }
 
