@@ -137,8 +137,10 @@ function start {
     export repertoire_telechargement
     export repertoire_telechargement_temporaire
     export repertoire_telechargement_texte
+    export bdd_address
     export rest_address
     export notification_address
+    export database
 
     # installation des prerequis
     chmod 777 $DIR/common/install.sh

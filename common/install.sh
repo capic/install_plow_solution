@@ -25,4 +25,27 @@ function installPrerequis {
     echo "=== Fin d'installation des prérequis === "
 }
 
-installPrerequis
+function createDatabase {
+    echo "=== Création de la base de données ==="
+}
+
+function start {
+    installPrerequis
+
+    # on teste si la bdd existe
+    # => si non on demande si on doit la créer ou pas
+    RESULT=`mysqlshow -u root -p -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
+    if [ "$RESULT" == "" ]; then
+        options=("Oui")
+        PS3=" La base de données n'existe pas, la créer ?"
+        select opt in "${options[@]}" "Quit"; do
+            case "$REPLY" in
+                1 ) createDatabase; break;;
+               $(( ${#options[@]}+1 )) ) echo "Non!"; exit 1;;
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+        done
+    fi
+}
+
+start

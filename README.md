@@ -1,6 +1,8 @@
 # install_plow_solution
 Ne pas oublier de rendre executable le sh et de le lancer comme suit: ./install.sh
 
+Ajouter le droit à toutes les adresses sur la base de données
+
 TODO
 mettre un menu au moment de l'installation de node pour demander l'architecture processeur ou trouver une façon de gérer l'installation de node
 gérer les configs de serveurs
