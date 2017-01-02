@@ -50,7 +50,11 @@ function start {
             PS3=" La base de données ${database} n'existe pas, la créer ?"
             select opt in "${options[@]}" "Quit"; do
                 case "$REPLY" in
-                    1 ) retry=createDatabase; break;;
+                    1 )
+                        if createDatabase; then
+                            retry=false;
+                         fi
+                         break;;
                     2 ) retry=false; break;;
                     *) echo "Le choix n'est pas correct";continue;;
                 esac
