@@ -147,12 +147,12 @@ function start {
     $DIR/common/install.sh
 
     menu
-    options=("Oui")
-    PS3="Insérer la configuration ?"
+    options=("Oui" "Non")
+    PS3="Insérer la configuration ?3"
     select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
             1 ) configDatabase; break;;
-           $(( ${#options[@]}+1 )) ) echo "Non!"; exit 1;;
+            2 ) break;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
     done

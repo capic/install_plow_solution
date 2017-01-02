@@ -27,6 +27,8 @@ function installPrerequis {
 
 function createDatabase {
     echo "=== Création de la base de données ==="
+
+    return true
 }
 
 function start {
@@ -34,21 +36,25 @@ function start {
 
     # on teste si la bdd existe
     # => si non on demande si on doit la créer ou pas
-    echo "Connexion au serveur de base de données pour verifier si la base existe"
-    RESULT=`mysqlshow -u root -p -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
-    if [ "$RESULT" == "" ]; then
-        options=("Oui")
-        PS3=" La base de données n'existe pas, la créer ?"
-        select opt in "${options[@]}" "Quit"; do
-            case "$REPLY" in
-                1 ) createDatabase; break;;
-               $(( ${#options[@]}+1 )) ) echo "Non!"; exit 1;;
-                *) echo "Le choix n'est pas correct";continue;;
-            esac
-        done
-    else
-        echo "La base de données existe déjà"
-    fi
+    echo "Connexion au serveur de base de données pour verifier si la base existe ..."
+    retry=true
+
+    while [ "${retry}" = true ]; do
+        RESULT=`mysqlshow -u root -p -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
+        if [ "$RESULT" == "" ]; then
+            options=("Oui" "Non")
+            PS3=" La base de données n'existe pas, la créer ?"
+            select opt in "${options[@]}" "Quit"; do
+                case "$REPLY" in
+                    1 ) retry=createDatabase; break;;
+                    2 ) break;;
+                    *) echo "Le choix n'est pas correct";continue;;
+                esac
+            done
+        else
+            echo "La base de données existe déjà"
+        fi
+   done
 }
 
 start
