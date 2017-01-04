@@ -62,29 +62,21 @@ function start {
 
     # on teste si la bdd existe
     # => si non on demande si on doit la créer ou pas
-    retry=true
+    RESULT=`mysqlshow -u root -p${database_password} -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
+    if [ "$RESULT" == "" ]; then
+        options=("Oui" "Non")
+        PS3=" La base de données ${database} n'existe pas, la créer ?"
+        select opt in "${options[@]}" "Quit"; do
+            case "$REPLY" in
+                1 )createDatabase; break;;
+                2 ) break;;
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+        done
+    else
 
-    while [ "${retry}" = true ]; do
-        RESULT=`mysqlshow -u root -p${database_password} -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
-        if [ "$RESULT" == "" ]; then
-            options=("Oui" "Non")
-            PS3=" La base de données ${database} n'existe pas, la créer ?"
-            select opt in "${options[@]}" "Quit"; do
-                case "$REPLY" in
-                    1 )
-                        if createDatabase; then
-                            retry=false;
-                         fi
-                         break;;
-                    2 ) retry=false; break;;
-                    *) echo "Le choix n'est pas correct";continue;;
-                esac
-            done
-        else
-            retry=false
-            echo "La base de données existe déjà"
-        fi
-   done
+        echo "La base de données existe déjà"
+    fi
 }
 
 start

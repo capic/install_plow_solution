@@ -103,33 +103,6 @@ function configDatabase {
     python_directory_download_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement}"'"`
     python_directory_download_text_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_texte}"'"`
 
-    echo "insert into application_configuration(
-        id_application,
-        download_activated,
-        api_log_database_level,
-        python_log_level,
-        python_log_format,
-        python_log_directory_id,
-        python_log_console_level,
-        python_directory_download_temp_id,
-        python_directory_download_id,
-        python_directory_download_text_id,
-        notification_address,
-        periodic_check_minutes)
-    values (
-        ${python_application_id},
-        true,
-        4,
-        4,
-        '[%(levelname)8s]  %(asctime)s <%(to_ihm)4s>     (%(file_name)s) {%(function_name)s} [%(message)s]',
-        ${python_log_directory_id},
-        4,
-        ${python_directory_download_temp_id},
-        ${python_directory_download_id},
-        ${python_directory_download_text_id},
-        '${notification_address}',
-        120)"
-
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
     insert into application_configuration(
         id_application,
