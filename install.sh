@@ -98,10 +98,10 @@ function installPlowPython {
 function configDatabase {
     echo "Configuration de la base de données => insertion de la configuration"
 
-    python_log_directory_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_git_plow_python}'"`
-    python_directory_download_temp_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_telechargement_temporaire}'"`
-    python_directory_download_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_telechargement}'"`
-    python_directory_download_text_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_telechargement_texte}'"`
+    python_log_directory_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='"${repertoire_git_plow_python}"'"`
+    python_directory_download_temp_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='"${repertoire_telechargement_temporaire}"'"`
+    python_directory_download_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='"${repertoire_telechargement}"'"`
+    python_directory_download_text_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='"${repertoire_telechargement_texte}"'"`
 
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
     insert into application_configuration(
