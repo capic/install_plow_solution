@@ -128,7 +128,7 @@ function configDatabase {
         ${python_directory_download_temp_id},
         ${python_directory_download_id},
         ${python_directory_download_text_id},
-        '${notification_address}',
+        "${notification_address}",
         120);
 EOF
 }
