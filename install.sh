@@ -123,7 +123,7 @@ function configDatabase {
         1,
         2,
         4,
-        ${notification_address},
+        '${notification_address}',
         120);
 EOF
 }
@@ -133,7 +133,7 @@ function start {
 
 #demander mot de passe bdd et sauvegarde
     echo "Connexion au serveur de base de données pour verifier si la base existe ..."
-    read -p "Mot de passe" database_password
+    read -s -p "Mot de passe: " database_password
 
     export branch
     export python_application_id
