@@ -29,7 +29,7 @@ function createDatabase {
     echo "=== Création de la base de données ==="
 
     mysql -u root -p${database_password} -h ${bdd_address} << EOF
-CREATE DATABASE ${database}
+CREATE DATABASE ${database} CHARACTER SET utf8 COLLATE utf8_general_ci
 EOF
     echo "=== Création de la structure de la base de données ==="
     mysql -u root -p${database_password} -h ${bdd_address} ${database} < $DIR/../scripts/plowshare.sql
