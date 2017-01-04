@@ -32,7 +32,7 @@ function createDatabase {
 CREATE DATABASE ${database}
 EOF
     echo "=== Création de la structure de la base de données ==="
-    mysql -u root -p${database_password} -h ${bdd_address} < $DIR/../scripts/plowshare.sql
+    mysql -u root -p${database_password} -h ${bdd_address} ${database} < $DIR/../scripts/plowshare.sql
 
     return 0
 }
