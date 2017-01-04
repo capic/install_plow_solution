@@ -28,7 +28,7 @@ function installPrerequis {
 function createDatabase {
     echo "=== Création de la base de données ==="
 
-    mysql -u root -p -h ${bdd_address} << EOF
+    mysql -u root -p${database_password} -h ${bdd_address} << EOF
 CREATE DATABASE ${database}
 EOF
     echo "=== Création de la structure de la base de données ==="
