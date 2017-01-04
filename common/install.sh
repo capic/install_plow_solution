@@ -34,6 +34,26 @@ EOF
     echo "=== Création de la structure de la base de données ==="
     mysql -u root -p${database_password} -h ${bdd_address} ${database} < $DIR/../scripts/plowshare.sql
 
+#    repertoire log
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) VALUES (${repertoire_git_plow_python}log) WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_git_plow_python}log')
+EOF
+
+#    repertoire telechargement
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) VALUES (${repertoire_telechargement}) WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_telechargement}')
+EOF
+
+#    repertoire telechargement temporaire
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) VALUES (${repertoire_telechargement_temporaire}) WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_telechargement_temporaire}')
+EOF
+
+#    repertoire telechargement texte
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) VALUES (${repertoire_telechargement_texte}) WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_telechargement_texte}')
+EOF
+
     return 0
 }
 

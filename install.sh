@@ -98,6 +98,11 @@ function installPlowPython {
 function configDatabase {
     echo "Configuration de la base de données => insertion de la configuration"
 
+    python_log_directory_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_git_plow_python}'"`
+    python_directory_download_temp_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_telechargement_temporaire}'"`
+    python_directory_download_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_telechargement}'"`
+    python_directory_download_text_id=`mysql -ss -e -u root -h ${bdd_address} -p${database_password} -D ${database} "SELECT id FROM directory WHERE path='${repertoire_telechargement_texte}'"`
+
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
     insert into application_configuration(
         id_application,
@@ -118,11 +123,11 @@ function configDatabase {
         4,
         4,
         '[%(levelname)8s]  %(asctime)s <%(to_ihm)4s>     (%(file_name)s) {%(function_name)s} [%(message)s]',
-        3,
+        ${python_log_directory_id},
         4,
-        1,
-        2,
-        4,
+        ${python_directory_download_temp_id},
+        ${python_directory_download_id},
+        ${python_directory_download_text_id},
         '${notification_address}',
         120);
 EOF

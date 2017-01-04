@@ -204,17 +204,6 @@ CREATE TABLE `directory` (
   `path` varchar(2048) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Contenu de la table `directory`
---
-
-INSERT INTO `directory` (`id`, `path`) VALUES
-(1, '/mnt/HD/HD_a2/telechargement/temp_plowdown/'),
-(2, '/mnt/HD/HD_a2/telechargement/'),
-(3, '/var/www/plow_solution_dev/log/'),
-(4, '/mnt/HD/HD_a2/telechargement/telechargements_texte/dev/'),
-(17, '/mnt/HD/HD_a2/'),
-(20, '/mnt/HD/HD_b2/Media/Videos/Films/_A REGARDER/');
 
 -- --------------------------------------------------------
 
