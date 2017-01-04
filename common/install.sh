@@ -31,6 +31,8 @@ function createDatabase {
     mysql -u root -p -h ${bdd_address} << EOF
 CREATE DATABASE ${database}
 EOF
+    echo "=== Création de la structure de la base de données ==="
+    mysql -u root -p -h ${bdd_address} < $DIR/../scripts/plowshare.sql
 
     return 0
 }
@@ -40,11 +42,10 @@ function start {
 
     # on teste si la bdd existe
     # => si non on demande si on doit la créer ou pas
-    echo "Connexion au serveur de base de données pour verifier si la base existe ..."
     retry=true
 
     while [ "${retry}" = true ]; do
-        RESULT=`mysqlshow -u root -p -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
+        RESULT=`mysqlshow -u root -p${database_password} -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`
         if [ "$RESULT" == "" ]; then
             options=("Oui" "Non")
             PS3=" La base de données ${database} n'existe pas, la créer ?"

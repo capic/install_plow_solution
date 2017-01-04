@@ -98,7 +98,7 @@ function installPlowPython {
 function configDatabase {
     echo "Configuration de la base de données => insertion de la configuration"
 
-    mysql -u root -h ${bdd_address} -p -D ${database} << EOF
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
     insert into application_configuration(
         id_application,
         download_activated,
@@ -131,6 +131,10 @@ EOF
 function start {
     configureGeneralsVariables
 
+#demander mot de passe bdd et sauvegarde
+    echo "Connexion au serveur de base de données pour verifier si la base existe ..."
+    read -p "Mot de passe" database_password
+
     export branch
     export python_application_id
     export repertoire_installation_base_defaut
@@ -146,6 +150,7 @@ function start {
     export rest_address
     export notification_address
     export database
+    export database_password
 
     # installation des prerequis
     chmod 777 $DIR/common/install.sh
