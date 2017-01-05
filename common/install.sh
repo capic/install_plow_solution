@@ -36,6 +36,7 @@ EOF
 }
 
 function insertDirectoriesInDatabase {
+    echo "=== Insertion des repertoires ==="
     #    repertoire log
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
 INSERT INTO directory (path) SELECT '${repertoire_git_plow_python}log' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_git_plow_python}log')
