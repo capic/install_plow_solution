@@ -33,8 +33,10 @@ CREATE DATABASE ${database} CHARACTER SET utf8 COLLATE utf8_general_ci
 EOF
     echo "=== Création de la structure de la base de données ==="
     mysql -u root -p${database_password} -h ${bdd_address} ${database} < $DIR/../scripts/plowshare.sql
+}
 
-#    repertoire log
+function insertDirectoriesInDatabase {
+    #    repertoire log
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
 INSERT INTO directory (path) SELECT '${repertoire_git_plow_python}log' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_git_plow_python}log')
 EOF
@@ -54,7 +56,6 @@ EOF
 INSERT INTO directory (path) SELECT '${repertoire_telechargement_texte}' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_telechargement_texte}')
 EOF
 
-    return 0
 }
 
 function start {
@@ -77,6 +78,8 @@ function start {
 
         echo "La base de données existe déjà"
     fi
+
+    insertDirectoriesInDatabase()
 }
 
 start
