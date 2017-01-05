@@ -98,6 +98,10 @@ function installPlowPython {
 function configDatabase {
     echo "Configuration de la base de données => insertion de la configuration"
 
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+    DELETE FROM  application_configuration where id_application = ${python_application_id}
+EOF
+
     python_log_directory_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_git_plow_python}"log'"`
     python_directory_download_temp_id=`mysql  -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_temporaire}"'"`
     python_directory_download_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement}"'"`
@@ -163,7 +167,7 @@ function start {
 
     menu
     options=("Oui" "Non")
-    PS3="Insérer la configuration ?3"
+    PS3="Insérer la configuration (Effacera la version actuelle si elle existe)?"
     select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
             1 ) configDatabase; break;;
