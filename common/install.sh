@@ -80,7 +80,7 @@ function start {
         echo "La base de données existe déjà"
     fi
 
-    insertDirectoriesInDatabase()
+    insertDirectoriesInDatabase
 }
 
 start
