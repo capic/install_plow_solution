@@ -60,34 +60,6 @@ EOF
 
 }
 
-function createDirectories {
-    echo "=== Création des répertoires inexistants ==="
-
-    if [ ! -d "${repertoire_git_plow_python}log" ]; then
-        echo "Création du répertoire de logs de plow python"
-        mkdir ${repertoire_git_plow_python}log
-        chmod 777 ${repertoire_git_plow_python}log
-    fi
-
-    if [ ! -d "${repertoire_telechargement}log" ]; then
-        echo "Création du répertoire de telechargement"
-        mkdir ${repertoire_telechargement}log
-        chmod 777 ${repertoire_telechargement}log
-    fi
-
-    if [ ! -d "${repertoire_telechargement_temporaire}log" ]; then
-        echo "Création du répertoire de telechargement temporaire"
-        mkdir ${repertoire_telechargement_temporaire}log
-        chmod 777 ${repertoire_telechargement_temporaire}log
-    fi
-
-    if [ ! -d "${repertoire_telechargement_texte}log" ]; then
-        echo "Création du répertoire de telechargement texte"
-        mkdir ${repertoire_telechargement_texte}log
-        chmod 777 ${repertoire_telechargement_texte}log
-    fi
-}
-
 function start {
     echo "=== Démarrage de l'installation des commons ==="
 
@@ -112,7 +84,6 @@ function start {
         echo "La base de données existe déjà"
     fi
 
-    createDirectories
     insertDirectoriesInDatabase
 }
 
