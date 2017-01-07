@@ -78,6 +78,7 @@ function menu {
 
 function configurePlowPythonVariables {
     echo "=== Configuration des variables de plow python ==="
+
     echo "Chemin d'installation de plow python ? (defaut: ${repertoire_git_plow_python})"
     read -p ${repertoire_installation_base} repertoire_git_plow_python_input
     if [ ! -z "${repertoire_git_plow_python_input}" ]; then
@@ -88,6 +89,7 @@ function configurePlowPythonVariables {
 }
 
 function installPlowPython {
+    echo "=== Installation de plow python ==="
     configurePlowPythonVariables
 
     # installation de plow_python
@@ -96,17 +98,20 @@ function installPlowPython {
 }
 
 function configDatabase {
-    echo "Configuration de la base de données => insertion de la configuration"
+    echo "=== Configuration de la base de données ==="
 
+    echo "Suppression de l'ancienne configuration avec l'id: ${python_application_id} si elle existe"
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
     DELETE FROM  application_configuration where id_application = ${python_application_id}
 EOF
 
+    echo "Insertion des repertoires si ils n'existent pas"
     python_log_directory_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_git_plow_python}"log'"`
     python_directory_download_temp_id=`mysql  -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_temporaire}"'"`
     python_directory_download_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement}"'"`
     python_directory_download_text_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_texte}"'"`
 
+    echo "Insetion de la configuration id: ${python_application_id}"
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
     insert into application_configuration(
         id_application,
@@ -138,6 +143,7 @@ EOF
 }
 
 function start {
+    echo "=== Démarrage de l'installation ==="
     configureGeneralsVariables
 
 #demander mot de passe bdd et sauvegarde
@@ -166,6 +172,8 @@ function start {
     $DIR/common/install.sh
 
     menu
+
+    echo "================= Configuration BDD ================="
     options=("Oui" "Non")
     PS3="Insérer la configuration (Effacera la version actuelle si elle existe)?"
     select opt in "${options[@]}" "Quit"; do

@@ -8,10 +8,10 @@ function installPrerequis {
     apt-get update
     apt-get -y upgrade
 
-    echo "<<<<< Installation du reste des prérequis >>>>>"
+    echo "--- Installation du reste des prérequis ---"
     apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils mysql-client
 
-    echo "<<<<< Installation des librairies python >>>>>"
+    echo "--- Installation des librairies python ---"
     if ! which pip >/dev/null; then
         wget https://bootstrap.pypa.io/get-pip.py
         python3 get-pip.py
@@ -37,6 +37,7 @@ EOF
 
 function insertDirectoriesInDatabase {
     echo "=== Insertion des repertoires ==="
+
     #    repertoire log
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
 INSERT INTO directory (path) SELECT '${repertoire_git_plow_python}log' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_git_plow_python}log')
@@ -60,8 +61,11 @@ EOF
 }
 
 function start {
+    echo "=== Démarrage de l'installation des commons ==="
+
     installPrerequis
 
+    echo "Test de l'existence de la BDD"
     # on teste si la bdd existe
     # => si non on demande si on doit la créer ou pas
     RESULT=`mysqlshow -u root -p${database_password} -h ${bdd_address} ${database}| grep -v Wildcard | grep -o ${database}`

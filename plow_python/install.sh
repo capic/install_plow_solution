@@ -2,22 +2,13 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 #source $DIR/config/config_install.cfg
 
-function displayConfig {
-    echo "=== Configuration ==="
-    echo "Branche git: ${branch}"
-    echo "Chemin de base de l'installation: ${repertoire_installation_base}"
-    echo "Chemin d'installation de plow python: ${repertoire_git_plow_python}"
-    echo "Chemin repertoire téléchargement: ${repertoire_telechargement}"
-    echo "Chemin repertoire téléchargement temporaire: ${repertoire_telechargement_temporaire}"
-    echo "Adresse serveur: ${rest_address}"
-    echo "Adresse serveur de notification: ${notification_address}"
-}
-
 function createConfigPythonFile {
-    echo "Suppression du fichier de configuration déjà existant"
+    echo "=== Création du fichier de config python ==="
+
+    echo "Suppression du fichier de configuration déjà existant: ${repertoire_git_plow_python}config_python.cfg"
     rm ${repertoire_git_plow_python}config_python.cfg
 
-    echo "Création du fichier de configuration pour plow_python"
+    echo "Création du fichier de configuration pour plow_python: ${repertoire_git_plow_python}config_python.cfg"
 
     echo "# application id" >> ${repertoire_git_plow_python}/config_python.cfg
     echo "PYTHON_APPLICATION_ID=${python_application_id}" >> ${repertoire_git_plow_python}/config_python.cfg
@@ -42,25 +33,26 @@ function createConfigPythonFile {
 
 # fonction d'installaion de plowshare et de ses prerequis
 function installPlowshare {
-    echo "=== Installation des prérequis plowshare === "
-    echo "*** Teste si plowdown est installé ****"
-    if ! which plowdown >/dev/null; then
-        apt-get -y install coreutils sed util-linux grep curl recode rhino
-        echo "=== Installation de plowshare === "
-        echo "Adresse du dépot git de plowdown : ${git_plowshare} => $repertoire_git_plowshare"
-        git clone $git_plowshare $repertoire_git_plowshare
-        chown $(whoami) $repertoire_git_plowshare
-        cd $repertoire_git_plowshare
-        make install
-        plowmod --install
-    fi
+    echo "=== Installation de plowshare === "
+
+    echo "Plowshare n'est pas installé => installation"
+    apt-get -y install coreutils sed util-linux grep curl recode rhino
+    echo "=== Installation de plowshare === "
+    echo "Adresse du dépot git de plowdown : ${git_plowshare} => $repertoire_git_plowshare"
+    git clone $git_plowshare $repertoire_git_plowshare
+    chown $(whoami) $repertoire_git_plowshare
+    cd $repertoire_git_plowshare
+    make install
+    plowmod --install
+
     echo "=== Fin d'installation de plowshare === "
 }
 
 function installPlowPython {
-    displayConfig
+    echo "=== Installation de plow python ==="
 
-     if ! which plowdown >/dev/null; then
+    echo "*** Teste si plowdown est installé ****"
+    if ! which plowdown >/dev/null; then
         options=("Oui" "Non")
         PS3="Attention, plowshare n'est pas installé, voulez-vous l'installer ?"
         select opt in "${options[@]}" "Quit"; do
@@ -70,6 +62,8 @@ function installPlowPython {
                 *) echo "Le choix n'est pas correct";continue;;
             esac
         done
+    else
+        echo "Plowshare est déjà installé"
     fi
 
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
@@ -82,9 +76,13 @@ function installPlowPython {
     createConfigPythonFile
 }
 
+function start {
+    installPlowPython
+}
+
 if [[ $EUID -ne 0 ]]; then
    echo "Ce script doit être lancé avec les droits super utilisateur" 1>&2
    exit 1
 fi
 
-installPlowPython
+start
