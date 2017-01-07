@@ -69,9 +69,6 @@ function installPlowPython {
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
     echo "Téléchargement du gestionnaire de téléchargements"
     git clone -b ${branch} $git_plow_python $repertoire_git_plow_python
-    echo "Création du répertoire de log"
-    mkdir ${repertoire_git_plow_python}log
-    chmod 777 ${repertoire_git_plow_python}log
 
     createConfigPythonFile
 }
