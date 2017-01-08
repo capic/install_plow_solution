@@ -148,25 +148,25 @@ function createDirectories {
     if [ ! -d "${repertoire_git_plow_python}log" ]; then
         echo "Création du répertoire de logs de plow python"
         mkdir -p ${repertoire_git_plow_python}log
-        chmod 777 ${repertoire_git_plow_python}log
+        chmod -R 777 ${repertoire_git_plow_python}log
     fi
 
-    if [ ! -d "${repertoire_telechargement}log" ]; then
+    if [ ! -d "${repertoire_telechargement}" ]; then
         echo "Création du répertoire de telechargement"
-        mkdir -p ${repertoire_telechargement}log
-        chmod 777 ${repertoire_telechargement}log
+        mkdir -p ${repertoire_telechargement}
+        chmod -R 777 ${repertoire_telechargement}
     fi
 
-    if [ ! -d "${repertoire_telechargement_temporaire}log" ]; then
+    if [ ! -d "${repertoire_telechargement_temporaire}" ]; then
         echo "Création du répertoire de telechargement temporaire"
-        mkdir -p ${repertoire_telechargement_temporaire}log
-        chmod 777 ${repertoire_telechargement_temporaire}log
+        mkdir -p ${repertoire_telechargement_temporaire}
+        chmod -R 777 ${repertoire_telechargement_temporaire}
     fi
 
-    if [ ! -d "${repertoire_telechargement_texte}log" ]; then
+    if [ ! -d "${repertoire_telechargement_texte}" ]; then
         echo "Création du répertoire de telechargement texte"
-        mkdir -p ${repertoire_telechargement_texte}log
-        chmod 777 ${repertoire_telechargement_texte}log
+        mkdir -p ${repertoire_telechargement_texte}
+        chmod -R 777 ${repertoire_telechargement_texte}
     fi
 }
 
