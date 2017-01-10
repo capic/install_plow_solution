@@ -5,7 +5,7 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 # fonction d'installation des prerequis
 function installPrerequis {
     echo "=== Installation des prérequis === "
-    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils mysql-client openvpn
+    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils
 
     echo "--- Installation des librairies python ---"
     if ! which pip >/dev/null; then

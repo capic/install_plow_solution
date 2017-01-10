@@ -6,6 +6,8 @@ function updatePackage {
     echo "--- Mise à jour des dépots --- "
     apt-get update
     apt-get -y upgrade
+
+    apt-get install mysql-client openvpn -y
 }
 
 function createDatabase {
