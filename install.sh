@@ -206,8 +206,10 @@ function exportVariables {
     export repertoire_installation_base
     export git_plowshare
     export git_plow_python
+    export git_plow_back_rest
     export repertoire_git_plow_python
     export repertoire_git_plowshare
+    export repertoire_git_plow_back_rest
     export repertoire_telechargement
     export repertoire_telechargement_temporaire
     export repertoire_telechargement_texte
