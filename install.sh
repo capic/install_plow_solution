@@ -232,6 +232,7 @@ function exportVariables {
     export database
     export database_password
     export nodejs_version
+    export arm_version
     export download_server_address
 }
 

@@ -10,12 +10,17 @@ function installPrerequis {
     if [ ! -z "${nodejs_version_input}" ]; then
         nodejs_version=${nodejs_version_input}
     fi
-    wget "https://nodejs.org/dist/latest/node-v${nodejs_version}-linux-armv7l.tar.gz" -P /tmp
+    echo -e "\e[31mVersion arm ? (defaut: ${arm_version})\e[39m"
+    read arm_version_input
+    if [ ! -z "${arm_version_input}" ]; then
+        arm_version=${arm_version_input}
+    fi
+    wget "https://nodejs.org/dist/latest/node-v${nodejs_version}-linux-${arm_version}.tar.gz" -P /tmp
     cd /tmp
-    tar -xf node-v7.4.0-linux-armv7l.tar.gz
-    cd node-v7.4.0-linux-armv7l
+    tar -xf node-v${nodejs_version}-linux-${arm_version}.tar.gz
+    cd node-v${nodejs_version}-linux-${arm_version}
     cp -R * /usr/local/
-    rm -R /tmp/node-v7.4.0-linux-armv7l
+    rm -R /tmp/node-v${nodejs_version}-linux-${arm_version}
     cd
 }
 
