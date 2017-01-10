@@ -16,6 +16,7 @@ function installPrerequis {
     cd node-v7.4.0-linux-armv7l
     cp -R * /usr/local/
     rm -R /tmp/node-v7.4.0-linux-armv7l
+    cd
 }
 
 function createConfigFilePlowBackRest {
@@ -129,7 +130,7 @@ function createConfigFilePlowBackRest {
 function installPlowBackRest {
     echo "=== Installation de plow back rest ==="
 
-    echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
+    echo "Adresse du dépot git de plow back rest : $git_plow_back_rest => $repertoire_git_plow_back_rest"
     git clone -b ${branch} ${git_plow_back_rest} ${repertoire_git_plow_back_rest}
 
     createConfigFilePlowBackRest
