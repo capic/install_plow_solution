@@ -15,6 +15,7 @@ function installPrerequis {
     tar -xvf node-v7.4.0-linux-armv7l.tar.gz
     cd node-v7.4.0-linux-armv7l
     cp -R * /usr/local/
+    rm -R /tmp/node-v7.4.0-linux-armv7l
 }
 
 function createConfigFilePlowBackRest {
