@@ -131,9 +131,13 @@ EOF
 
     echo "Insertion des repertoires si ils n'existent pas"
     python_log_directory_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_git_plow_python}"log/'"`
+    echo "id de ${repertoire_git_plow_python}log/: ${python_log_directory_id}"
     python_directory_download_temp_id=`mysql  -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_temporaire}"'"`
+    echo "id de ${repertoire_telechargement_temporaire}: ${python_directory_download_temp_id}"
     python_directory_download_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement}"'"`
+    echo "id de ${repertoire_telechargement}: ${python_directory_download_id}"
     python_directory_download_text_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_texte}"'"`
+    echo "id de ${repertoire_telechargement_texte}: ${python_directory_download_text_id}"
 
     echo "Insetion de la configuration id: ${python_application_id}"
     mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
