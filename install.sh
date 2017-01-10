@@ -110,6 +110,19 @@ function installPlowPython {
     # installation de plow_python
     chmod 777 $DIR/plow_python/install.sh
     $DIR/plow_python/install.sh
+
+    createDirectories
+
+    echo "================= Configuration BDD ================="
+    options=("Oui" "Non")
+    PS3="Insérer la configuration (Effacera la version actuelle si elle existe)?"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) configDatabase; break;;
+            2 ) break;;
+            *) echo "Le choix n'est pas correct";continue;;
+        esac
+    done
 }
 
 function installPlowBackRest {
@@ -237,19 +250,6 @@ function start {
 
 
     menu
-
-    createDirectories
-
-    echo "================= Configuration BDD ================="
-    options=("Oui" "Non")
-    PS3="Insérer la configuration (Effacera la version actuelle si elle existe)?"
-    select opt in "${options[@]}" "Quit"; do
-        case "$REPLY" in
-            1 ) configDatabase; break;;
-            2 ) break;;
-            *) echo "Le choix n'est pas correct";continue;;
-        esac
-    done
 }
 
 start
