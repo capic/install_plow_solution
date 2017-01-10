@@ -124,11 +124,6 @@ function installPlowBackRest {
 function configDatabase {
     echo "=== Configuration de la base de données ==="
 
-    echo "Suppression de l'ancienne configuration avec l'id: ${python_application_id} si elle existe"
-    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
-    DELETE FROM  application_configuration where id_application = ${python_application_id}
-EOF
-
     echo "Insertion des repertoires si ils n'existent pas"
     python_log_directory_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_git_plow_python}"log/'"`
     echo "id de ${repertoire_git_plow_python}log/: ${python_log_directory_id}"
@@ -167,6 +162,12 @@ EOF
         ${python_directory_download_text_id},
         '${notification_address}',
         120)
+    on duplicate key update
+        python_log_directory_id = ${python_log_directory_id},
+        python_directory_download_temp_id = ${python_directory_download_temp_id},
+        python_directory_download_id =  ${python_directory_download_temp_id},
+        python_directory_download_text_id = ${python_directory_download_text_id},
+        notification_address = '${notification_address}'
 EOF
 }
 
