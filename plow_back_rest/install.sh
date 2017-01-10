@@ -12,7 +12,7 @@ function installPrerequis {
     fi
     wget "https://nodejs.org/dist/latest/node-v${nodejs_version}-linux-armv7l.tar.gz" -P /tmp
     cd /tmp
-    tar -xvf node-v7.4.0-linux-armv7l.tar.gz
+    tar -xf node-v7.4.0-linux-armv7l.tar.gz
     cd node-v7.4.0-linux-armv7l
     cp -R * /usr/local/
     rm -R /tmp/node-v7.4.0-linux-armv7l
@@ -33,7 +33,7 @@ function createConfigFilePlowBackRest {
     echo "      \"database\": \"${database}\"," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"user\": \"root\"," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"password\": \"${database_password}\"," >> ${repertoire_git_plow_back_rest}config/local.json
-    echo "  }," >> $${repertoire_git_plow_back_rest}config/local.json
+    echo "  }," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  \"heapdump\": {" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"activated\": false," >> ${repertoire_git_plow_python}/config_python.cfg
     echo "      \"directory\": ${repertoire_git_plow_back_rest}dump\"," >> ${repertoire_git_plow_back_rest}config/local.json
