@@ -14,6 +14,11 @@ function configureCommonsVariables {
     if [ ! -z "${branch_input}" ]; then
         branch=${branch_input}
     fi
+    echo -e "\e[31mAdresse base de données ? (defaut: ${bdd_address})\e[39m"
+    read bdd_address_input
+    if [ ! -z "${bdd_address_input}" ]; then
+        bdd_address=${bdd_address_input}
+    fi
     echo -e "\e[31mNom base de données ? (defaut: ${database})\e[39m"
     read database_input
     if [ ! -z "${database_input}" ]; then
@@ -62,11 +67,6 @@ function configurePlowPythonVariables {
         repertoire_git_plow_python=${repertoire_installation_base}${repertoire_git_plow_python_input}
     elif [ "${repertoire_installation_base_defaut}" != "${repertoire_installation_base}" ]; then
         repertoire_git_plow_python=${repertoire_git_plow_python/${repertoire_installation_base_defaut}/${repertoire_installation_base}}
-    fi
-    echo -e "\e[31mAdresse base de données ? (defaut: ${bdd_address})\e[39m"
-    read bdd_address_input
-    if [ ! -z "${bdd_address_input}" ]; then
-        bdd_address=${bdd_address_input}
     fi
     echo -e "\e[31mAdresse serveur ? (defaut: ${rest_address})\e[39m"
     read rest_address_input
