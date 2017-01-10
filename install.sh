@@ -215,6 +215,8 @@ function start {
     echo "=== Démarrage de l'installation ==="
 
 #demander mot de passe bdd et sauvegarde
+    configureCommonsVariables
+
     echo "Connexion au serveur de base de données pour verifier si la base existe ..."
     read -s -p "Mot de passe: " database_password
 
@@ -222,7 +224,7 @@ function start {
     chmod 777 $DIR/common/install.sh
     $DIR/common/install.sh
 
-    configureCommonsVariables
+
     menu
 
     createDirectories
