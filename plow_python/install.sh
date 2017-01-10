@@ -2,6 +2,25 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 #source $DIR/config/config_install.cfg
 
+# fonction d'installation des prerequis
+function installPrerequis {
+    echo "=== Installation des prérequis === "
+    apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils mysql-client openvpn
+
+    echo "--- Installation des librairies python ---"
+    if ! which pip >/dev/null; then
+        wget https://bootstrap.pypa.io/get-pip.py
+        python3 get-pip.py
+    fi
+    echo "## install psutil ##"
+    pip3 install psutil
+    echo "## install watchdog ##"
+    pip3 install watchdog
+    echo "## install request ##"
+    pip3 install request
+    echo "=== Fin d'installation des prérequis === "
+}
+
 function createConfigPythonFile {
     echo "=== Création du fichier de config python ==="
 
@@ -35,10 +54,9 @@ function createConfigPythonFile {
 function installPlowshare {
     echo "=== Installation de plowshare === "
 
-    echo "Plowshare n'est pas installé => installation"
     apt-get -y install coreutils sed util-linux grep curl recode rhino
-    echo "=== Installation de plowshare === "
-    echo "Adresse du dépot git de plowdown : ${git_plowshare} => $repertoire_git_plowshare"
+
+    echo "Adresse du dépot git de plowshare : ${git_plowshare} => $repertoire_git_plowshare"
     git clone $git_plowshare $repertoire_git_plowshare
     chown $(whoami) $repertoire_git_plowshare
     cd $repertoire_git_plowshare
@@ -67,13 +85,13 @@ function installPlowPython {
     fi
 
     echo "Adresse du dépot git de plow_pyhton : $git_plow_python => $repertoire_git_plow_python"
-    echo "Téléchargement du gestionnaire de téléchargements"
     git clone -b ${branch} $git_plow_python $repertoire_git_plow_python
 
     createConfigPythonFile
 }
 
 function start {
+    installPrerequis
     installPlowPython
 }
 
