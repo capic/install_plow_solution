@@ -170,25 +170,25 @@ function createDirectories {
     echo "=== Création des répertoires inexistants ==="
 
     if [ ! -d "${repertoire_git_plow_python}log" ]; then
-        echo "Création du répertoire de logs de plow python"
+        echo "Création du répertoire de logs de plow python: ${repertoire_git_plow_python}log"
         mkdir -p ${repertoire_git_plow_python}log
         chmod -R 777 ${repertoire_git_plow_python}log
     fi
 
     if [ ! -d "${repertoire_telechargement}" ]; then
-        echo "Création du répertoire de telechargement"
+        echo "Création du répertoire de telechargement: ${repertoire_telechargement}"
         mkdir -p ${repertoire_telechargement}
         chmod -R 777 ${repertoire_telechargement}
     fi
 
     if [ ! -d "${repertoire_telechargement_temporaire}" ]; then
-        echo "Création du répertoire de telechargement temporaire"
+        echo "Création du répertoire de telechargement temporaire: ${repertoire_telechargement_temporaire}"
         mkdir -p ${repertoire_telechargement_temporaire}
         chmod -R 777 ${repertoire_telechargement_temporaire}
     fi
 
     if [ ! -d "${repertoire_telechargement_texte}" ]; then
-        echo "Création du répertoire de telechargement texte"
+        echo "Création du répertoire de telechargement texte: ${repertoire_telechargement_texte}"
         mkdir -p ${repertoire_telechargement_texte}
         chmod -R 777 ${repertoire_telechargement_texte}
     fi
