@@ -165,7 +165,7 @@ function configDatabase {
     on duplicate key update
         python_log_directory_id = ${python_log_directory_id},
         python_directory_download_temp_id = ${python_directory_download_temp_id},
-        python_directory_download_id =  ${python_directory_download_temp_id},
+        python_directory_download_id =  ${python_directory_download_id},
         python_directory_download_text_id = ${python_directory_download_text_id},
         notification_address = '${notification_address}'
 EOF
