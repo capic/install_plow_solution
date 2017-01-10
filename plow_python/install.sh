@@ -90,9 +90,40 @@ function installPlowPython {
     createConfigPythonFile
 }
 
+function insertDirectoriesInDatabase {
+    echo "=== Insertion des repertoires ==="
+
+
+    #    repertoire log
+    echo "Insertion de ${repertoire_git_plow_python}log/"
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) SELECT '${repertoire_git_plow_python}log/' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_git_plow_python}log/')
+EOF
+
+#    repertoire telechargement
+    echo "Insertion de ${repertoire_telechargement}"
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) SELECT '${repertoire_telechargement}' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_telechargement}')
+EOF
+
+#    repertoire telechargement temporaire
+    echo "Insertion de ${repertoire_telechargement_temporaire}"
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) SELECT '${repertoire_telechargement_temporaire}' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_telechargement_temporaire}')
+EOF
+
+#    repertoire telechargement texte
+    echo "Insertion de ${repertoire_telechargement_texte}"
+    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
+INSERT INTO directory (path) SELECT '${repertoire_telechargement_texte}' FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM directory WHERE path='${repertoire_telechargement_texte}')
+EOF
+
+}
+
 function start {
     installPrerequis
     installPlowPython
+    insertDirectoriesInDatabase
 }
 
 if [[ $EUID -ne 0 ]]; then
