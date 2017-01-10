@@ -29,6 +29,8 @@ function configureCommonsVariables {
     if [ ! -z "${notification_address_input}" ]; then
         notification_address=${notification_address_input}
     fi
+
+    exportVariables
 }
 
 function configurePlowPythonVariables {
@@ -73,6 +75,8 @@ function configurePlowPythonVariables {
     if [ ! -z "${rest_address_input}" ]; then
         rest_address=${rest_address_input}
     fi
+
+    exportVariables
 }
 
 function configurePlowBackRestVariables {
@@ -81,6 +85,8 @@ function configurePlowBackRestVariables {
     if [ ! -z "${download_address_input}" ]; then
         download_server_address=${download_server_address_input}
     fi
+
+    exportVariables
 }
 
 function menu {
@@ -100,7 +106,6 @@ function menu {
 function installPlowPython {
     echo "=== Installation de plow python ==="
     configurePlowPythonVariables
-    exportVariables
 
     # installation de plow_python
     chmod 777 $DIR/plow_python/install.sh
@@ -110,7 +115,6 @@ function installPlowPython {
 function installPlowBackRest {
     echo "=== Installation de plow back rest ==="
     configurePlowBackRestVariables
-    exportVariables
 
     # installation de plow back rest
     chmod 777 $DIR/plow_back_rest/install.sh
