@@ -138,6 +138,9 @@ function installPlowBackRest {
     echo "Adresse du dépot git de plow back rest : $git_plow_back_rest => $repertoire_git_plow_back_rest"
     git clone -b ${branch} ${git_plow_back_rest} ${repertoire_git_plow_back_rest}
 
+    cd ${repertoire_git_plow_back_rest}
+    npm install
+
     createConfigFilePlowBackRest
 }
 
