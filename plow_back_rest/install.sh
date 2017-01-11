@@ -3,25 +3,32 @@ DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 function installPrerequis {
     echo "=== Installation des prérequis ==="
-    #TODO: verifier si node deja installe, si oui demander si update
-    echo "--- Installation de nodejs ---"
-    echo -e "\e[31mVersion de nodejs ? (defaut: ${nodejs_version})\e[39m"
-    read nodejs_version_input
-    if [ ! -z "${nodejs_version_input}" ]; then
-        nodejs_version=${nodejs_version_input}
+
+    echo "*** Teste si node est installé ****"
+    if ! which node >/dev/null; then
+        echo "--- Installation de nodejs ---"
+        echo -e "\e[31mVersion de nodejs ? (defaut: ${nodejs_version})\e[39m"
+        read nodejs_version_input
+        if [ ! -z "${nodejs_version_input}" ]; then
+            nodejs_version=${nodejs_version_input}
+        fi
+        echo -e "\e[31mVersion arm ? (defaut: ${arm_version})\e[39m"
+        read arm_version_input
+        if [ ! -z "${arm_version_input}" ]; then
+            arm_version=${arm_version_input}
+        fi
+        echo "Récupération du paquet nodejs"
+        wget "https://nodejs.org/dist/latest/node-v${nodejs_version}-linux-${arm_version}.tar.gz" -P /tmp
+        cd /tmp
+        echo "Extraction de nodejs dans le répertoire temporaire"
+        tar -xf node-v${nodejs_version}-linux-${arm_version}.tar.gz
+        cd node-v${nodejs_version}-linux-${arm_version}
+        echo "Copie de nodejs"
+        cp -R * /usr/local/
+        echo "Suppression du répertoire temporaire"
+        rm -R /tmp/node-v${nodejs_version}-linux-${arm_version}
+        cd
     fi
-    echo -e "\e[31mVersion arm ? (defaut: ${arm_version})\e[39m"
-    read arm_version_input
-    if [ ! -z "${arm_version_input}" ]; then
-        arm_version=${arm_version_input}
-    fi
-    wget "https://nodejs.org/dist/latest/node-v${nodejs_version}-linux-${arm_version}.tar.gz" -P /tmp
-    cd /tmp
-    tar -xf node-v${nodejs_version}-linux-${arm_version}.tar.gz
-    cd node-v${nodejs_version}-linux-${arm_version}
-    cp -R * /usr/local/
-    rm -R /tmp/node-v${nodejs_version}-linux-${arm_version}
-    cd
 }
 
 function createConfigFilePlowBackRest {
