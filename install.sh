@@ -32,8 +32,6 @@ function configureCommonsVariables {
 
     echo "Connexion au serveur de base de données pour verifier si la base existe ..."
     read -s -p "Mot de passe: " database_password
-
-    exportVariables
 }
 
 function configurePlowPythonVariables {
@@ -80,8 +78,6 @@ function configurePlowPythonVariables {
     if [ ! -z "${rest_address_input}" ]; then
         rest_address=${rest_address_input}
     fi
-
-    exportVariables
 }
 
 function configurePlowBackRestVariables {
@@ -92,8 +88,6 @@ function configurePlowBackRestVariables {
     if [ ! -z "${download_address_input}" ]; then
         download_server_address=${download_server_address_input}
     fi
-
-    exportVariables
 }
 
 function menu {
@@ -114,6 +108,7 @@ function menu {
 function installPlowPython {
     echo "=== Installation de plow python ==="
     configurePlowPythonVariables
+    exportVariables
 
     installCommon
 
@@ -138,6 +133,7 @@ function installPlowPython {
 function installPlowBackRest {
     echo "=== Installation de plow back rest ==="
     configurePlowBackRestVariables
+    exportVariables
 
     installCommon
 
@@ -148,6 +144,7 @@ function installPlowBackRest {
 
 function installPlowNotification {
     echo "=== Installation de plow notification ==="
+    exportVariables
 
     # installation de plow notification
     chmod 777 $DIR/plow_notification/install.sh

@@ -20,7 +20,7 @@ function installPrerequis {
 function installPlowNotification {
     echo "=== Installation de plow notification ==="
 
-    echo "Creation de l'environnement virtuel"
+    echo "Creation de l'environnement virtuel: ${repertoire_installation_base}"
     if [ ! -d "${repertoire_installation_base}" ]; then
         mkdir ${repertoire_installation_base}
     fi
