@@ -2,6 +2,7 @@
 
 function installPrerequis {
     echo "=== Installation des prérequis ==="
+    apt-get install software-properties-common
 
     echo "Ajout du dépot"
     apt-add-repository ppa:pypy/ubuntu/ppa
