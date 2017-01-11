@@ -7,13 +7,27 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
-function configureCommonsVariables {
-    echo "=== Configuration des variables générales ==="
+function configureCommonsVariables_1 {
+    echo "=== Configuration des variables générales 1 ==="
+
+    #    on sauvegarde le repertoire defini par defaut (utile pour plus tard)
+    repertoire_installation_base_defaut=${repertoire_installation_base}
+    echo -e "\e[31mChemin de base de l'installation ? (defaut: ${repertoire_installation_base})\e[39m"
+    read repertoire_installation_base_input
+    if [ ! -z "${repertoire_installation_base_input}" ]; then
+        repertoire_installation_base=${repertoire_installation_base_input}
+    fi
+}
+
+function configureCommonsVariables_2 {
+    echo "=== Configuration des variables générales 2 ==="
+
     echo -e "\e[31mBranche git ? (defaut: ${branch})\e[39m"
     read branch_input
     if [ ! -z "${branch_input}" ]; then
         branch=${branch_input}
     fi
+
     echo -e "\e[31mAdresse base de données ? (defaut: ${bdd_address})\e[39m"
     read bdd_address_input
     if [ ! -z "${bdd_address_input}" ]; then
@@ -35,21 +49,12 @@ function configureCommonsVariables {
 }
 
 function configurePlowPythonVariables {
-    configureCommonsVariables
-
     echo "=== Configuration des variables de plow python ==="
 
     echo -e "\e[31mId de la configuration en base de données ? (defaut: ${python_application_id})\e[39m"
     read python_application_id_input
     if [ ! -z "${python_application_id_input}" ]; then
         python_application_id=${python_application_id_input}
-    fi
-    #    on sauvegarde le repertoire defini par defaut (utile pour plus tard)
-    repertoire_installation_base_defaut=${repertoire_installation_base}
-    echo -e "\e[31mChemin de base de l'installation ? (defaut: ${repertoire_installation_base})\e[39m"
-    read repertoire_installation_base_input
-    if [ ! -z "${repertoire_installation_base_input}" ]; then
-        repertoire_installation_base=${repertoire_installation_base_input}
     fi
     echo -e "\e[31mChemin repertoire téléchargement ? (defaut: ${repertoire_telechargement})\e[39m"
     read repertoire_telechargement_input
@@ -107,6 +112,9 @@ function menu {
 
 function installPlowPython {
     echo "=== Installation de plow python ==="
+
+    configureCommonsVariables_1
+    configureCommonsVariables_2
     configurePlowPythonVariables
     exportVariables
 
@@ -132,6 +140,9 @@ function installPlowPython {
 
 function installPlowBackRest {
     echo "=== Installation de plow back rest ==="
+
+    configureCommonsVariables_1
+    configureCommonsVariables_2
     configurePlowBackRestVariables
     exportVariables
 
@@ -144,6 +155,8 @@ function installPlowBackRest {
 
 function installPlowNotification {
     echo "=== Installation de plow notification ==="
+
+    configureCommonsVariables_1
     exportVariables
 
     # installation de plow notification
