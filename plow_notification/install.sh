@@ -4,7 +4,7 @@ function installPrerequis {
     echo "=== Installation des prérequis ==="
 
     echo "Ajout du dépot"
-    sudo apt-add-repository ppa:pypy/ubuntu/ppa
+    apt-add-repository ppa:pypy/ubuntu/ppa
 
     echo "--- Mise à jour des dépots --- "
     apt-get update
