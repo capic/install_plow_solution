@@ -8,6 +8,9 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 function configureCommonsVariables {
+    echo "Connexion au serveur de base de données pour verifier si la base existe ..."
+    read -s -p "Mot de passe: " database_password
+
     echo "=== Configuration des variables générales ==="
     echo -e "\e[31mBranche git ? (defaut: ${branch})\e[39m"
     read branch_input
@@ -34,6 +37,8 @@ function configureCommonsVariables {
 }
 
 function configurePlowPythonVariables {
+    configureCommonsVariables
+
     echo "=== Configuration des variables de plow python ==="
 
     echo -e "\e[31mId de la configuration en base de données ? (defaut: ${python_application_id})\e[39m"
@@ -80,6 +85,8 @@ function configurePlowPythonVariables {
 }
 
 function configurePlowBackRestVariables {
+    configureCommonsVariables
+
     echo -e "\e[31mAdresse serveur de telechargement ? (defaut: ${download_server_address})\e[39m"
     read download_address_input
     if [ ! -z "${download_address_input}" ]; then
@@ -97,6 +104,7 @@ function menu {
         case "$REPLY" in
             1 ) installPlowPython; break;;
             2 ) installPlowBackRest; break;;
+            2 ) installPlowNotification; break;;
            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
@@ -132,6 +140,14 @@ function installPlowBackRest {
     # installation de plow back rest
     chmod 777 $DIR/plow_back_rest/install.sh
     $DIR/plow_back_rest/install.sh
+}
+
+function installPlowNotification {
+    echo "=== Installation de plow notification ==="
+
+    # installation de plow notification
+    chmod 777 $DIR/plow_notification/install.sh
+    $DIR/plow_notification/install.sh
 }
 
 function configDatabase {
@@ -240,11 +256,6 @@ function start {
     echo "=== Démarrage de l'installation ==="
 
 #demander mot de passe bdd et sauvegarde
-    configureCommonsVariables
-
-    echo "Connexion au serveur de base de données pour verifier si la base existe ..."
-    read -s -p "Mot de passe: " database_password
-
     # installation des prerequis
     chmod 777 $DIR/common/install.sh
     $DIR/common/install.sh

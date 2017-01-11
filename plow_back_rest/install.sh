@@ -82,7 +82,7 @@ function createConfigFilePlowBackRest {
     echo "      \"UNRAR_OK\": 13," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"UNRAR_ERROR\": 14," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"TREATMENT_IN_PROGRESS\": 999" >> ${repertoire_git_plow_back_rest}config/local.json
-    echo "  \"}," >> ${repertoire_git_plow_back_rest}config/local.json
+    echo "  }," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  \"action\": {" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"status\": {" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "          \"WAITING\": 1," >> ${repertoire_git_plow_back_rest}config/local.json
