@@ -48,7 +48,7 @@ function createConfigFilePlowBackRest {
     echo "  }," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  \"heapdump\": {" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"activated\": false," >> ${repertoire_git_plow_back_rest}/config_python.cfg
-    echo "      \"directory\": ${repertoire_git_plow_back_rest}dump\"," >> ${repertoire_git_plow_back_rest}config/local.json
+    echo "      \"directory\": \"${repertoire_git_plow_back_rest}dump\"," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"minute\": 0" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  }," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  \"download_server\": {" >> ${repertoire_git_plow_back_rest}config/local.json
