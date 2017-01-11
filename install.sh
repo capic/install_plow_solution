@@ -115,6 +115,8 @@ function installPlowPython {
     echo "=== Installation de plow python ==="
     configurePlowPythonVariables
 
+    installCommon
+
     # installation de plow_python
     chmod 777 $DIR/plow_python/install.sh
     $DIR/plow_python/install.sh
@@ -137,6 +139,8 @@ function installPlowBackRest {
     echo "=== Installation de plow back rest ==="
     configurePlowBackRestVariables
 
+    installCommon
+
     # installation de plow back rest
     chmod 777 $DIR/plow_back_rest/install.sh
     $DIR/plow_back_rest/install.sh
@@ -148,6 +152,14 @@ function installPlowNotification {
     # installation de plow notification
     chmod 777 $DIR/plow_notification/install.sh
     $DIR/plow_notification/install.sh
+}
+
+function installCommon {
+    echo "=== Installation des commons ==="
+
+    # installation des prerequis
+    chmod 777 $DIR/common/install.sh
+    $DIR/common/install.sh
 }
 
 function configDatabase {
@@ -255,13 +267,7 @@ function exportVariables {
 function start {
     echo "=== Démarrage de l'installation ==="
 
-#demander mot de passe bdd et sauvegarde
-    # installation des prerequis
-    chmod 777 $DIR/common/install.sh
-    $DIR/common/install.sh
-
-
-    menu
+     menu
 }
 
 start
