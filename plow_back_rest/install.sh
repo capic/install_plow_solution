@@ -44,7 +44,7 @@ function createConfigFilePlowBackRest {
     echo "      \"host\": \"localhost\"," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"database\": \"${database}\"," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"user\": \"root\"," >> ${repertoire_git_plow_back_rest}config/local.json
-    echo "      \"password\": \"${database_password}\"," >> ${repertoire_git_plow_back_rest}config/local.json
+    echo "      \"password\": \"${database_password}\"" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  }," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  \"heapdump\": {" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"activated\": false," >> ${repertoire_git_plow_back_rest}/config_python.cfg
@@ -59,7 +59,7 @@ function createConfigFilePlowBackRest {
     echo "      \"delete_package_files\": \"python3 /var/www/plow_solution/main/download_basic.py delete_package_files\"," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"start_download\": \"python3 /var/www/plow_solution/main/download_basic.py start\"," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"stop_download\": \"python3 /var/www/plow_solution/main/download_basic.py stop\"," >> ${repertoire_git_plow_back_rest}config/local.json
-    echo "      \"stop_current_downloads\": \"python3 /var/www/plow_solution/main/download_basic.py stop_current_downloads\"," >> ${repertoire_git_plow_back_rest}config/local.json
+    echo "      \"stop_current_downloads\": \"python3 /var/www/plow_solution/main/download_basic.py stop_current_downloads\"" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  }," >> ${repertoire_git_plow_back_rest}config/local.json
     echo "  \"notification\": {" >> ${repertoire_git_plow_back_rest}config/local.json
     echo "      \"activated\": true," >> ${repertoire_git_plow_back_rest}config/local.json

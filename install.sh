@@ -98,7 +98,7 @@ function configurePlowBackRestVariables {
 
 function menu {
     echo "================ MENU ================"
-    options=("Installation de plow python", "Installation de plow back rest")
+    options=("Installation de plow python", "Installation de plow back rest", "Installation de plow notification")
     PS3="Installations ?"
     select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
