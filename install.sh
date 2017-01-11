@@ -8,9 +8,6 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 function configureCommonsVariables {
-    echo "Connexion au serveur de base de données pour verifier si la base existe ..."
-    read -s -p "Mot de passe: " database_password
-
     echo "=== Configuration des variables générales ==="
     echo -e "\e[31mBranche git ? (defaut: ${branch})\e[39m"
     read branch_input
@@ -32,6 +29,9 @@ function configureCommonsVariables {
     if [ ! -z "${notification_address_input}" ]; then
         notification_address=${notification_address_input}
     fi
+
+    echo "Connexion au serveur de base de données pour verifier si la base existe ..."
+    read -s -p "Mot de passe: " database_password
 
     exportVariables
 }
