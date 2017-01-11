@@ -104,7 +104,7 @@ function menu {
         case "$REPLY" in
             1 ) installPlowPython; break;;
             2 ) installPlowBackRest; break;;
-            2 ) installPlowNotification; break;;
+            3 ) installPlowNotification; break;;
            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
