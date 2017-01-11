@@ -81,7 +81,7 @@ function createConfigFile {
     echo "  ]" >> ${repertoire_installation_base}.crossbar/config.json
     echo "}" >> ${repertoire_installation_base}.crossbar/config.json
 
-}}
+}
 
 function start {
     echo "=== Démarrage de l'installation de plow notification ==="
