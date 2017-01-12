@@ -10,14 +10,14 @@ function updatePackage {
     apt-get install mysql-client openvpn -y
 
     install_pip=true
-    if  which pip3 >/dev/null; then
+    if  which pip >/dev/null; then
         echo "pip est déjà installé, le réinstaller ? (O/N)"
         read install_pip
     fi
 
     if ${install_pip} = true; then
         wget https://bootstrap.pypa.io/get-pip.py
-        python3 get-pip.py
+        python get-pip.py
     fi
 }
 
