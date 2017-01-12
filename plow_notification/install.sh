@@ -14,12 +14,12 @@ function installPrerequis {
     apt-get install build-essential libssl-dev python-pip pypy pypy-dev python3-dev python-dev  libffi-dev
 
     echo "Reinstallation de pyyaml"
-    pip3 uninstall pyyaml
+    pip uninstall pyyaml
     apt-get install libyaml-dev libpython3-dev
-    pip3 install pyyaml
+    pip install pyyaml
 
     echo "Installation de l'environnement virtuel"
-    pip3 install virtualenv
+    pip install virtualenv
 
     echo "Creation de l'environnement virtuel: ${repertoire_installation_base}"
     if [ ! -d "${repertoire_installation_base}" ]; then
@@ -31,7 +31,7 @@ function installPrerequis {
     . bin/activate
 
     echo "Installation"
-    pip3 install crossbar
+    pip install crossbar
 }
 
 function installPlowNotification {
