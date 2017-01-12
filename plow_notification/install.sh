@@ -11,10 +11,10 @@ function installPrerequis {
     apt-get update
     apt-get -y upgrade
 
-    apt-get install build-essential libssl-dev python-pip pypy pypy-dev
+    apt-get install build-essential libssl-dev python-pip pypy pypy-dev python3-dev python-dev  libffi-dev
 
     echo "Installation de l'environnement virtuel"
-    pip install virtualenv
+    pip3 install virtualenv
 }
 
 function installPlowNotification {
@@ -30,7 +30,7 @@ function installPlowNotification {
     . bin/activate
 
     echo "Installation"
-    pip install crossbar
+    pip3 install crossbar
 }
 
 function createConfigFile {
