@@ -20,10 +20,6 @@ function installPrerequis {
 
     echo "Installation de l'environnement virtuel"
     pip3 install virtualenv
-}
-
-function installPlowNotification {
-    echo "=== Installation de plow notification ==="
 
     echo "Creation de l'environnement virtuel: ${repertoire_installation_base}"
     if [ ! -d "${repertoire_installation_base}" ]; then
@@ -36,6 +32,13 @@ function installPlowNotification {
 
     echo "Installation"
     pip3 install crossbar
+}
+
+function installPlowNotification {
+    echo "=== Installation de plow notification ==="
+
+    cd ${repertoire_installation_base}
+    crossbar init
 }
 
 function createConfigFile {
