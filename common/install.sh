@@ -8,6 +8,11 @@ function updatePackage {
     apt-get -y upgrade
 
     apt-get install mysql-client openvpn -y
+
+    if ! which pip3 >/dev/null; then
+        wget https://bootstrap.pypa.io/get-pip.py
+        python3 get-pip.py
+    fi
 }
 
 function createDatabase {

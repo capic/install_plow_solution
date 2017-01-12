@@ -8,10 +8,6 @@ function installPrerequis {
     apt-get -y install git python2.7 python3 python-dev screen postfix build-essential openssl libssl-dev gcc mailutils
 
     echo "--- Installation des librairies python ---"
-    if ! which pip3 >/dev/null; then
-        wget https://bootstrap.pypa.io/get-pip.py
-        python3 get-pip.py
-    fi
     echo "## install psutil ##"
     pip3 install psutil
     echo "## install watchdog ##"

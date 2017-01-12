@@ -60,7 +60,7 @@ function createConfigFile {
     echo "                                  \"uri\": \"*\"," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                                  \"publish\": true," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                                  \"subscribe\": true," >> ${repertoire_installation_base}.crossbar/config.json
-    echo"                                   \"call\": true," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  \"call\": true," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                                  \"register\": true" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                              }" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                          ]" >> ${repertoire_installation_base}.crossbar/config.json
