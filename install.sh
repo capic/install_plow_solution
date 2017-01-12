@@ -14,7 +14,7 @@ function installCommonPython {
         read install_pip
     fi
 
-    if ${install_pip} = 'o'; then
+    if [ ${install_pip} eq 'o' ]; then
         wget https://bootstrap.pypa.io/get-pip.py
         python get-pip.py
     fi
