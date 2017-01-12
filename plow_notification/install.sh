@@ -13,6 +13,11 @@ function installPrerequis {
 
     apt-get install build-essential libssl-dev python-pip pypy pypy-dev python3-dev python-dev  libffi-dev
 
+    echo "Reinstallation de pyyaml"
+    pip3 uninstall pyyaml
+    apt-get install libyaml-dev libpython3-dev
+    pip3 install pyyaml
+
     echo "Installation de l'environnement virtuel"
     pip3 install virtualenv
 }
