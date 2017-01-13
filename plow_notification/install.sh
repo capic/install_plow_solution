@@ -34,6 +34,8 @@ function installPlowNotification {
 }
 
 function createConfigFile {
+    echo "=== Suppression de l'ancien fichier ==="
+    rm ${repertoire_installation_base}.crossbar/config.json
     echo "=== Création du fichier de configuration ==="
     echo "{" >> ${repertoire_installation_base}.crossbar/config.json
     echo "  \"controller\": {" >> ${repertoire_installation_base}.crossbar/config.json
