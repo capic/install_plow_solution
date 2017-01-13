@@ -5,7 +5,14 @@ function installPrerequis {
     echo "=== Installation des prérequis ==="
 
     echo "*** Teste si node est installé ****"
-    if ! which node >/dev/null; then
+
+    install_node=true
+    if which node >/dev/null; then
+        echo "Nodejs déjà installé, réinstaller ? (o/n)"
+        read install_node
+    fi
+
+    if [ ${install_node} = 'o' ]; then
         echo "--- Installation de nodejs ---"
         echo -e "\e[31mVersion de nodejs ? (defaut: ${nodejs_version})\e[39m"
         read nodejs_version_input

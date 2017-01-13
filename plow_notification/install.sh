@@ -11,14 +11,15 @@ function installPrerequis {
     apt-get update
     apt-get -y upgrade
 
-    apt-get install build-essential libssl-dev python-pip pypy pypy-dev
+    apt-get install build-essential libssl-dev python-pip pypy pypy-dev python3-dev python-dev  libffi-dev
+
+    echo "Reinstallation de pyyaml"
+    pip uninstall pyyaml
+    apt-get install libyaml-dev libpython3-dev
+    pip install pyyaml
 
     echo "Installation de l'environnement virtuel"
     pip install virtualenv
-}
-
-function installPlowNotification {
-    echo "=== Installation de plow notification ==="
 
     echo "Creation de l'environnement virtuel: ${repertoire_installation_base}"
     if [ ! -d "${repertoire_installation_base}" ]; then
@@ -31,6 +32,13 @@ function installPlowNotification {
 
     echo "Installation"
     pip install crossbar
+}
+
+function installPlowNotification {
+    echo "=== Installation de plow notification ==="
+
+    cd ${repertoire_installation_base}
+    crossbar init
 }
 
 function createConfigFile {
@@ -54,7 +62,7 @@ function createConfigFile {
     echo "                                  \"uri\": \"*\"," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                                  \"publish\": true," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                                  \"subscribe\": true," >> ${repertoire_installation_base}.crossbar/config.json
-    echo"                                   \"call\": true," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  \"call\": true," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                                  \"register\": true" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                              }" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                          ]" >> ${repertoire_installation_base}.crossbar/config.json

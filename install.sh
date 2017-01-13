@@ -7,6 +7,19 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+function installCommonPython {
+    install_pip=true
+    if  which pip >/dev/null; then
+        echo "pip est déjà installé, le réinstaller ? (O/N)"
+        read install_pip
+    fi
+
+    if [ ${install_pip} = 'o' ]; then
+        wget https://bootstrap.pypa.io/get-pip.py
+        python get-pip.py
+    fi
+}
+
 function configureCommonsVariables_1 {
     echo "=== Configuration des variables générales 1 ==="
 
@@ -86,8 +99,6 @@ function configurePlowPythonVariables {
 }
 
 function configurePlowBackRestVariables {
-    configureCommonsVariables
-
     echo -e "\e[31mAdresse serveur de telechargement ? (defaut: ${download_server_address})\e[39m"
     read download_address_input
     if [ ! -z "${download_address_input}" ]; then
@@ -118,6 +129,7 @@ function installPlowPython {
     configurePlowPythonVariables
     exportVariables
 
+    installCommonPython
     installCommon
 
     # installation de plow_python
@@ -158,6 +170,8 @@ function installPlowNotification {
 
     configureCommonsVariables_1
     exportVariables
+
+    installCommonPython
 
     # installation de plow notification
     chmod 777 $DIR/plow_notification/install.sh
