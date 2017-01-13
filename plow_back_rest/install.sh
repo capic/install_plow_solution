@@ -12,7 +12,7 @@ function installPrerequis {
         read install_node
     fi
 
-    if [ install_node = 'o' ]; then
+    if [ ${install_node} = 'o' ]; then
         echo "--- Installation de nodejs ---"
         echo -e "\e[31mVersion de nodejs ? (defaut: ${nodejs_version})\e[39m"
         read nodejs_version_input
