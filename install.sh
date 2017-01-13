@@ -99,8 +99,6 @@ function configurePlowPythonVariables {
 }
 
 function configurePlowBackRestVariables {
-    configureCommonsVariables
-
     echo -e "\e[31mAdresse serveur de telechargement ? (defaut: ${download_server_address})\e[39m"
     read download_address_input
     if [ ! -z "${download_address_input}" ]; then
