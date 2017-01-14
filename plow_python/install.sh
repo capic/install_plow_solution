@@ -119,7 +119,7 @@ EOF
 function addToStartup {
     echo "=== Ajout de plow python au démarrage ==="
     echo ${repertoire_git_plow_python////\\/}
-    sed -i "s/exit 0$/su pi -c '${repertoire_git_plow_python////\\/}main\/download_basic.py normal < \/dev\/null &'\n\n&/" /etc/rc.local
+    sed -i "s/exit 0$/su pi -c '${repertoire_git_plow_python////\\/}main\/download_basic.py normal < \/dev\/null \&'\n\n&/" /etc/rc.local
 }
 
 function start {
