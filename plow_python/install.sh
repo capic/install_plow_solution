@@ -116,10 +116,16 @@ EOF
 
 }
 
+function addToStartup {
+    echo "=== Ajout de plow python au démarrage ==="
+    sudo sed -i 's/exit 0/${repertoire_git_plow_python}main/download_basic.py normal\n&/' /etc/rc.local
+}
+
 function start {
     installPrerequis
     installPlowPython
     insertDirectoriesInDatabase
+    addToStartup
 }
 
 if [[ $EUID -ne 0 ]]; then

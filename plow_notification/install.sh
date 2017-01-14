@@ -46,8 +46,8 @@ function createConfigFile {
     rm ${repertoire_installation_base}.crossbar/config.json
     echo "=== Création du fichier de configuration ==="
     echo "{" >> ${repertoire_installation_base}.crossbar/config.json
-    echo "  \"controller\": {" >> ${repertoire_installation_base}.crossbar/config.json
-    echo "  }," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "  \"version\": 2," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "  \"controller\": {}," >> ${repertoire_installation_base}.crossbar/config.json
     echo "  \"workers\": [" >> ${repertoire_installation_base}.crossbar/config.json
     echo "      {" >> ${repertoire_installation_base}.crossbar/config.json
     echo "          \"type\": \"router\"," >> ${repertoire_installation_base}.crossbar/config.json
@@ -59,11 +59,19 @@ function createConfigFile {
     echo "                          \"name\": \"anonymous\"," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                          \"permissions\": [" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                              {" >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                                  \"uri\": \"*\"," >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                                  \"publish\": true," >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                                  \"subscribe\": true," >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                                  \"call\": true," >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                                  \"register\": true" >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  \"uri\": \"\"," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  \"match\": \"prefix\"," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  \"allow\": {" >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                      \"call\": true," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                      \"register\": true" >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                      \"publish\": true," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                      \"subscribe\": true," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  }," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  \"disclose\": {" >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                        \"caller\": false," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                        \"publisher\": false" >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  }," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                                  \"cache\": true" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                              }" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                          ]" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                      }" >> ${repertoire_installation_base}.crossbar/config.json
@@ -74,9 +82,9 @@ function createConfigFile {
     echo "              {" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                  \"type\": \"web\"," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                  \"endpoint\": {" >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                      \"type\": \"tcp\"," >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                      \"port\": 8181" >> ${repertoire_installation_base}.crossbar/config.json
-    echo "                  }," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                  \"type\": \"tcp\"," >> ${repertoire_installation_base}.crossbar/config.json
+    echo "                  \"port\": 8181" >> ${repertoire_installation_base}.crossbar/config.json
+    echo "              }," >> ${repertoire_installation_base}.crossbar/config.json
     echo "                  \"paths\": {" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                      \"/\": {" >> ${repertoire_installation_base}.crossbar/config.json
     echo "                          \"type\": \"static\"," >> ${repertoire_installation_base}.crossbar/config.json
