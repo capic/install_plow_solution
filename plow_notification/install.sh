@@ -102,11 +102,36 @@ function createConfigFile {
 
 }
 
+function addToStartup {
+    echo "=== Ajout de plow notification au démarrage ==="
+
+    options=("Oui" "Non")
+    PS3="Voulez vous ajouter plow notification au démarrage de l'appareil ?"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) apt-get install csh daemontools daemontools-run
+                mkdir /etc/service/crossbar
+                if [ ! -f /etc/service/crossbar/run ]; then
+                    echo "#!/bin/sh" > /etc/service/crossbar/run
+                    echo "" > /etc/service/crossbar/run
+                    echo "sudo crossbar start \\" > /etc/service/crossbar/run
+                    echo "--cbdir ${repertoire_installation_base}.crossbar \\" > /etc/service/crossbar/run
+                    echo "--logdir ${repertoire_installation_base}.crossbar/log" > /etc/service/crossbar/run
+                fi
+                chmod +x /etc/service/crossbar/run
+                sed -i "\/bin\/csh -cf '\/usr\/bin\/svscanboot \&'" /etc/rc.local;
+                break;;
+            2 ) break;;
+            *) echo "Le choix n'est pas correct";continue;;
+        esac
+    done
+}
 function start {
     echo "=== Démarrage de l'installation de plow notification ==="
     installPrerequis
     installPlowNotification
     createConfigFile
+    addToStartup
 }
 
 if [[ $EUID -ne 0 ]]; then

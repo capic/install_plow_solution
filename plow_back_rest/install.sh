@@ -158,6 +158,20 @@ function installPlowBackRest {
     createConfigFilePlowBackRest
 }
 
+function addToStartup {
+    echo "=== Ajout de plow back rest au démarrage ==="
+
+    options=("Oui" "Non")
+    PS3="Voulez vous ajouter plow back rest au démarrage de l'appareil ?"
+    select opt in "${options[@]}" "Quit"; do
+        case "$REPLY" in
+            1 ) sed -i "s/exit 0$/su pi -c ' cd ${repertoire_git_plow_back_rest////\\/} && node bin/www < \/dev\/null \&'\n\n&/" /etc/rc.local; break;;
+            2 ) break;;
+            *) echo "Le choix n'est pas correct";continue;;
+        esac
+    done
+}
+
 function start {
     echo "=== Démarrage de l'installation de plow back rest ==="
     installPrerequis
