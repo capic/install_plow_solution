@@ -112,14 +112,14 @@ function addToStartup {
             1 ) apt-get install csh daemontools daemontools-run
                 mkdir /etc/service/crossbar
                 if [ ! -f /etc/service/crossbar/run ]; then
-                    echo "#!/bin/sh" > /etc/service/crossbar/run
-                    echo "" > /etc/service/crossbar/run
-                    echo "sudo crossbar start \\" > /etc/service/crossbar/run
-                    echo "--cbdir ${repertoire_installation_base}.crossbar \\" > /etc/service/crossbar/run
-                    echo "--logdir ${repertoire_installation_base}.crossbar/log" > /etc/service/crossbar/run
+                    echo "#!/bin/sh" >> /etc/service/crossbar/run
+                    echo "" >> /etc/service/crossbar/run
+                    echo "sudo crossbar start \\" >> /etc/service/crossbar/run
+                    echo "--cbdir ${repertoire_installation_base}.crossbar \\" >> /etc/service/crossbar/run
+                    echo "--logdir ${repertoire_installation_base}.crossbar/log" >> /etc/service/crossbar/run
                 fi
                 chmod +x /etc/service/crossbar/run
-                sed -i "\/bin\/csh -cf '\/usr\/bin\/svscanboot \&'" /etc/rc.local;
+                sed -i "s/exit 0$/\/bin\/csh -cf '\/usr\/bin\/svscanboot \&'\n\n&/" /etc/rc.local
                 break;;
             2 ) break;;
             *) echo "Le choix n'est pas correct";continue;;
