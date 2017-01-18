@@ -59,6 +59,7 @@ function configureCommonsVariables_2 {
 
     echo "Connexion au serveur de base de données pour verifier si la base existe ..."
     read -s -p "Mot de passe: " database_password
+    echo "\r\n"
 }
 
 function configurePlowPythonVariables {
@@ -108,13 +109,14 @@ function configurePlowBackRestVariables {
 
 function menu {
     echo "================ MENU ================"
-    options=("Installation de plow python", "Installation de plow back rest", "Installation de plow notification")
+    options=("Installation de plow python", "Installation de plow back rest", "Installation de plow notification", "Installation des dossiers paratagés")
     PS3="Installations ?"
     select opt in "${options[@]}" "Quit"; do
         case "$REPLY" in
             1 ) installPlowPython; break;;
             2 ) installPlowBackRest; break;;
             3 ) installPlowNotification; break;;
+            4 ) createSharedDirectories; break;;
            $(( ${#options[@]}+1 )) ) echo "Goodbye!"; exit 1;;
             *) echo "Le choix n'est pas correct";continue;;
         esac
@@ -130,24 +132,13 @@ function installPlowPython {
     exportVariables
 
     installCommonPython
-    installCommon
+    installPreInstall
 
     # installation de plow_python
     chmod 777 $DIR/plow_python/install.sh
     $DIR/plow_python/install.sh
 
-    createDirectories
-
-    echo "================= Configuration BDD ================="
-    options=("Oui" "Non")
-    PS3="Insérer la configuration (Effacera la version actuelle si elle existe)?"
-    select opt in "${options[@]}" "Quit"; do
-        case "$REPLY" in
-            1 ) configDatabase; break;;
-            2 ) break;;
-            *) echo "Le choix n'est pas correct";continue;;
-        esac
-    done
+    installPostInstall
 }
 
 function installPlowBackRest {
@@ -158,7 +149,7 @@ function installPlowBackRest {
     configurePlowBackRestVariables
     exportVariables
 
-    installCommon
+    installPreInstall
 
     # installation de plow back rest
     chmod 777 $DIR/plow_back_rest/install.sh
@@ -178,90 +169,68 @@ function installPlowNotification {
     $DIR/plow_notification/install.sh
 }
 
-function installCommon {
-    echo "=== Installation des commons ==="
+function installPreInstall {
+    echo "=== Installation des éléments pré installation ==="
+
+    chmod 777 $DIR/pre-install/install.sh
+    $DIR/pre-install/install.sh
+}
+
+function installPostInstall {
+    echo "=== Installation des éléments post installation ==="
 
     # installation des prerequis
-    chmod 777 $DIR/common/install.sh
-    $DIR/common/install.sh
+    chmod 777 $DIR/post-install/install.sh
+    $DIR/post-install/install.sh
 }
 
-function configDatabase {
-    echo "=== Configuration de la base de données ==="
+function createSharedDirectories {
+    echo "=== Création des répertoires partagés inexistants ==="
 
-    echo "Insertion des repertoires si ils n'existent pas"
-    python_log_directory_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_git_plow_python}"log/'"`
-    echo "id de ${repertoire_git_plow_python}log/: ${python_log_directory_id}"
-    python_directory_download_temp_id=`mysql  -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_temporaire}"'"`
-    echo "id de ${repertoire_telechargement_temporaire}: ${python_directory_download_temp_id}"
-    python_directory_download_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement}"'"`
-    echo "id de ${repertoire_telechargement}: ${python_directory_download_id}"
-    python_directory_download_text_id=`mysql -u root -h ${bdd_address} -p${database_password} -D ${database} -ss -e "SELECT id FROM directory WHERE path='"${repertoire_telechargement_texte}"'"`
-    echo "id de ${repertoire_telechargement_texte}: ${python_directory_download_text_id}"
+    toAdd=true
 
-    echo "Insetion de la configuration id: ${python_application_id}"
-    mysql -u root -h ${bdd_address} -p${database_password} -D ${database} << EOF
-    insert into application_configuration(
-        id_application,
-        download_activated,
-        api_log_database_level,
-        python_log_level,
-        python_log_format,
-        python_log_directory_id,
-        python_log_console_level,
-        python_directory_download_temp_id,
-        python_directory_download_id,
-        python_directory_download_text_id,
-        notification_address,
-        periodic_check_minutes)
-    values (
-        ${python_application_id},
-        true,
-        4,
-        4,
-        '[%(levelname)8s]  %(asctime)s <%(to_ihm)4s>     (%(file_name)s) {%(function_name)s} [%(message)s]',
-        ${python_log_directory_id},
-        4,
-        ${python_directory_download_temp_id},
-        ${python_directory_download_id},
-        ${python_directory_download_text_id},
-        '${notification_address}',
-        120)
-    on duplicate key update
-        python_log_directory_id = ${python_log_directory_id},
-        python_directory_download_temp_id = ${python_directory_download_temp_id},
-        python_directory_download_id =  ${python_directory_download_id},
-        python_directory_download_text_id = ${python_directory_download_text_id},
-        notification_address = '${notification_address}'
-EOF
-}
+    while [ ${toAdd} = true ]; do
+        options=("Oui" "Non")
+        PS3="Créer un répertoire partagé ?"
+        select opt in "${options[@]}" "Quit"; do
+            case "$REPLY" in
+                1 ) echo "Chemin local du répertoire"
+                    read chemin
+                    if [ ! -d "${chemin}" ]; then
+                        echo "Création pysique du répertoire ${chemin}"
+                        mkdir -p ${chemin};
+                        chmod -R 777 ${chemin};
+                    fi
 
-function createDirectories {
-    echo "=== Création des répertoires inexistants ==="
+                    options=("Oui" "Non")
+                    PS3="Ajout du repertoire pour qu'il soit monté au démarrage ?"
+                    select opt in "${options[@]}" "Quit"; do
+                        case "$REPLY" in
+                            1 ) echo "Chemin distant"
+                                read chemin_distant
 
-    if [ ! -d "${repertoire_git_plow_python}log" ]; then
-        echo "Création du répertoire de logs de plow python: ${repertoire_git_plow_python}log"
-        mkdir -p ${repertoire_git_plow_python}log
-        chmod -R 777 ${repertoire_git_plow_python}log
-    fi
+                                options=("ntfs" "nfs")
+                                PS3="Type de montage"
+                                select opt in "${options[@]}" "Quit"; do
+                                    case "$REPLY" in
+                                        1 ) type="ntfs-3g"; break;;
+                                        2 ) type="nfs"; break;;
+                                    esac
+                                done
+                                echo "${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0" >> /etc/fstab
 
-    if [ ! -d "${repertoire_telechargement}" ]; then
-        echo "Création du répertoire de telechargement: ${repertoire_telechargement}"
-        mkdir -p ${repertoire_telechargement}
-        chmod -R 777 ${repertoire_telechargement}
-    fi
-
-    if [ ! -d "${repertoire_telechargement_temporaire}" ]; then
-        echo "Création du répertoire de telechargement temporaire: ${repertoire_telechargement_temporaire}"
-        mkdir -p ${repertoire_telechargement_temporaire}
-        chmod -R 777 ${repertoire_telechargement_temporaire}
-    fi
-
-    if [ ! -d "${repertoire_telechargement_texte}" ]; then
-        echo "Création du répertoire de telechargement texte: ${repertoire_telechargement_texte}"
-        mkdir -p ${repertoire_telechargement_texte}
-        chmod -R 777 ${repertoire_telechargement_texte}
-    fi
+                                break;;
+                            2 ) break;;
+                            *) echo "Le choix n'est pas correct";continue;;
+                        esac
+                     done
+                    break;;
+                2 ) toAdd=false
+                    break;;
+                *) echo "Le choix n'est pas correct";continue;;
+            esac
+        done
+    done
 }
 
 function exportVariables {
