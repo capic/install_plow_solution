@@ -192,7 +192,7 @@ function createSharedDirectories {
     while [ ${toAdd} = true ]; do
         options=("Oui" "Non")
         PS3="Créer un répertoire partagé ?"
-        select opt in "${options[@]}" "Quit"; do
+        select opt in "${options[@]}"; do
             case "$REPLY" in
                 1 ) echo "Chemin local du répertoire"
                     read chemin
@@ -204,19 +204,20 @@ function createSharedDirectories {
 
                     options=("Oui" "Non")
                     PS3="Ajout du repertoire pour qu'il soit monté au démarrage ?"
-                    select opt in "${options[@]}" "Quit"; do
+                    select opt in "${options[@]}"; do
                         case "$REPLY" in
                             1 ) echo "Chemin distant"
                                 read chemin_distant
 
                                 options=("ntfs" "nfs")
                                 PS3="Type de montage"
-                                select opt in "${options[@]}" "Quit"; do
+                                select opt in "${options[@]}"; do
                                     case "$REPLY" in
                                         1 ) type="ntfs-3g"; break;;
                                         2 ) type="nfs"; break;;
                                     esac
                                 done
+                                echo "Insertion de ${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0"
                                 echo "${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0" >> /etc/fstab
 
                                 break;;
