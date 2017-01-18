@@ -15,8 +15,7 @@ function installPrerequis {
 
     echo "Reinstallation de pyyaml"
     pip uninstall pyyaml
-    apt-get install libyaml-dev libpython3-dev
-    pip install pyyaml
+    apt-get install libyaml-dev libpython3-dev pyyaml -y
 
     echo "Installation de l'environnement virtuel"
     pip install virtualenv

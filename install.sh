@@ -202,24 +202,38 @@ function createSharedDirectories {
                         chmod -R 777 ${chemin};
                     fi
 
+                    fstab=true
                     options=("Oui" "Non")
                     PS3="Ajout du repertoire pour qu'il soit monté au démarrage ?"
                     select opt in "${options[@]}"; do
                         case "$REPLY" in
-                            1 ) echo "Chemin distant"
-                                read chemin_distant
+                            1 ) # on test pour savoir si le repertoire existe déjo dans le fstab
+                                if grep -Fxq ${chemin} /etc/fstab; then
+                                    options=("Oui" "Non")
+                                    PS3="Le chemin existe déjà dans fstab, le modfier ?"
+                                    select opt in "${options[@]}"; do
+                                        case "$REPLY" in
+                                            1 ) fstab=true; break;;
+                                            2 ) fstab=false; break;;
+                                        esac
+                                    done
+                                fi
 
-                                options=("ntfs" "nfs")
-                                PS3="Type de montage"
-                                select opt in "${options[@]}"; do
-                                    case "$REPLY" in
-                                        1 ) type="ntfs-3g"; break;;
-                                        2 ) type="nfs"; break;;
-                                    esac
-                                done
-                                echo "Insertion de ${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0"
-                                grep -q  "${chemin_distant}" || echo "${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0" >> /etc/fstab
+                                if [ ${fstab} = true ]; then
+                                    echo "Chemin distant"
+                                    read chemin_distant
 
+                                    options=("ntfs" "nfs")
+                                    PS3="Type de montage"
+                                    select opt in "${options[@]}"; do
+                                        case "$REPLY" in
+                                            1 ) type="ntfs-3g"; break;;
+                                            2 ) type="nfs"; break;;
+                                        esac
+                                    done
+                                    echo "Insertion de ${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0"
+                                    grep -q  "${chemin_distant}" || echo "${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0" >> /etc/fstab
+                                fi
                                 break;;
                             2 ) break;;
                             *) echo "Le choix n'est pas correct";continue;;

@@ -8,6 +8,7 @@ function installPrerequis {
 
     install_node=true
     if which node >/dev/null; then
+#    TODO: afficher le numero de version
         echo "Nodejs déjà installé, réinstaller ? (o/n)"
         read install_node
     fi
@@ -176,6 +177,7 @@ function start {
     echo "=== Démarrage de l'installation de plow back rest ==="
     installPrerequis
     installPlowBackRest
+    addToStartup
 }
 
 if [[ $EUID -ne 0 ]]; then
