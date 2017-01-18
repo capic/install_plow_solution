@@ -218,7 +218,7 @@ function createSharedDirectories {
                                     esac
                                 done
                                 echo "Insertion de ${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0"
-                                echo "${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0" >> /etc/fstab
+                                grep -q -F "${chemin_distant}" || echo "${chemin_distant} ${chemin}   ${type} defaults,nofail 0   0" >> /etc/fstab
 
                                 break;;
                             2 ) break;;
@@ -232,6 +232,9 @@ function createSharedDirectories {
             esac
         done
     done
+
+    rpc.statd restart
+    mount -a
 }
 
 function exportVariables {
