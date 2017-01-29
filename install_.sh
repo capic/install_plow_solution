@@ -11,7 +11,7 @@ function start {
     echo "=== Démarrage de l'installation ==="
 
     echo "Installation de python 3"
-    apt install python3 -y
+    apt install python3 mysql-client mysql-connector-python python-dev -y
 
     python3 ./main.py
 }

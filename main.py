@@ -79,14 +79,15 @@ def exit():
 
 # Main Program
 if __name__ == "__main__":
+    print("Démarrage de l'installation principale")
+
     variables.load_config()
 
     common.update_package()
-    common.install_package("git python2.7 python-dev screen python3 pip3 mysql-client openvpn")
+    common.install_package("git screen openvpn")
 
     common.install_pip()
 
-    common.install_pip_package("mysql-connector-python")
 
     utils.create_database()
 
