@@ -196,8 +196,9 @@ function createSharedDirectories {
             case "$REPLY" in
                 1 ) echo "Chemin local du répertoire"
                     read chemin
+
                     if [ ! -d "${chemin}" ]; then
-                        echo "Création pysique du répertoire ${chemin}"
+                        echo "Création physique du répertoire ${chemin}"
                         mkdir -p ${chemin};
                         chmod -R 777 ${chemin};
                     fi
@@ -275,8 +276,17 @@ function exportVariables {
     export download_server_address
 }
 
+
+
+
 function start {
     echo "=== Démarrage de l'installation ==="
+
+    echo "Installation de python 3"
+    apt install python3 pip3 -y
+
+
+
 
      menu
 }

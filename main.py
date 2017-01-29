@@ -1,0 +1,95 @@
+#!/usr/bin/env python
+import sys
+import os
+import main_plow_python
+import main_plow_back_rest
+import main_plow_notification
+import common
+import utils
+import variables
+
+menu_main = {
+    'title': ['Menu Principal', ''],
+    '1': ['Installation de Plow Python', install_plow_python],
+    '2': ['Installation de Plow Back Rest', install_plow_back_rest],
+    '3': ['Installation de Plow Notification', install_plow_notification],
+    '4': ['Création de répertoires partagés', createSharedDirectories],
+    '9': ['Retour', back],
+    '0': ['Sortie', exit],
+}
+
+
+def install_plow_python():
+    print("=== Installation de plow python ===")
+
+    main_plow_python.main()
+
+
+def install_plow_back_rest():
+    print("=== Installation de plow back rest ===")
+
+    main_plow_back_rest.main()
+
+
+def install_plow_notification():
+    print("=== Installation de plow notification ===")
+
+    main_plow_notification.main()
+
+
+# Main menu
+def menu(menu_to_display):
+    os.system('clear')
+
+    for key in menu_to_display:
+        if key == 'title':
+            print(menu_to_display[key][0] + "\n")
+        else:
+            print(key + ". " + menu_to_display[key][0])
+
+    choice = input(" >>  ")
+    exec_menu(menu_to_display, choice)
+
+    return
+
+
+def exec_menu(menu_to_display, choice):
+    os.system('clear')
+    ch = choice.lower()
+    if ch == '':
+        menu_to_display['title'][1]()
+    else:
+        try:
+            menu_to_display[ch][1]()
+        except KeyError:
+            print("Invalid selection, please try again.\n")
+            menu_to_display['title'][1]()
+    return
+
+
+# Back to main menu
+def back(menu_to_display):
+    menu_to_display['title'][1]()
+
+
+# Exit program
+def exit():
+    sys.exit()
+
+
+# Main Program
+if __name__ == "__main__":
+    variables.load_config()
+
+    common.update_package()
+    common.install_package("git python2.7 python-dev screen python3 pip3 mysql-client openvpn")
+
+    common.install_pip()
+
+    common.install_pip_package("mysql-connector-python")
+
+    utils.create_database()
+
+    # Launch main menu
+    menu(menu_main)
+
