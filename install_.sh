@@ -11,7 +11,7 @@ function start {
     echo "=== Démarrage de l'installation ==="
 
     echo "Installation de python 3"
-    apt install python3 pip -y
+    apt install python3 -y
 
     python3 ./main.py
 }
