@@ -12,7 +12,8 @@ function start {
 
     echo "Installation de python 3"
     apt install python3 mysql-client python-dev -y
-    pip3 install mysql-connector-python
+    wget https://dev.mysql.com/get/Downloads/Connector-Python/mysql-connector-python-py3_2.1.5-1debian8.2_all.deb
+    dpkg -i mysql-connector-python-py3_2.1.5-1debian8.2_all.deb
 
     python3 ./main.py
 }
