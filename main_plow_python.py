@@ -85,7 +85,7 @@ def insert_directories_in_database():
     cursor = cnx.cursor()
     try:
         print("Insertion de " + variables.configuration.repertoire_git_plow_python + "log/")
-        cursor.execute("INSERT INTO directory(path) SELECT '" + variables.configuration.repertoire_git_plow_python + "log/' FROM DUAL WHERE NOT EXISTS(SELECT 1 FROM directory WHERE path = " + variables.configuration.repertoire_git_plow_python + "log/')")
+        cursor.execute("INSERT INTO directory(path) SELECT '" + variables.configuration.repertoire_git_plow_python + "log/' FROM DUAL WHERE NOT EXISTS(SELECT 1 FROM directory WHERE path = '" + variables.configuration.repertoire_git_plow_python + "log/')")
 
         # repertoire telechargement
         print("Insertion de " + variables.configuration.repertoire_telechargement)
