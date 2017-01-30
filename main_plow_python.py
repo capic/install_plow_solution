@@ -3,6 +3,7 @@ import variables
 import utils
 import io
 import os
+import pwd
 
 
 def install_prerequis():
