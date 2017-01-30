@@ -83,10 +83,10 @@ if __name__ == "__main__":
 
     variables.load_config()
 
-    common.update_package()
-    common.install_package("git screen openvpn")
+    utils.update_package()
+    utils.install_package("git screen openvpn")
 
-    common.install_pip()
+    utils.install_pip()
 
 
     utils.create_database()

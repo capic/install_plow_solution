@@ -37,27 +37,52 @@ def load_config():
 
     print(config.sections())
 
-    # repertoire_git_plow_python = config['DEFAULT']['repertoire_git_plow_python']
-    # repertoire_installation_base = config['repertoire_installation_base']
+    repertoire_git_plow_python = config['DEFAULT']['repertoire_git_plow_python']
+    repertoire_installation_base = config['DEFAULT']['repertoire_installation_base']
     branch = config['DEFAULT']['branch']
-    # bdd_address = config['bdd_address']
-    # database = config['database']
-    # notification_address = config['repertoire_git_plow_python']
-    # python_application_id = config['python_application_id']
-    # repertoire_telechargement = config['repertoire_telechargement']
-    # repertoire_telechargement_temporaire = config['repertoire_telechargement_temporaire']
-    # repertoire_telechargement_texte = config['repertoire_telechargement_texte']
-    # rest_address = config['rest_address']
-    # download_server_address = config['download_server_address']
-    # git_plowshare = config['git_plowshare']
-    # repertoire_git_plowshare = config['repertoire_git_plowshare']
-    # git_plow_python = config['git_plow_python']
-    # repertoire_git_plow_python = config['repertoire_git_plow_python']
-    # nodejs_version = config['nodejs_version']
-    # arm_version = config['arm_version']
-    # repertoire_git_plow_back_rest = config['repertoire_git_plow_back_rest']
-    # git_plow_back_rest = config['git_plow_back_rest']
+    bdd_address = config['DEFAULT']['bdd_address']
+    database = config['DEFAULT']['database']
+    notification_address = config['repertoire_git_plow_python']
+    python_application_id = config['DEFAULT']['python_application_id']
+    repertoire_telechargement = config['DEFAULT']['repertoire_telechargement']
+    repertoire_telechargement_temporaire = config['DEFAULT']['repertoire_telechargement_temporaire']
+    repertoire_telechargement_texte = config['DEFAULT']['repertoire_telechargement_texte']
+    rest_address = config['DEFAULT']['rest_address']
+    download_server_address = config['DEFAULT']['download_server_address']
+    git_plowshare = config['DEFAULT']['git_plowshare']
+    repertoire_git_plowshare = config['DEFAULT']['repertoire_git_plowshare']
+    git_plow_python = config['DEFAULT']['git_plow_python']
+    repertoire_git_plow_python = config['DEFAULT']['repertoire_git_plow_python']
+    nodejs_version = config['DEFAULT']['nodejs_version']
+    arm_version = config['DEFAULT']['arm_version']
+    repertoire_git_plow_back_rest = config['DEFAULT']['repertoire_git_plow_back_rest']
+    git_plow_back_rest = config['DEFAULT']['git_plow_back_rest']
 
+    print_config()
+
+
+def print_config():
+    print("=== Configuration ===")
+    print("repertoire_git_plow_python: " + repertoire_git_plow_python)
+    print("repertoire_installation_base: " + repertoire_installation_base)
+    print("branch: " + branch)
+    print("bdd_address: " + bdd_address)
+    print("database: " + database)
+    print("notification_address: " + notification_address)
+    print("python_application_id: " + python_application_id)
+    print("repertoire_telechargement: " + repertoire_telechargement)
+    print("repertoire_telechargement_temporaire: " + repertoire_telechargement_temporaire)
+    print("repertoire_telechargement_texte: " + repertoire_telechargement_texte)
+    print("rest_address: " + rest_address)
+    print("download_server_address: " + download_server_address)
+    print("git_plowshare: " + git_plowshare)
+    print("repertoire_git_plowshare: " + repertoire_git_plowshare)
+    print("git_plow_python: " + git_plow_python)
+    print("repertoire_git_plow_python: " + repertoire_git_plow_python)
+    print("nodejs_version: " + nodejs_version)
+    print("arm_version: " + arm_version)
+    print("repertoire_git_plow_back_rest: " + repertoire_git_plow_back_rest)
+    print("git_plow_back_rest: " + git_plow_back_rest)
 
 
 def configure_commons_variables_1():
