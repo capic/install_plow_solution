@@ -4,35 +4,12 @@ import configparser
 import os
 
 from Bcolors import Bcolors
-
-
-repertoire_installation_base_defaut = ""
-repertoire_installation_base = ""
-branch = ""
-bdd_address = ""
-database = ""
-notification_address = ""
-database_password = ""
-python_application_id = -1
-repertoire_telechargement = ""
-repertoire_telechargement_temporaire = ""
-repertoire_telechargement_texte = ""
-repertoire_git_plow_python = ""
-rest_address = ""
-download_server_address = ""
-git_plowshare = ""
-repertoire_git_plowshare = ""
-git_plow_python = ""
-repertoire_git_plow_python = ""
-nodejs_version = ""
-arm_version = ""
-repertoire_git_plow_back_rest = ""
-git_plow_back_rest = ""
-
+from Configuration import Configuration
 
 def load_config():
     print("=== Chargement de la config " + os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini ===")
     global configuration
+    configuration = Configuration()
 
     config = configparser.ConfigParser()
     config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini")
