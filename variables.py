@@ -6,6 +6,7 @@ import os
 from Bcolors import Bcolors
 from Configuration import Configuration
 
+
 def load_config():
     print("=== Chargement de la config " + os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini ===")
     global configuration
@@ -23,7 +24,7 @@ def load_config():
     configuration.bdd_address = config['DEFAULT']['bdd_address']
     configuration.database = config['DEFAULT']['database']
     configuration.notification_address = config['DEFAULT']['notification_address']
-    configuration.python_application_id = config['DEFAULT']['python_application_id']
+    configuration.python_application_id = int(config['DEFAULT']['python_application_id'])
     configuration.repertoire_telechargement = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement']
     configuration.repertoire_telechargement_temporaire = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement_temporaire']
     configuration.repertoire_telechargement_texte = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement_texte']
