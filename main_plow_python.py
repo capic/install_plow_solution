@@ -81,7 +81,7 @@ def insert_directories_in_database():
     print("=== Insertion des repertoires ===")
 
     print("Connexion ...")
-    cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address)
+    cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address, database=variables.configuration.database)
     cursor = cnx.cursor()
     try:
         print("Insertion de " + variables.configuration.repertoire_git_plow_python + "log/")
