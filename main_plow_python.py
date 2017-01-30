@@ -4,6 +4,7 @@ import utils
 import io
 import os
 import pwd
+import mysql
 
 
 def install_prerequis():
