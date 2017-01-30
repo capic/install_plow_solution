@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import variables
 import utils
-import common
 import io
+import os
 
 
 def install_prerequis():
