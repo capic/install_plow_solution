@@ -75,6 +75,8 @@ def database_exists():
 
 
 def create_database():
+    variables.configure_database_password()
+
     if not database_exists():
         print("La base de données " + variables.configuration.database + " n'existe pas, la créer ? (o/n)")
         choice = input(" >>  ")
