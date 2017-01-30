@@ -10,10 +10,10 @@ import variables
 
 menu_main = {
     'title': ['Menu Principal', ''],
-    '1': ['Installation de Plow Python', install_plow_python],
-    '2': ['Installation de Plow Back Rest', install_plow_back_rest],
-    '3': ['Installation de Plow Notification', install_plow_notification],
-    '4': ['Création de répertoires partagés', createSharedDirectories],
+    '1': ['Installation de Plow Python', install_plow_python()],
+    '2': ['Installation de Plow Back Rest', install_plow_back_rest()],
+    '3': ['Installation de Plow Notification', install_plow_notification()],
+    '4': ['Création de répertoires partagés', createSharedDirectories()],
     '9': ['Retour', back],
     '0': ['Sortie', exit],
 }
