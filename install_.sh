@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-source $DIR/config/config_install.cfg
 
 if [[ $EUID -ne 0 ]]; then
    echo "Ce script doit être lancé avec les droits super utilisateur" 1>&2
