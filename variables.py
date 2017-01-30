@@ -36,8 +36,9 @@ def load_config():
     config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini")
 
     print(config.sections())
+    print(config['DEFAULT']['repertoire_installation_base'])
+    variables.repertoire_installation_base = config['DEFAULT']['repertoire_installation_base']
 
-    repertoire_installation_base = config['DEFAULT']['repertoire_installation_base']
     repertoire_git_plow_python = config['REPERTOIRES_GIT']['repertoire_git_plow_python']
     branch = config['DEFAULT']['branch']
     bdd_address = config['DEFAULT']['bdd_address']
