@@ -40,7 +40,7 @@ def load_config():
     branch = config['DEFAULT']['branch']
     bdd_address = config['DEFAULT']['bdd_address']
     database = config['DEFAULT']['database']
-    notification_address = config['repertoire_git_plow_python']
+    notification_address = config['DEFAULT']['notification_address']
     python_application_id = config['DEFAULT']['python_application_id']
     repertoire_telechargement = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement']
     repertoire_telechargement_temporaire = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement_temporaire']
