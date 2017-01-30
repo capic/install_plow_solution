@@ -36,28 +36,27 @@ def load_config():
     config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini")
 
     print(config.sections())
-    print(config.options('DEFAULT'))
 
-    repertoire_git_plow_python = config['repertoire_git_plow_python']
-    repertoire_installation_base = config['repertoire_installation_base']
-    branch = config['branch']
-    bdd_address = config['bdd_address']
-    database = config['database']
-    notification_address = config['repertoire_git_plow_python']
-    python_application_id = config['python_application_id']
-    repertoire_telechargement = config['repertoire_telechargement']
-    repertoire_telechargement_temporaire = config['repertoire_telechargement_temporaire']
-    repertoire_telechargement_texte = config['repertoire_telechargement_texte']
-    rest_address = config['rest_address']
-    download_server_address = config['download_server_address']
-    git_plowshare = config['git_plowshare']
-    repertoire_git_plowshare = config['repertoire_git_plowshare']
-    git_plow_python = config['git_plow_python']
-    repertoire_git_plow_python = config['repertoire_git_plow_python']
-    nodejs_version = config['nodejs_version']
-    arm_version = config['arm_version']
-    repertoire_git_plow_back_rest = config['repertoire_git_plow_back_rest']
-    git_plow_back_rest = config['git_plow_back_rest']
+    # repertoire_git_plow_python = config['DEFAULT']['repertoire_git_plow_python']
+    # repertoire_installation_base = config['repertoire_installation_base']
+    branch = config['DEFAULT']['branch']
+    # bdd_address = config['bdd_address']
+    # database = config['database']
+    # notification_address = config['repertoire_git_plow_python']
+    # python_application_id = config['python_application_id']
+    # repertoire_telechargement = config['repertoire_telechargement']
+    # repertoire_telechargement_temporaire = config['repertoire_telechargement_temporaire']
+    # repertoire_telechargement_texte = config['repertoire_telechargement_texte']
+    # rest_address = config['rest_address']
+    # download_server_address = config['download_server_address']
+    # git_plowshare = config['git_plowshare']
+    # repertoire_git_plowshare = config['repertoire_git_plowshare']
+    # git_plow_python = config['git_plow_python']
+    # repertoire_git_plow_python = config['repertoire_git_plow_python']
+    # nodejs_version = config['nodejs_version']
+    # arm_version = config['arm_version']
+    # repertoire_git_plow_back_rest = config['repertoire_git_plow_back_rest']
+    # git_plow_back_rest = config['git_plow_back_rest']
 
 
 
