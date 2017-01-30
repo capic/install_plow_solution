@@ -31,9 +31,9 @@ git_plow_back_rest = ""
 
 
 def load_config():
-    print("=== Chargement de la config " + os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.cfg ===")
+    print("=== Chargement de la config " + os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini ===")
     config = configparser.ConfigParser()
-    config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.cfg")
+    config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini")
 
     print(config.sections())
     print(config.options('DEFAULT'))
