@@ -21,9 +21,9 @@ def install_plow_share():
 
     print("Adresse du dépot git de plowshare : " + variables.configuration.git_plowshare + " => " + variables.configuration.repertoire_git_plowshare)
     os.system("git clone " + variables.configuration.git_plowshare + " " + variables.configuration.repertoire_git_plowshare)
-    uid = pwd.getpwnam(variables.configuration.repertoire_git_plowshare).pw_uid
-    gid = grp.getgrnam(variables.configuration.repertoire_git_plowshare).gr_gid
-    os.chown(variables.configuration.repertoire_git_plowshare, uid, gid)
+    # uid = pwd.getpwnam(variables.configuration.repertoire_git_plowshare).pw_uid
+    # gid = grp.getgrnam(variables.configuration.repertoire_git_plowshare).gr_gid
+    # os.chown(variables.configuration.repertoire_git_plowshare, uid, gid)
     os.chdir(variables.configuration.repertoire_git_plowshare)
     os.system("make install")
     os.system("plowmod --install")
