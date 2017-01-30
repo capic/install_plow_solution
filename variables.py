@@ -35,8 +35,7 @@ def load_config():
     config = configparser.ConfigParser()
     config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.cfg")
 
-    for c in config:
-        print(c + " => " + config[c])
+    print(cfg.options())
 
     repertoire_git_plow_python = config['repertoire_git_plow_python']
     repertoire_installation_base = config['repertoire_installation_base']
