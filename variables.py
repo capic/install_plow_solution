@@ -32,58 +32,60 @@ git_plow_back_rest = ""
 
 def load_config():
     print("=== Chargement de la config " + os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini ===")
+    global configuration
+
     config = configparser.ConfigParser()
     config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.ini")
 
     print(config.sections())
     print(config['DEFAULT']['repertoire_installation_base'])
-    variables.repertoire_installation_base = config['DEFAULT']['repertoire_installation_base']
+    configuration.repertoire_installation_base = config['DEFAULT']['repertoire_installation_base']
 
-    repertoire_git_plow_python = config['REPERTOIRES_GIT']['repertoire_git_plow_python']
-    branch = config['DEFAULT']['branch']
-    bdd_address = config['DEFAULT']['bdd_address']
-    database = config['DEFAULT']['database']
-    notification_address = config['DEFAULT']['notification_address']
-    python_application_id = config['DEFAULT']['python_application_id']
-    repertoire_telechargement = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement']
-    repertoire_telechargement_temporaire = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement_temporaire']
-    repertoire_telechargement_texte = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement_texte']
-    rest_address = config['DEFAULT']['rest_address']
-    download_server_address = config['DEFAULT']['download_server_address']
-    git_plowshare = config['GIT']['git_plowshare']
-    repertoire_git_plowshare = config['REPERTOIRES_GIT']['repertoire_git_plowshare']
-    git_plow_python = config['GIT']['git_plow_python']
-    repertoire_git_plow_python = config['REPERTOIRES_GIT']['repertoire_git_plow_python']
-    nodejs_version = config['DEFAULT']['nodejs_version']
-    arm_version = config['DEFAULT']['arm_version']
-    repertoire_git_plow_back_rest = config['REPERTOIRES_GIT']['repertoire_git_plow_back_rest']
-    git_plow_back_rest = config['GIT']['git_plow_back_rest']
+    configuration.repertoire_git_plow_python = config['REPERTOIRES_GIT']['repertoire_git_plow_python']
+    configuration.branch = config['DEFAULT']['branch']
+    configuration.bdd_address = config['DEFAULT']['bdd_address']
+    configuration.database = config['DEFAULT']['database']
+    configuration.notification_address = config['DEFAULT']['notification_address']
+    configuration.python_application_id = config['DEFAULT']['python_application_id']
+    configuration.repertoire_telechargement = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement']
+    configuration.repertoire_telechargement_temporaire = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement_temporaire']
+    configuration.repertoire_telechargement_texte = config['REPERTOIRES_TELECHARGEMENT']['repertoire_telechargement_texte']
+    configuration.rest_address = config['DEFAULT']['rest_address']
+    configuration.download_server_address = config['DEFAULT']['download_server_address']
+    configuration.git_plowshare = config['GIT']['git_plowshare']
+    configuration.repertoire_git_plowshare = config['REPERTOIRES_GIT']['repertoire_git_plowshare']
+    configuration.git_plow_python = config['GIT']['git_plow_python']
+    configuration.repertoire_git_plow_python = config['REPERTOIRES_GIT']['repertoire_git_plow_python']
+    configuration.nodejs_version = config['DEFAULT']['nodejs_version']
+    configuration.arm_version = config['DEFAULT']['arm_version']
+    configuration.repertoire_git_plow_back_rest = config['REPERTOIRES_GIT']['repertoire_git_plow_back_rest']
+    configuration.git_plow_back_rest = config['GIT']['git_plow_back_rest']
 
     print_config()
 
 
 def print_config():
     print("=== Configuration ===")
-    print("repertoire_git_plow_python: %s" % repertoire_git_plow_python)
-    print("repertoire_installation_base: %s" % repertoire_installation_base)
-    print("branch: %s" % branch)
-    print("bdd_address: %s" % bdd_address)
-    print("database: %s" % database)
-    print("notification_address: %s" % notification_address)
-    print("python_application_id: %d" % python_application_id)
-    print("repertoire_telechargement: %s" % repertoire_telechargement)
-    print("repertoire_telechargement_temporaire: %s" % repertoire_telechargement_temporaire)
-    print("repertoire_telechargement_texte: %s" % repertoire_telechargement_texte)
-    print("rest_address: %s" % rest_address)
-    print("download_server_address: %s" % download_server_address)
-    print("git_plowshare: %s" % git_plowshare)
-    print("repertoire_git_plowshare: %s" % repertoire_git_plowshare)
-    print("git_plow_python: %s" % git_plow_python)
-    print("repertoire_git_plow_python: %s" % repertoire_git_plow_python)
-    print("nodejs_version: %s" % nodejs_version)
-    print("arm_version: %s" % arm_version)
-    print("repertoire_git_plow_back_rest: %s" % repertoire_git_plow_back_rest)
-    print("git_plow_back_rest: %s" % git_plow_back_rest)
+    print("repertoire_git_plow_python: %s" % configuration.repertoire_git_plow_python)
+    print("repertoire_installation_base: %s" % configuration.repertoire_installation_base)
+    print("branch: %s" % configuration.branch)
+    print("bdd_address: %s" % configuration.bdd_address)
+    print("database: %s" % configuration.database)
+    print("notification_address: %s" % configuration.notification_address)
+    print("python_application_id: %d" % configuration.python_application_id)
+    print("repertoire_telechargement: %s" % configuration.repertoire_telechargement)
+    print("repertoire_telechargement_temporaire: %s" % configuration.repertoire_telechargement_temporaire)
+    print("repertoire_telechargement_texte: %s" % configuration.repertoire_telechargement_texte)
+    print("rest_address: %s" % configuration.rest_address)
+    print("download_server_address: %s" % configuration.download_server_address)
+    print("git_plowshare: %s" % configuration.git_plowshare)
+    print("repertoire_git_plowshare: %s" % configuration.repertoire_git_plowshare)
+    print("git_plow_python: %s" % configuration.git_plow_python)
+    print("repertoire_git_plow_python: %s" % configuration.repertoire_git_plow_python)
+    print("nodejs_version: %s" % configuration.nodejs_version)
+    print("arm_version: %s" % configuration.arm_version)
+    print("repertoire_git_plow_back_rest: %s" % configuration.repertoire_git_plow_back_rest)
+    print("git_plow_back_rest: %s" % configuration.git_plow_back_rest)
 
 
 def configure_commons_variables_1():

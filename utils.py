@@ -55,9 +55,9 @@ def database_exists():
     exist = false
 
     try:
-        cnx = mysql.connector.connect(user='root', password=variables.database_password, host=variables.bdd_address, database=variables.database)
+        cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address, database=variables.configuration.database)
 
-        print("La base de données " + variables.database + " existe")
+        print("La base de données " + variables.configuration.database + " existe")
         exist = true
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
@@ -75,22 +75,22 @@ def database_exists():
 
 def create_database():
     if not database_exists():
-        print("La base de données " + variables.database + " n'existe pas, la créer ? (o/n)")
+        print("La base de données " + variables.configuration.database + " n'existe pas, la créer ? (o/n)")
         choice = input(" >>  ")
 
         if choice == 'o':
             print("=== Création de la base de données ===")
             print("Connexion ...")
-            cnx = mysql.connector.connect(user='root', password=variables.database_password, host=variables.bdd_address)
+            cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address)
             cursor = cnx.cursor()
             try:
                 print("Création de la base de données")
-                cursor.execute("CREATE DATABASE " + variables.database + " CHARACTER SET utf8 COLLATE utf8_general_ci")
+                cursor.execute("CREATE DATABASE " + variables.configuration.database + " CHARACTER SET utf8 COLLATE utf8_general_ci")
             except mysql.connector.Error as err:
                 print("Erreur de création de la base de données: {}".format(err))
 
             cnx.close()
 
             print("Création de la structure de la base de données")
-            os.system("mysql -u root -p" + variables.database_password + " -h " + variables.bdd_address + " " + variables.database + " < " + os.path.dirname(os.path.abspath(__file__)) + "/scripts/plowshare.sql")
+            os.system("mysql -u root -p" + variables.configuration.database_password + " -h " + variables.configuration.bdd_address + " " + variables.configuration.database + " < " + os.path.dirname(os.path.abspath(__file__)) + "/scripts/plowshare.sql")
 

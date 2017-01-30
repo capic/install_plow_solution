@@ -21,20 +21,20 @@ def install_prerequis():
     if install_node:
         print("Installation de nodejs")
 
-        print(Bcolors.FAIL + "Version de nodejs ? (defaut: " + variables.nodejs_version + ")" + Bcolors.ENDC)
+        print(Bcolors.FAIL + "Version de nodejs ? (defaut: " + variables.configuration.nodejs_version + ")" + Bcolors.ENDC)
         choice = input(" >>  ")
         if choice != "":
-            variables.nodejs_version = choice
+            variables.configuration.nodejs_version = choice
             choice = ""
 
-        print(Bcolors.FAIL + "Version arm ? (defaut: " + variables.arm_version + ")" + Bcolors.ENDC)
+        print(Bcolors.FAIL + "Version arm ? (defaut: " + variables.configuration.arm_version + ")" + Bcolors.ENDC)
         choice = input(" >>  ")
         if choice != "":
-            variables.arm_version = choice
+            variables.configuration.arm_version = choice
             choice = ""
 
         print("Récupération du paquet nodejs")
-        urllib.urlretrieve("https://nodejs.org/dist/latest/node-v" + variables.nodejs_version + "-linux-" + variables.arm_version + ".tar.gz", filename="/tmp/node.tar.gz")
+        urllib.urlretrieve("https://nodejs.org/dist/latest/node-v" + variables.configuration.nodejs_version + "-linux-" + variables.configuration.arm_version + ".tar.gz", filename="/tmp/node.tar.gz")
         os.chdir("/tmp")
         print("Extraction de nodejs dans le répertoire temporaire")
         os.system("tar -xf node.tar.gz")
@@ -48,12 +48,12 @@ def install_prerequis():
 def create_config_file_plow_back_rest():
     print("=== Création du fichier de config plow back rest ===")
 
-    print("Suppression du fichier de configuration déjà existant: " + variables.repertoire_git_plow_back_rest + "config/local.json")
-    os.remove(variables.repertoire_git_plow_back_rest + "config/local.json")
+    print("Suppression du fichier de configuration déjà existant: " + variables.configuration.repertoire_git_plow_back_rest + "config/local.json")
+    os.remove(variables.configuration.repertoire_git_plow_back_rest + "config/local.json")
 
-    print("Création du fichier de configuration pour plow_python: " + variables.repertoire_git_plow_back_rest + "config/local.json")
+    print("Création du fichier de configuration pour plow_python: " + variables.configuration.repertoire_git_plow_back_rest + "config/local.json")
 
-    file = io.open(variables.repertoire_git_plow_back_rest + "config/local.json", "w")
+    file = io.open(variables.configuration.repertoire_git_plow_back_rest + "config/local.json", "w")
     file.write("# application id")
     file.write("{")
     file.write("  \"db\": {")
@@ -159,10 +159,10 @@ def create_config_file_plow_back_rest():
 def install_plow_back_rest():
     print("=== Installation de plow back rest ===")
 
-    print("Adresse du dépot git de plow_back_rest : " + variables.git_plow_back_rest + " => " + variables.repertoire_git_plow_back_rest)
-    os.system("git clone -b " + variables.branch + " " + variables.git_plow_back_rest + " " + variables.repertoire_git_plow_back_rest)
+    print("Adresse du dépot git de plow_back_rest : " + variables.configuration.git_plow_back_rest + " => " + variables.configuration.repertoire_git_plow_back_rest)
+    os.system("git clone -b " + variables.configuration.branch + " " + variables.configuration.git_plow_back_rest + " " + variables.configuration.repertoire_git_plow_back_rest)
 
-    os.chdir(variables.repertoire_git_plow_back_rest)
+    os.chdir(variables.configuration.repertoire_git_plow_back_rest)
     os.system('npm install')
 
     create_config_file_plow_back_rest()
@@ -180,7 +180,7 @@ def add_to_startup():
             file_data = file.read()
 
         # Replace the target string
-        file_data = file_data.replace("exit 0", "su pi -c 'python3 " + variables.repertoire_git_plow_back_rest + " && node bin/www < \/dev\/null \&'\n\n\r\nexit 0")
+        file_data = file_data.replace("exit 0", "su pi -c 'python3 " + variables.configuration.repertoire_git_plow_back_rest + " && node bin/www < \/dev\/null \&'\n\n\r\nexit 0")
 
         # Write the file out again
         with open("file.txt", 'w') as file:
