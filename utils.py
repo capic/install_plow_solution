@@ -52,13 +52,13 @@ def install_pip_package(package):
 def database_exists():
     print("=== Test de l'existence de la base de données ===")
 
-    exist = false
+    exist = False
 
     try:
         cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address, database=variables.configuration.database)
 
         print("La base de données " + variables.configuration.database + " existe")
-        exist = true
+        exist = True
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Erreur de connexion")
