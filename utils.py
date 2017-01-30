@@ -21,7 +21,7 @@ def install_pip():
     print("=== Installation de pip ===")
     choice = 'o'
 
-    if is_tool('pip3'):
+    if is_installed('pip3'):
         print("pip est déjà installé, le réinstaller ? (O/N)")
         choice = input(" >>  ")
 
