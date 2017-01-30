@@ -35,6 +35,9 @@ def load_config():
     config = configparser.ConfigParser()
     config.read(os.path.dirname(os.path.abspath(__file__)) + "/config/config_install.cfg")
 
+    for c in config:
+        print(c + " => " + config[c])
+
     repertoire_git_plow_python = config['repertoire_git_plow_python']
     repertoire_installation_base = config['repertoire_installation_base']
     branch = config['branch']
@@ -55,6 +58,7 @@ def load_config():
     arm_version = config['arm_version']
     repertoire_git_plow_back_rest = config['repertoire_git_plow_back_rest']
     git_plow_back_rest = config['git_plow_back_rest']
+
 
 
 def configure_commons_variables_1():
