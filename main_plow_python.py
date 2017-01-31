@@ -118,12 +118,12 @@ def add_to_startup():
 
         replace_string = "su pi -c 'python3 " + variables.configuration.repertoire_git_plow_python + "main/download_basic.py normal < \/dev\/null \&'\n\n\r\n"
         p = file_data.rfind(replace_string)
-        file_data = file_data[:p] + "" + file_data[p+1:]
+        file_data = file_data[:p] + "" + file_data[p+len(replace_string):]
 
         print("Remplace \"exit 0\" par \"" + replace_string + "exit 0\"")
         # Replace the target string
         p = file_data.rfind("exit 0")
-        file_data = file_data[:p] + replace_string + "exit 0" + file_data[p+1:]
+        file_data = file_data[:p] + replace_string + "exit 0" + file_data[p+len(replace_string)+7:]
 
         # Write the file out again
         with open("/etc/rc.local", 'w') as file:
