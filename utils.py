@@ -55,6 +55,7 @@ def database_exists():
     exist = False
 
     try:
+        print("Connexion avec user=%s, password=%s, host=%s, database=%s ..." % ('root', variables.configuration.database_password, variables.configuration.bdd_address, variables.configuration.database))
         cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address, database=variables.configuration.database)
 
         print("La base de données " + variables.configuration.database + " existe")
@@ -74,13 +75,15 @@ def database_exists():
 
 
 def create_database():
+    variables.configure_database_password()
+
     if not database_exists():
         print("La base de données " + variables.configuration.database + " n'existe pas, la créer ? (o/n)")
         choice = input(" >>  ")
 
         if choice == 'o':
             print("=== Création de la base de données ===")
-            print("Connexion ...")
+            print("Connexion avec user=%s, password=%s, host=%s ..." % ('root', variables.configuration.database_password, variables.configuration.bdd_address))
             cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address)
             cursor = cnx.cursor()
             try:

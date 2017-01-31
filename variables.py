@@ -69,91 +69,91 @@ def print_config():
 def configure_commons_variables_1():
     print("=== Configuration des variables générales 1 ===")
 
-    print(Bcolors.FAIL + "Chemin de base de l'installation ? (defaut: " + repertoire_installation_base + ")" + Bcolors.ENDC)
+    print("%sChemin de base de l'installation ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.repertoire_installation_base, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        repertoire_installation_base = choice
+        configuration.repertoire_installation_base = choice
         choice = ""
 
 
 def configure_commons_variables_2():
     print("=== Configuration des variables générales 2 ===")
 
-    print(Bcolors.FAIL + "Branche git ? (defaut: " + branch + ")" + Bcolors.ENDC)
+    print("%sBranche git ? (defaut: %s)%s" %(Bcolors.FAIL, configuration.branch, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        branch = choice
+        configuration.branch = choice
         choice = ""
 
-    print(Bcolors.FAIL + "Adresse base de données ? (defaut: " + bdd_address + ")" + Bcolors.ENDC)
+    print("%sAdresse base de données ? (defaut: %s)%s" %(Bcolors.FAIL, configuration.bdd_address , Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        bdd_address = choice
+        configuration.bdd_address = choice
         choice = ""
 
-    print(Bcolors.FAIL + "Nom base de données ? (defaut: " + database + ")" + Bcolors.ENDC)
+    print("%sNom base de données ? (defaut: %s)%s" %(Bcolors.FAIL, configuration.database, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        database = choice
+        configuration.database = choice
         choice = ""
 
-    print(Bcolors.FAIL + "Adresse serveur de notification ? (defaut: " + notification_address + ")" + Bcolors.ENDC)
+    print("%sAdresse serveur de notification ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.notification_address, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        notification_address = choice
-        choice = ""
-
-    print(Bcolors.UNDERLINE + "Connexion au serveur de base de données pour verifier si la base existe ..." + Bcolors.ENDC)
-    print(Bcolors.FAIL + "Mot de passe:" + Bcolors.ENDC)
-    choice = input(" >>  ")
-    if choice != "":
-        database_password = choice
+        configuration.notification_address = choice
         choice = ""
 
 
 def configure_plow_python_variables():
     print("=== Configuration des variables de plow python ===")
 
-    print(Bcolors.FAIL + "Id de la configuration en base de données ? (defaut: " + python_application_id + ")" + Bcolors.ENDC)
+    print("%sId de la configuration en base de données ? (defaut: %d)%s" % (Bcolors.FAIL, configuration.python_application_id, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        python_application_id = int(choice)
+        configuration.python_application_id = int(choice)
         choice = ""
 
-    print(Bcolors.FAIL + "Chemin repertoire téléchargement ? (defaut: " + repertoire_telechargement + ")" + Bcolors.ENDC)
+    print("%sChemin repertoire téléchargement ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.repertoire_telechargement, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        repertoire_telechargement = choice
+        configuration.repertoire_telechargement = choice
         choice = ""
 
-    print(Bcolors.FAIL + "Chemin repertoire téléchargement temporaire ? (defaut: " + repertoire_telechargement_temporaire + ")" + Bcolors.ENDC)
+    print("%sChemin repertoire téléchargement temporaire ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.repertoire_telechargement_temporaire, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        repertoire_telechargement_temporaire = choice
+        configuration.repertoire_telechargement_temporaire = choice
         choice = ""
 
-    print(Bcolors.FAIL + "Chemin repertoire téléchargement texte ? (defaut: " + repertoire_telechargement_texte + ")" + Bcolors.ENDC)
+    print("%sChemin repertoire téléchargement texte ? (defaut: %s)%s" % (Bcolors.FAIL , configuration.repertoire_telechargement_texte, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        repertoire_telechargement_texte = choice
+        configuration.repertoire_telechargement_texte = choice
         choice = ""
 
-    print(Bcolors.FAIL + "Chemin d'installation de plow python ? (defaut: " + repertoire_git_plow_python + ")" + Bcolors.ENDC)
+    print("%sChemin d'installation de plow python ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.repertoire_git_plow_python, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        repertoire_git_plow_python = repertoire_installation_base + choice
+        configuration.repertoire_git_plow_python = repertoire_installation_base + choice
         choice = ""
 
-    print(Bcolors.FAIL + "Adresse serveur ? (defaut: " + rest_address + ")" + Bcolors.ENDC)
+    print("%sAdresse serveur ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.rest_address, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        rest_address = choice
+        configuration.rest_address = choice
         choice = ""
 
 
 def configure_plow_back_rest_variables():
-    print(Bcolors.FAIL + "Adresse serveur de telechargement ? (defaut: " + download_server_address + ")" + Bcolors.ENDC)
+    print("%sAdresse serveur de telechargement ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.download_server_address, Bcolors.ENDC))
     choice = input(" >>  ")
     if choice != "":
-        download_server_address = choice
+        configuration.download_server_address = choice
+        choice = ""
+
+def configure_database_password():
+    print("%sMot de passe de la base de données ? (defaut: %s)%s" % (Bcolors.FAIL, configuration.database_password, Bcolors.ENDC))
+    choice = input(" >>  ")
+    if choice != "":
+        configuration.database_password = choice
         choice = ""

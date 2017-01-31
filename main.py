@@ -8,16 +8,6 @@ import common
 import utils
 import variables
 
-menu_main = {
-    'title': ['Menu Principal', ''],
-    '1': ['Installation de Plow Python', 'install_plow_python'],
-    '2': ['Installation de Plow Back Rest', 'install_plow_back_rest'],
-    '3': ['Installation de Plow Notification', 'install_plow_notification'],
-    '4': ['Création de répertoires partagés', 'createSharedDirectories'],
-    '9': ['Retour', 'back'],
-    '0': ['Sortie', 'exit'],
-}
-
 
 def install_plow_python():
     print("=== Installation de plow python ===")
@@ -60,7 +50,7 @@ def exec_menu(menu_to_display, choice):
         menu_to_display['title'][1]()
     else:
         try:
-            getattr(menu_to_display[ch][1])()
+            menu_to_display[ch][1]()
         except KeyError:
             print("Invalid selection, please try again.\n")
             menu_to_display['title'][1]()
@@ -75,6 +65,16 @@ def back(menu_to_display):
 # Exit program
 def exit():
     sys.exit()
+
+menu_main = {
+    'title': ['Menu Principal', ''],
+    '1': ['Installation de Plow Python', install_plow_python],
+    '2': ['Installation de Plow Back Rest', install_plow_back_rest],
+    '3': ['Installation de Plow Notification', install_plow_notification],
+    # '4': ['Création de répertoires partagés', createSharedDirectories],
+    '9': ['Retour', back],
+    '0': ['Sortie', exit],
+}
 
 
 # Main Program

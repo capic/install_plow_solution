@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 import variables
 import utils
-import common
 import io
+import os
+import pwd
+import mysql
 
 
 def install_prerequis():
@@ -19,9 +21,9 @@ def install_plow_share():
 
     print("Adresse du dépot git de plowshare : " + variables.configuration.git_plowshare + " => " + variables.configuration.repertoire_git_plowshare)
     os.system("git clone " + variables.configuration.git_plowshare + " " + variables.configuration.repertoire_git_plowshare)
-    uid = pwd.getpwnam(variables.configuration.repertoire_git_plowshare).pw_uid
-    gid = grp.getgrnam(variables.configuration.repertoire_git_plowshare).gr_gid
-    os.chown(variables.configuration.repertoire_git_plowshare, uid, gid)
+    # uid = pwd.getpwnam(variables.configuration.repertoire_git_plowshare).pw_uid
+    # gid = grp.getgrnam(variables.configuration.repertoire_git_plowshare).gr_gid
+    # os.chown(variables.configuration.repertoire_git_plowshare, uid, gid)
     os.chdir(variables.configuration.repertoire_git_plowshare)
     os.system("make install")
     os.system("plowmod --install")
@@ -37,24 +39,24 @@ def create_config_python_file():
 
     file = io.open(variables.configuration.repertoire_git_plow_python + "config_python.cfg", "w")
     file.write("# application id")
-    file.write("PYTHON_APPLICATION_ID=" + variables.configuration.python_application_id)
+    file.write("PYTHON_APPLICATION_ID=%d" % variables.configuration.python_application_id)
     file.write("")
     file.write("DOWNLOAD_ACTIVATED=True")
     file.write("")
     file.write("# rest server address")
-    file.write("REST_ADRESS=\"" + variables.configuration.rest_address + "\"")
+    file.write("REST_ADRESS=\"%s\"" % variables.configuration.rest_address)
     file.write("# notification server address")
-    file.write("NOTIFICATION_ADDRESS=\"" + variables.configuration.notification_address + "\"")
+    file.write("NOTIFICATION_ADDRESS=\"%s\"" % variables.configuration.notification_address)
     file.write("")
     file.write("#LEVEL_OFF = 0, LEVEL_ALERT = 1, LEVEL_ERROR = 2, LEVEL_INFO = 3, LEVEL_DEBUG = 4")
     file.write("PYTHON_LOG_LEVEL=4")
     file.write("PYTHON_LOG_CONSOLE_LEVEL=4")
     file.write("PYHTON_LOG_FORMAT=\"[%(levelname)8s]  %(asctime)s <%(to_ihm)4s>     (%(file_name)s) {%(function_name)s} [%(message)s]\"")
     file.write("")
-    file.write("PYTHON_LOG_DIRECTORY=\"" + variables.configuration.repertoire_git_plow_python + "log/\"")
-    file.write("PYTHON_DIRECTORY_DOWNLOAD_TEMP=\"" + variables.configuration.repertoire_telechargement_temporaire + "\"")
-    file.write("PYTHON_DIRECTORY_DOWNLOAD=\"" + variables.configuration.repertoire_telechargement + "\"")
-    file.write("PYTHON_DIRECTORY_DOWNLOAD_TEXT=\"" + variables.configuration.repertoire_telechargement_texte + "\"")
+    file.write("PYTHON_LOG_DIRECTORY=\"%slog\"" % variables.configuration.repertoire_git_plow_python)
+    file.write("PYTHON_DIRECTORY_DOWNLOAD_TEMP=\"%s\"" % variables.configuration.repertoire_telechargement_temporaire )
+    file.write("PYTHON_DIRECTORY_DOWNLOAD=\"%s\"" % variables.configuration.repertoire_telechargement)
+    file.write("PYTHON_DIRECTORY_DOWNLOAD_TEXT=\"%s\"" % variables.configuration.repertoire_telechargement_texte)
 
     file.close()
 
@@ -79,11 +81,11 @@ def insert_directories_in_database():
     print("=== Insertion des repertoires ===")
 
     print("Connexion ...")
-    cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address)
+    cnx = mysql.connector.connect(user='root', password=variables.configuration.database_password, host=variables.configuration.bdd_address, database=variables.configuration.database)
     cursor = cnx.cursor()
     try:
         print("Insertion de " + variables.configuration.repertoire_git_plow_python + "log/")
-        cursor.execute("INSERT INTO directory(path) SELECT '" + variables.configuration.repertoire_git_plow_python + "log/' FROM DUAL WHERE NOT EXISTS(SELECT 1 FROM directory WHERE path = " + variables.configuration.repertoire_git_plow_python + "log/')")
+        cursor.execute("INSERT INTO directory(path) SELECT '" + variables.configuration.repertoire_git_plow_python + "log/' FROM DUAL WHERE NOT EXISTS(SELECT 1 FROM directory WHERE path = '" + variables.configuration.repertoire_git_plow_python + "log/')")
 
         # repertoire telechargement
         print("Insertion de " + variables.configuration.repertoire_telechargement)
