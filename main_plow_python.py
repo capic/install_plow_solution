@@ -124,7 +124,7 @@ def add_to_startup():
         file_data = file_data.replace("exit 0", replace_string + "exit 0")
 
         # Write the file out again
-        with open("file.txt", 'w') as file:
+        with open("/etc/rc.local", 'w') as file:
             file.write(file_data)
 
 
