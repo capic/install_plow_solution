@@ -116,6 +116,7 @@ def add_to_startup():
         with open("/etc/fstab", 'r') as file:
             file_data = file.read()
 
+        print("Remplace \"exit 0\" par \"su pi -c 'python3 " + variables.configuration.repertoire_git_plow_python + "main/download_basic.py normal < \/dev\/null \&'\n\n\r\nexit 0\"")
         # Replace the target string
         file_data = file_data.replace("exit 0", "su pi -c 'python3 " + variables.configuration.repertoire_git_plow_python + "main/download_basic.py normal < \/dev\/null \&'\n\n\r\nexit 0")
 
