@@ -123,7 +123,10 @@ def add_to_startup():
         print("Remplace \"exit 0\" par \"" + replace_string + "exit 0\"")
         # Replace the target string
         p = file_data.rfind("exit 0")
-        print("Position de exit 0: " + p)
+        print("Position de exit 0: %d" % p)
+        print(file_data[:p])
+        print(replace_string)
+        print(file_data[p:])
         file_data = file_data[:p] + replace_string + file_data[p:]
 
         # Write the file out again
