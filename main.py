@@ -31,7 +31,7 @@ def install_plow_notification():
 def menu(menu_to_display):
     os.system('clear')
 
-    for key in menu_to_display:
+    for key in sorted(menu_to_display, key=menu_to_display.get):
         if key == 'title':
             print(menu_to_display[key][0] + "\n")
         else:

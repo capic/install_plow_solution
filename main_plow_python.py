@@ -113,15 +113,25 @@ def add_to_startup():
 
     if choice == 'o':
         file_data = None
-        with open("/etc/fstab", 'r') as file:
+        with open("/etc/rc.local", 'r') as file:
             file_data = file.read()
 
+        replace_string = "su pi -c 'python3 " + variables.configuration.repertoire_git_plow_python + "main/download_basic.py normal < \/dev\/null \&'\n\n\r\n"
+        p = file_data.rfind(replace_string)
+        file_data = file_data[:p] + "" + file_data[p+len(replace_string):]
+
+        print("Remplace \"exit 0\" par \"" + replace_string + "exit 0\"")
         # Replace the target string
-        file_data = file_data.replace("exit 0", "su pi -c 'python3 " + variables.configuration.repertoire_git_plow_python + "main/download_basic.py normal < \/dev\/null \&'\n\n\r\nexit 0")
+        p = file_data.rfind("exit 0")
+        print("Position de exit 0: %d" % p)
+        print(file_data[:p])
+        print(replace_string)
+        print(file_data[p:])
+        file_data = file_data[:p] + replace_string + file_data[p:]
 
         # Write the file out again
-        with open("file.txt", 'w') as file:
-            file.write(file_data)
+        # with open("/etc/rc.local", 'w') as file:
+        #     file.write(file_data)
 
 
 def main():
