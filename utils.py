@@ -5,6 +5,7 @@ import os
 import mysql.connector
 from mysql.connector import errorcode
 import variables
+import urllib
 
 
 def is_installed(name):
